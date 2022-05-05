@@ -1,0 +1,35 @@
+
+
+.imgg {
+    -fx-border-color: black;
+    -fx-border-radius: 15px 50px ;
+
+
+}
+#cont {
+    -fx-border-radius: 1px 50px;
+    -fx-border-image-slice: white;
+}
+#ee {
+    -fx-border-color: black;
+    -webkit-border-radius: 1px 50px;
+    -moz-border-radius: 1px 50px;
+    -fx-border-radius: 1px 50px;
+    -fx-background-color: white;
+    -fx-background-radius: 1px 50px;
+
+}
+#es {
+    -fx-border-color: black;
+   -fx-border-width: thick;
+    -fx-border-radius: 1px 50px;
+    -fx-background-color: white;
+    -fx-background-radius: 1px 50px;
+}
+#ee:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+.root {
+-fx-background-image: url("https://previews.123rf.com/images/nataliazakharova/nataliazakharova1904/nataliazakharova190400064/120933467-dark-vintage-flower-background-pink-azalea-flower-wallpaper.jpg");
+}
