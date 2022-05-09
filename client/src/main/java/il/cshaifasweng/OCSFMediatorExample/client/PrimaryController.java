@@ -480,7 +480,9 @@ public class PrimaryController {
 			allProducts.add(flower5);
 			Product flower6 = new Product(6,flower_button6.getId(),flower_name6.getContentText(),"",flower_price6.getContentText());
 			allProducts.add(flower6);
-
+			///
+			System.out.println("hiiiiiiiiiiii");
+			///
 			List<Product> productList = new ArrayList<Product>() ;
 			productList.add(flower1);
 			productList.add(flower2);
