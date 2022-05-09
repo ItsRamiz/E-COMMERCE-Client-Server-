@@ -129,7 +129,8 @@ public class SimpleServer extends AbstractServer {
 
 				System.out.println("remove a flower");
 				flowersnum--;
-				String IDREMOVEDITEM = "5";
+				String IDREMOVEDITEM = recievedmsg.getid();
+				int removedId=Integer.parseInt(IDREMOVEDITEM);
 				SessionFactory sessionFactory = getSessionFactory();
 				session = sessionFactory.openSession();
 				Transaction tx = session.beginTransaction();
@@ -138,21 +139,8 @@ public class SimpleServer extends AbstractServer {
 
 
 				try {
-					System.out.println("arrived here!!1");
+					System.out.println("arrived here!!!1");
 					int i;
-					       int removedId= 0;
-
-
-
-					try{
-						removedId = Integer.valueOf(IDREMOVEDITEM);
-						//System.out.println(number); // output = 25
-					}
-					catch (NumberFormatException ex){
-						ex.printStackTrace();
-					}
-
-
 
 
 

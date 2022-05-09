@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import il.cshaifasweng.OCSFMediatorExample.entities.Product;
 
 import java.awt.*;
+import java.awt.Dialog;
 import java.awt.MenuItem;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -64,6 +65,9 @@ public class PrimaryController {
 
 	@FXML // fx:id="customPrice"
 	private TextField customPrice; // Value injected by FXMLLoader
+
+	@FXML
+	private TextField customid;
 
 	@FXML // fx:id="customType"
 	private TextField customType; // Value injected by FXMLLoader
@@ -136,6 +140,9 @@ public class PrimaryController {
 	@FXML // fx:id="AddItem"
 	private Button AddItem; // Value injected by FXMLLoader
 
+	//@FXML // fx:id="AddItem"
+	//private Button remID;
+
 	@FXML // fx:id="RemoveItem"
 	private Button RemoveItem; // Value injected by FXMLLoader
 
@@ -149,29 +156,30 @@ public class PrimaryController {
 
 		FinishCustomItem.setText("Add Custom Item To Cart");
 		CancelCustomItem.setText("Cancel Custom Item Designer");
-		flower_button1.setVisible(false);
-		flower_button2.setVisible(false);
-		flower_button3.setVisible(false);
-		flower_button4.setVisible(false);
-		flower_button5.setVisible(false);
-		flower_button6.setVisible(false);
+		flower_button1.setVisible(true);
+		flower_button2.setVisible(true);
+		flower_button3.setVisible(true);
+		flower_button4.setVisible(true);
+		flower_button5.setVisible(true);
+		flower_button6.setVisible(true);
 
-		flower_price1.setVisible(false);
-		flower_price2.setVisible(false);
-		flower_price3.setVisible(false);
-		flower_price4.setVisible(false);
-		flower_price5.setVisible(false);
-		flower_price6.setVisible(false);
+		flower_price1.setVisible(true);
+		flower_price2.setVisible(true);
+		flower_price3.setVisible(true);
+		flower_price4.setVisible(true);
+		flower_price5.setVisible(true);
+		flower_price6.setVisible(true);
 
-		flower_name1.setVisible(false);
-		flower_name2.setVisible(false);
-		flower_name3.setVisible(false);
-		flower_name4.setVisible(false);
-		flower_name5.setVisible(false);
-		flower_name6.setVisible(false);
+		flower_name1.setVisible(true);
+		flower_name2.setVisible(true);
+		flower_name3.setVisible(true);
+		flower_name4.setVisible(true);
+		flower_name5.setVisible(true);
+		flower_name6.setVisible(true);
 
 		CreateCustomItem.setVisible(false);
 		adminEditCatalog.setVisible(false);
+		//	remID.setVisible(false);
 
 		EditItemExtra.setVisible(false);
 		EditItemDesc.setVisible(false);
@@ -183,6 +191,7 @@ public class PrimaryController {
 
 		customColor.setVisible(true);
 		customPrice.setVisible(true);
+		customid.setVisible(true);
 		customType.setVisible(true);
 
 		CancelCustomItem.setVisible(true);
@@ -197,6 +206,7 @@ public class PrimaryController {
 	}
 	@FXML
 	void cancelCustomitem(ActionEvent event) {
+		//.setVisible(false);
 		flower_button1.setVisible(true);
 		flower_button2.setVisible(true);
 		flower_button3.setVisible(true);
@@ -223,6 +233,7 @@ public class PrimaryController {
 
 		customColor.setVisible(false);
 		customPrice.setVisible(false);
+		customid.setVisible(false);
 		customType.setVisible(false);
 
 		CancelCustomItem.setVisible(false);
@@ -236,24 +247,24 @@ public class PrimaryController {
 		String newDesc = EditItemDesc.getText();
 		String newPrice = EditItemPrice.getText();
 		// Create a new product with the current variables
-		Product new_product=new Product();
-		new_product.setID(7);
-		new_product.setButton(newType);
-		//new_product.setDetails("newflower");
-		//new_product.setImage("");
-		//new_product.setName("redflower");
-		new_product.setPrice(newPrice);
+		Product new_flower=new Product();
+		new_flower.setPrice(newPrice);
+		new_flower.setButton(newType);
+		new_flower.setID(7);
 		try {
-			SimpleClient.getClient().sendToServer(new_product); // sends the updated product to the server class
+			SimpleClient.getClient().sendToServer(new_flower); // sends the updated product to the server class
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		///// func that send msg to server
 		CreateCustomItem.setVisible(true);
 		adminEditCatalog.setVisible(true);
 
+		//	remID.setVisible(false);
 		customColor.setVisible(false);
 		customPrice.setVisible(false);
+		customid.setVisible(false);
 		customType.setVisible(false);
 
 		CancelCustomItem.setVisible(false);
@@ -268,18 +279,17 @@ public class PrimaryController {
 	@FXML
 	void adminRemoveItemFunc(ActionEvent event)
 	{
+
 		String deleteID = EditItemExtra.getText();
 		// Remove the item with the currnet ID from the catalog
 		// create removeItem object
 		// give the deleteID to the removeItem object
-		System.out.println("the received id string is :" + deleteID);
-		RemovedProduct flowerRemoved=new RemovedProduct();
-		flowerRemoved.setmsg("remove item");
-		flowerRemoved.setID(deleteID);
-
 		// send the object to the server
+		System.out.println(deleteID);
+		RemovedProduct removeflower=new RemovedProduct();
+        removeflower.setID(deleteID);
 		try {
-			SimpleClient.getClient().sendToServer(flowerRemoved); // sends the updated product to the server class
+			SimpleClient.getClient().sendToServer(removeflower); // sends the updated product to the server class
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -289,6 +299,7 @@ public class PrimaryController {
 
 		customColor.setVisible(false);
 		customPrice.setVisible(false);
+		customid.setVisible(false);
 		customType.setVisible(false);
 
 		CancelCustomItem.setVisible(false);
@@ -298,6 +309,7 @@ public class PrimaryController {
 		EditItemDesc.setVisible(false);
 		EditItemPrice.setVisible(false);
 		EditItemExtra.setVisible(false);
+		//.setVisible(false);
 
 	}
 
@@ -305,16 +317,22 @@ public class PrimaryController {
 	void adminUpdateItemFunc(ActionEvent event)
 	{
 		String newType = EditItemType.getText();
+		System.out.println(newType);
 		String newDesc = EditItemDesc.getText();
+		System.out.println(newDesc);
 		String newPrice = EditItemPrice.getText();
+		System.out.println(newPrice);
 		String updateID = EditItemExtra.getText();
-		// Update the item with the current ID with the new variables
+		System.out.println(updateID);
 
+		// Update the item with the current ID with the new variables
+		//remID.setVisible(false);
 		CreateCustomItem.setVisible(true);
 		adminEditCatalog.setVisible(true);
 
 		customColor.setVisible(false);
 		customPrice.setVisible(false);
+		customid.setVisible(false);
 		customType.setVisible(false);
 
 		CancelCustomItem.setVisible(false);
@@ -330,11 +348,13 @@ public class PrimaryController {
 	@FXML
 	void chooseAdminEditCatalog(ActionEvent event)
 	{
+		//	remID.setVisible(false);
 		CreateCustomItem.setVisible(false);
 		adminEditCatalog.setVisible(true);
 
 		customColor.setVisible(false);
 		customPrice.setVisible(false);
+		customid.setVisible(false);
 		customType.setVisible(false);
 
 		CancelCustomItem.setVisible(false);
@@ -359,18 +379,21 @@ public class PrimaryController {
 		}
 		if(chosen == "Remove Item")
 		{
-			EditItemExtra.setText("Item ID To Remove");
+			//EditItemExtra.setText("Item ID To Remove");
+			UpdateItem.setText("Remove");
 			EditItemType.setVisible(false);
 			EditItemDesc.setVisible(false);
 			EditItemPrice.setVisible(false);
 			EditItemExtra.setVisible(true);
+			EditItemExtra.setText("ID to remove");
+			//.setVisible(true);
 			System.out.println("WENT REMOVE");
 			AddItem.setVisible(false);
 			UpdateItem.setVisible(false);
 			RemoveItem.setVisible(true);
 			//send id to server
 		}
-		if(chosen == "Update Item")
+		if(chosen == "Edit Item")
 		{
 			EditItemType.setText("New Item Type");
 			EditItemDesc.setText("New Item Desc");
@@ -438,6 +461,7 @@ public class PrimaryController {
 
 		customColor.setVisible(false);
 		customPrice.setVisible(false);
+		customid.setVisible(false);
 		customType.setVisible(false);
 
 		EditItemType.setVisible(false);
@@ -448,13 +472,13 @@ public class PrimaryController {
 		AddItem.setVisible(false);
 		RemoveItem.setVisible(false);
 		UpdateItem.setVisible(false);
-
+		//remID.setVisible(false);
 		CancelCustomItem.setVisible(false);
 		FinishCustomItem.setVisible(false);
 
 		adminEditCatalog.getItems().add("Add Item");
 		adminEditCatalog.getItems().add("Remove Item");
-		adminEditCatalog.getItems().add("Update Item");
+		adminEditCatalog.getItems().add("Edit Item");
 
 
 		initializeData();
@@ -480,9 +504,7 @@ public class PrimaryController {
 			allProducts.add(flower5);
 			Product flower6 = new Product(6,flower_button6.getId(),flower_name6.getContentText(),"",flower_price6.getContentText());
 			allProducts.add(flower6);
-			///
-			System.out.println("hiiiiiiiiiiii");
-			///
+
 			List<Product> productList = new ArrayList<Product>() ;
 			productList.add(flower1);
 			productList.add(flower2);
