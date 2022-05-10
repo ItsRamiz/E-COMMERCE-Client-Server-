@@ -257,7 +257,6 @@ public class PrimaryController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		///// func that send msg to server
 		CreateCustomItem.setVisible(true);
 		adminEditCatalog.setVisible(true);
 
@@ -286,8 +285,9 @@ public class PrimaryController {
 		// give the deleteID to the removeItem object
 		// send the object to the server
 		System.out.println(deleteID);
+		System.out.println(deleteID);
 		RemovedProduct removeflower=new RemovedProduct();
-        removeflower.setID(deleteID);
+		removeflower.setID(deleteID);
 		try {
 			SimpleClient.getClient().sendToServer(removeflower); // sends the updated product to the server class
 		} catch (IOException e) {
