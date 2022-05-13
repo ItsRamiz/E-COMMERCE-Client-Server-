@@ -65,12 +65,16 @@ public class Product implements Serializable {
     public String getImage(){
         return this.image;
     }
-    public void setID(int someID){
-        this.id = someID;
+    public int setID(int newid){
+        this.id = newid;
+        return  this.id;
     }
     public  int getID(){
+
         return this.id;
     }
 
-    public  int updateid(){ return this.id-1;}
+    public void updateid() {
+        this.id=id-1;
+    }
 }
