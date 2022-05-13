@@ -35,6 +35,7 @@ import static com.sun.xml.bind.v2.schemagen.Util.equal;
 
 
 public class PrimaryController {
+	public  int flowersnum2=6;
 	static boolean returnedFromSecondaryController = false;
 	boolean firstRun = true;
 	@FXML // ResourceBundle that was given to the FXMLLoader
@@ -243,6 +244,7 @@ public class PrimaryController {
 	@FXML
 	void adminAddItemFunc(ActionEvent event)
 	{
+
 		String newType = EditItemType.getText();
 		String newDesc = EditItemDesc.getText();
 		String newPrice = EditItemPrice.getText();
@@ -250,7 +252,8 @@ public class PrimaryController {
 		Product new_flower=new Product();
 		new_flower.setPrice(newPrice);
 		new_flower.setButton(newType);
-		new_flower.setID(7);
+		flowersnum2++;
+		new_flower.setID(flowersnum2);
 		try {
 			SimpleClient.getClient().sendToServer(new_flower); // sends the updated product to the server class
 		} catch (IOException e) {
@@ -284,10 +287,11 @@ public class PrimaryController {
 		// create removeItem object
 		// give the deleteID to the removeItem object
 		// send the object to the server
-		System.out.println(deleteID);
-		System.out.println(deleteID);
+		//System.out.println(deleteID);
+		//	System.out.println(deleteID);
 		RemovedProduct removeflower=new RemovedProduct();
 		removeflower.setID(deleteID);
+		flowersnum2--;
 		try {
 			SimpleClient.getClient().sendToServer(removeflower); // sends the updated product to the server class
 		} catch (IOException e) {
