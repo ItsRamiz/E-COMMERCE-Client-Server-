@@ -1,61 +1,25 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-@Table(name = "Customers Table")
-public class Customer {
-
+@Table(name = "customers_table")
+public class Customer extends Account {
     @Id
-    private int id;
-    @Column(name = "Customer Email")
-    private String Email;
-    @Column(name = "Customer Name")
-    private String Name;
-    @Column(name = "Customer Address")
+    private int customerID;
+    private LinkedList<Account> AccountList;
     private String Address;
-    @Column(name = "Customer PhoneNumber")
-    private String PhoneNumber;
+    private int personID;
+    private LinkedList<String> MessageList;
+    public Customer(String fullName, String address, String email, String password, long phoneNumber, long creditCardNumber, Date creditCardExpire, int ccv, String Address, int personID)
+    {
+        super(fullName, address, email, password, phoneNumber, creditCardNumber, creditCardExpire, ccv);
+        this.Address = Address;
+        this.personID = personID;
+        this.setPrivilage(1);
+    }
+    public Customer()
+    { }
 
-    public Customer(int id, String email, String name, String address, String phoneNumber) {
-        this.id = id;
-        Email = email;
-        Name = name;
-        Address = address;
-        PhoneNumber = phoneNumber;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-    public int getId() {
-        return id;
-    }
-    public void setEmail(String email){
-        this.Email = email;
-    }
-    public String getEmail(){
-        return this.Email;
-    }
-    public void setName(String name){
-        this.Name = name;
-    }
-    public String getName(){
-        return this.Name;
-    }
-    public void setAddress(String address){
-        this.Address = address;
-    }
-    public String getAddress(){
-        return this.Address;
-    }
-    public void setPhoneNumber(String number){
-        this.PhoneNumber = number;
-    }
-    public String getPhoneNumber(){
-        return this.PhoneNumber;
-    }
 }

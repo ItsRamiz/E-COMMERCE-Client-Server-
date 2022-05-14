@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 import il.cshaifasweng.OCSFMediatorExample.entities.Product;
 import il.cshaifasweng.OCSFMediatorExample.entities.RemovedProduct;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
@@ -44,6 +45,7 @@ public class SimpleServer extends AbstractServer {
 
 		// Add ALL of your entities here. You can also try adding a whole package.
 		configuration.addAnnotatedClass(Product.class);
+		configuration.addAnnotatedClass(Account.class);
 
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties())
@@ -68,7 +70,22 @@ public class SimpleServer extends AbstractServer {
 
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) throws SQLException {
+		System.out.println("arrived before account in handle message");
+		if (msg instanceof Account){
+			System.out.println("arrived to account in handle message");
+			SessionFactory sessionFactory = getSessionFactory();
+			session = sessionFactory.openSession();
+			Transaction tx1 = session.beginTransaction();
+			System.out.println("arrived to middle account in handle message");
 
+			Account acc1 = (Account) msg ;
+			session.save(acc1);
+			session.flush();
+			tx1.commit();
+			System.out.println("arrived to end middle account in handle message");
+			session.close();
+
+		}
 
 
 		/*DatabaseMetaData databaseMetaData = null;

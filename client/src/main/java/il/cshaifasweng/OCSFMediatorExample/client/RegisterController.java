@@ -42,7 +42,7 @@ public class RegisterController {
     void AddCustomerToDB(ActionEvent event) {
         // TODO : CHECK IF EMAIL EXISTS IN DB
         String Address = Street_Address.getText() + ", " + City_Address.getText() + ", Zip Code " + ZipCode.getText();
-        Customer new_customer = new Customer(1,Email.getText(), Name.getText(),Address,PhoneNumber.getText());
+        //Customer new_customer = new Customer(1,Email.getText(), Name.getText(),Address,PhoneNumber.getText());
         // TODO : ADD CUSTOMER TO DB
     }
 

@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 import il.cshaifasweng.OCSFMediatorExample.entities.Product;
+import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 
 import java.awt.*;
 import java.awt.Dialog;
@@ -9,10 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.RemovedProduct;
 import javafx.beans.property.SimpleObjectProperty;
@@ -23,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -522,7 +521,16 @@ public class PrimaryController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			Date datetemp = new Date();
+			Account testAccount = new Account("first name","new york","@gmail.com","123",123,323,datetemp,123);
+			try {
+				System.out.println("before sending the account to server");
+				SimpleClient.getClient().sendToServer(testAccount); // sends the updated product to the server class
+				System.out.println("after sending the account to server");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 		else{ // this is only for limited TIME SHOULD DELETE LATER !
