@@ -87,7 +87,7 @@ public class SimpleServer extends AbstractServer {
 
 		}
 
-		System.out.println("testing for githib ");
+
 
 
 		/*DatabaseMetaData databaseMetaData = null;
