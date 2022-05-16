@@ -4,6 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 
 import java.awt.*;
 import java.awt.Dialog;
+//import java.awt.Label;
 import java.awt.MenuItem;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -16,6 +17,9 @@ import il.cshaifasweng.OCSFMediatorExample.entities.RemovedProduct;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -27,18 +31,23 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.hibernate.sql.Update;
 
 import static com.sun.xml.bind.v2.schemagen.Util.equal;
 
 
 public class PrimaryController {
+	static List<Product> allProducts = new ArrayList<>();
 	public  int flowersnum2=6;
 	static boolean returnedFromSecondaryController = false;
 	boolean firstRun = true;
 	@FXML // ResourceBundle that was given to the FXMLLoader
 	private ResourceBundle resources;
+	private int catalog_start_index;
 
 	@FXML // URL location of the FXML file that was given to the FXMLLoader
 	private URL location;
@@ -101,22 +110,22 @@ public class PrimaryController {
 	private ImageView flower_button6; // Value injected by FXMLLoader
 
 	@FXML // fx:id="flower_name1"
-	private DialogPane flower_name1; // Value injected by FXMLLoader
+	private Label name1; // Value injected by FXMLLoader
 
 	@FXML // fx:id="flower_name2"
-	private DialogPane flower_name2; // Value injected by FXMLLoader
+	private Label name2; // Value injected by FXMLLoader
 
 	@FXML // fx:id="flower_name3"
-	private DialogPane flower_name3; // Value injected by FXMLLoader
+	private Label name3; // Value injected by FXMLLoader
 
 	@FXML // fx:id="flower_name4"
-	private DialogPane flower_name4; // Value injected by FXMLLoader
+	private Label name4; // Value injected by FXMLLoader
 
 	@FXML // fx:id="flower_name5"
-	private DialogPane flower_name5; // Value injected by FXMLLoader
+	private Label name5; // Value injected by FXMLLoader
 
 	@FXML // fx:id="flower_name6"
-	private DialogPane flower_name6; // Value injected by FXMLLoader
+	private Label name6; // Value injected by FXMLLoader
 
 	@FXML // fx:id="flower_price1"
 	private DialogPane flower_price1; // Value injected by FXMLLoader
@@ -140,6 +149,9 @@ public class PrimaryController {
 	@FXML // fx:id="AddItem"
 	private Button AddItem; // Value injected by FXMLLoader
 
+	@FXML
+	private Button accbtn; // Value injected by FXMLLoader
+
 	//@FXML // fx:id="AddItem"
 	//private Button remID;
 
@@ -148,6 +160,21 @@ public class PrimaryController {
 
 	@FXML // fx:id="UpdateItem"
 	private Button UpdateItem; // Value injected by FXMLLoader
+
+	@FXML // fx:id="adminEditCatalog"
+	private AnchorPane container1; // Value injected by FXMLLoader
+	@FXML // fx:id="adminEditCatalog"
+	private AnchorPane container2;
+	@FXML // fx:id="adminEditCatalog"
+	private AnchorPane container3;
+	@FXML // fx:id="adminEditCatalog"
+	private AnchorPane container4;
+	@FXML // fx:id="adminEditCatalog"
+	private AnchorPane container5;
+	@FXML // fx:id="adminEditCatalog"
+	private AnchorPane container6;
+	@FXML
+	private Button compln;
 
 	public static String current_button;
 
@@ -170,12 +197,12 @@ public class PrimaryController {
 		flower_price5.setVisible(true);
 		flower_price6.setVisible(true);
 
-		flower_name1.setVisible(true);
-		flower_name2.setVisible(true);
-		flower_name3.setVisible(true);
-		flower_name4.setVisible(true);
-		flower_name5.setVisible(true);
-		flower_name6.setVisible(true);
+		name1.setVisible(true);
+		name2.setVisible(true);
+		name3.setVisible(true);
+		name4.setVisible(true);
+		name5.setVisible(true);
+		name6.setVisible(true);
 
 		CreateCustomItem.setVisible(false);
 		adminEditCatalog.setVisible(false);
@@ -221,12 +248,12 @@ public class PrimaryController {
 		flower_price5.setVisible(true);
 		flower_price6.setVisible(true);
 
-		flower_name1.setVisible(true);
-		flower_name2.setVisible(true);
-		flower_name3.setVisible(true);
-		flower_name4.setVisible(true);
-		flower_name5.setVisible(true);
-		flower_name6.setVisible(true);
+		name1.setVisible(true);
+		name2.setVisible(true);
+		name3.setVisible(true);
+		name4.setVisible(true);
+		name5.setVisible(true);
+		name6.setVisible(true);
 
 		CreateCustomItem.setVisible(true);
 		adminEditCatalog.setVisible(true);
@@ -312,10 +339,46 @@ public class PrimaryController {
 		EditItemDesc.setVisible(false);
 		EditItemPrice.setVisible(false);
 		EditItemExtra.setVisible(false);
-		//.setVisible(false);
+		RemoveItem.setVisible(false);
+
+		int deleted = Toint(deleteID)%6;
+		for(int u =1;u<7;u++){
+			if(u == deleted){
+				swab(u,6);
+			}
+		}
+		//redo Ids
+		if(deleted == 1){
+			container1.setVisible(false);
+		}
+		if(deleted == 2){
+			container2.setVisible(false);
+		}
+		if(deleted == 3){
+			container3.setVisible(false);
+		}
+		if(deleted == 4){
+			container4.setVisible(false);
+		}
+		if(deleted == 5){
+			container5.setVisible(false);
+		}
+		if(deleted == 6){
+			container1.setVisible(false);
+		}
+
+
+	}
+	void swab(int a , int b){
 
 	}
 
+	int Toint(String a){
+		return 2;
+	}
+	String Tostring(int a){
+		return "2";
+	}
 	@FXML
 	void adminUpdateItemFunc(ActionEvent event)
 	{
@@ -416,12 +479,12 @@ public class PrimaryController {
 
 	public void updateFields(List<Product> allProducts)
 	{
-		flower_name1.setContentText(allProducts.get(0).getName());
-		flower_name2.setContentText(allProducts.get(1).getName());
-		flower_name3.setContentText(allProducts.get(2).getName());
-		flower_name4.setContentText(allProducts.get(3).getName());
-		flower_name5.setContentText(allProducts.get(4).getName());
-		flower_name6.setContentText(allProducts.get(5).getName());
+		name1.setText(allProducts.get(0).getName());
+		name2.setText(allProducts.get(1).getName());
+		name3.setText(allProducts.get(2).getName());
+		name4.setText(allProducts.get(3).getName());
+		name5.setText(allProducts.get(4).getName());
+		name6.setText(allProducts.get(5).getName());
 
 		flower_price1.setContentText(allProducts.get(0).getPrice());
 		flower_price2.setContentText(allProducts.get(1).getPrice());
@@ -430,7 +493,6 @@ public class PrimaryController {
 		flower_price5.setContentText(allProducts.get(4).getPrice());
 		flower_price6.setContentText(allProducts.get(5).getPrice());
 	}
-	static List<Product> allProducts = new ArrayList<>();
 	@FXML
 	void product_clicked(javafx.scene.input.MouseEvent event ) throws IOException {
 		current_button = ((ImageView)event.getSource()).getId();
@@ -449,12 +511,12 @@ public class PrimaryController {
 		assert flower_button4 != null : "fx:id=\"flower_button4\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_button5 != null : "fx:id=\"flower_button5\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_button6 != null : "fx:id=\"flower_button6\" was not injected: check your FXML file 'primary.fxml'.";
-		assert flower_name1 != null : "fx:id=\"flower_name1\" was not injected: check your FXML file 'primary.fxml'.";
-		assert flower_name2 != null : "fx:id=\"flower_name2\" was not injected: check your FXML file 'primary.fxml'.";
-		assert flower_name3 != null : "fx:id=\"flower_name3\" was not injected: check your FXML file 'primary.fxml'.";
-		assert flower_name4 != null : "fx:id=\"flower_name4\" was not injected: check your FXML file 'primary.fxml'.";
-		assert flower_name5 != null : "fx:id=\"flower_name5\" was not injected: check your FXML file 'primary.fxml'.";
-		assert flower_name6 != null : "fx:id=\"flower_name6\" was not injected: check your FXML file 'primary.fxml'.";
+		assert name1 != null : "fx:id=\"name1\" was not injected: check your FXML file 'primary.fxml'.";
+		assert name2 != null : "fx:id=\"name2\" was not injected: check your FXML file 'primary.fxml'.";
+		assert name3 != null : "fx:id=\"name3\" was not injected: check your FXML file 'primary.fxml'.";
+		assert name4 != null : "fx:id=\"name4\" was not injected: check your FXML file 'primary.fxml'.";
+		assert name5 != null : "fx:id=\"name5\" was not injected: check your FXML file 'primary.fxml'.";
+		assert name6 != null : "fx:id=\"name6\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_price1 != null : "fx:id=\"flower_price1\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_price2 != null : "fx:id=\"flower_price2\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_price3 != null : "fx:id=\"flower_price3\" was not injected: check your FXML file 'primary.fxml'.";
@@ -495,17 +557,17 @@ public class PrimaryController {
 	void initializeData(){
 		if(!returnedFromSecondaryController){
 
-			Product flower1 = new Product(1,flower_button1.getId(),flower_name1.getContentText(),"",flower_price1.getContentText());
+			Product flower1 = new Product(1,flower_button1.getId(),name1.getText(),"",flower_price1.getContentText());
 			allProducts.add(flower1);
-			Product flower2 = new Product(2,flower_button2.getId(),flower_name2.getContentText(),"",flower_price2.getContentText());
+			Product flower2 = new Product(2,flower_button2.getId(),name2.getText(),"",flower_price2.getContentText());
 			allProducts.add(flower2);
-			Product flower3 = new Product(3,flower_button3.getId(),flower_name3.getContentText(),"",flower_price3.getContentText());
+			Product flower3 = new Product(3,flower_button3.getId(),name3.getText(),"",flower_price3.getContentText());
 			allProducts.add(flower3);
-			Product flower4 = new Product(4,flower_button4.getId(),flower_name4.getContentText(),"",flower_price4.getContentText());
+			Product flower4 = new Product(4,flower_button4.getId(),name4.getText(),"",flower_price4.getContentText());
 			allProducts.add(flower4);
-			Product flower5 = new Product(5,flower_button5.getId(),flower_name5.getContentText(),"",flower_price5.getContentText());
+			Product flower5 = new Product(5,flower_button5.getId(),name5.getText(),"",flower_price5.getContentText());
 			allProducts.add(flower5);
-			Product flower6 = new Product(6,flower_button6.getId(),flower_name6.getContentText(),"",flower_price6.getContentText());
+			Product flower6 = new Product(6,flower_button6.getId(),name6.getText(),"",flower_price6.getContentText());
 			allProducts.add(flower6);
 
 			List<Product> productList = new ArrayList<Product>() ;
@@ -557,5 +619,31 @@ public class PrimaryController {
 
 	static boolean getReturnedFromSecondaryController(){
 		return returnedFromSecondaryController ;
+	}
+
+	@FXML
+	void complinstart(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("complaint.fxml"));
+		Parent roott = loader.load();
+		ComplaintController cc = loader.getController();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(roott));
+		stage.setTitle("complaint application");
+		stage.show();
+	}
+
+	@FXML
+	void accbtnlogin(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInPrim.fxml"));
+		Parent roott = loader.load();
+		LogInPrimary cc = loader.getController();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(roott));
+		stage.setTitle("complaint application");
+		stage.show();
+
+		Stage stagee = (Stage) accbtn.getScene().getWindow();
+		// do what you have to do
+		stagee.close();
 	}
 }
