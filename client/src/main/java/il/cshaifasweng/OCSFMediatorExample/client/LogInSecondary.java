@@ -1,18 +1,16 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import java.awt.event.ActionEvent;
-import java.net.URL;
-import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class LogInSecondary {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private Button Customer_login;
@@ -21,20 +19,48 @@ public class LogInSecondary {
     private Button Employee_login;
 
     @FXML
-    void CustomerLogIn(ActionEvent event) {
+    private Button backk;
 
+    @FXML
+    void CustomerLogIn(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
+        Parent roott = loader.load();
+        PrimaryController cc = loader.getController();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(roott));
+        stage.setTitle("Catalog");
+        stage.show();
+        Stage stagee = (Stage) Customer_login.getScene().getWindow();
+        // do what you have to do
+        stagee.close();
     }
 
     @FXML
-    void EmployeeLogIn(ActionEvent event) {
-
+    void EmployeeLogIn(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
+        Parent roott = loader.load();
+        PrimaryController cc = loader.getController();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(roott));
+        stage.setTitle("Catalog");
+        stage.show();
+        Stage stagee = (Stage) Employee_login.getScene().getWindow();
+        // do what you have to do
+        stagee.close();
     }
 
     @FXML
-    void initialize() {
-        assert Customer_login != null : "fx:id=\"Customer_login\" was not injected: check your FXML file 'LogInSecondary.fxml'.";
-        assert Employee_login != null : "fx:id=\"Employee_login\" was not injected: check your FXML file 'LogInSecondary.fxml'.";
-
+    void backkk(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInPrim.fxml"));
+        Parent roott = loader.load();
+        LogInPrimary cc = loader.getController();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(roott));
+        stage.setTitle("Login");
+        stage.show();
+        Stage stagee = (Stage) backk.getScene().getWindow();
+        // do what you have to do
+        stagee.close();
     }
 
 }
