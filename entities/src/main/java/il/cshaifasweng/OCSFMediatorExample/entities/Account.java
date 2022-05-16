@@ -27,16 +27,15 @@ public class Account implements Serializable {
     @Column(name = "CVV")
     private int ccv;
     @Column(name = "Logged_In")
-    private Boolean logged;
+    private Boolean loggedIn;
     //private List<Complaint> accountComplaints = new List<Complaint>;
     //private List<Order> accountOrders = new List<Order>;
     //private Cart accCart;
-    private int privilage;
+    private int belongShop;
 
 
-    public Account(String fullName, String address,String email, String password,long phoneNumber, long creditCardNumber,Date creditCardExpire,int ccv)
+    public Account(String fullName, String address,String email, String password,long phoneNumber, long creditCardNumber,Date creditCardExpire,int ccv,int belongShop)
     {
-        super();
         this.fullName = fullName;
         this.address = address;
         this.email = email;
@@ -45,8 +44,8 @@ public class Account implements Serializable {
         this.creditCardNumber = creditCardNumber;
         this.creditCardExpire = creditCardExpire;
         this.ccv = ccv;
-        this.privilage = 0;
-        this.logged = false;
+        this.loggedIn = false;
+        this.belongShop = belongShop;
     }
     public Account()
     {
@@ -90,11 +89,11 @@ public class Account implements Serializable {
     }
 
     public void setLogged(Boolean logged) {
-        this.logged = logged;
+        this.loggedIn = logged;
     }
 
-    public void setPrivilage(int privilage) {
-        this.privilage = privilage;
+    public void setBelongShop(int belongShop) {
+        this.belongShop = belongShop;
     }
 
     public int getAccountID() {
@@ -134,10 +133,10 @@ public class Account implements Serializable {
     }
 
     public Boolean getLogged() {
-        return logged;
+        return loggedIn;
     }
 
-    public int getPrivilage() {
-        return privilage;
+    public int getBelongShop() {
+        return belongShop;
     }
 }

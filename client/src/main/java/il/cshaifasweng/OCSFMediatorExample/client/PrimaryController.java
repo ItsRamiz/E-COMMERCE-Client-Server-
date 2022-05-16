@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.*;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.RemovedProduct;
+import il.cshaifasweng.OCSFMediatorExample.entities.UpdateMessage;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,6 +29,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.ImageView;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.EventBus;
 import org.hibernate.sql.Update;
 
 import static com.sun.xml.bind.v2.schemagen.Util.equal;
@@ -253,8 +256,13 @@ public class PrimaryController {
 		new_flower.setButton(newType);
 		flowersnum2++;
 		new_flower.setID(flowersnum2);
+		UpdateMessage updateMessage1 = new UpdateMessage("product","add");
+		updateMessage1.setProduct(new_flower);
+		updateMessage1.setId(flowersnum2);
 		try {
-			SimpleClient.getClient().sendToServer(new_flower); // sends the updated product to the server class
+			System.out.println("before sending updateMessage to server ");
+			SimpleClient.getClient().sendToServer(updateMessage1); // sends the updated product to the server class
+			System.out.println("afater sending updateMessage to server ");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -288,11 +296,12 @@ public class PrimaryController {
 		// send the object to the server
 		//System.out.println(deleteID);
 		//	System.out.println(deleteID);
-		RemovedProduct removeflower=new RemovedProduct();
-		removeflower.setID(deleteID);
+		UpdateMessage removeType = new UpdateMessage("product","remove");
+		removeType.setDelteId(deleteID);
+
 		flowersnum2--;
 		try {
-			SimpleClient.getClient().sendToServer(removeflower); // sends the updated product to the server class
+			SimpleClient.getClient().sendToServer(removeType); // sends the updated product to the server class
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -443,6 +452,7 @@ public class PrimaryController {
 
 	@FXML
 	void initialize() throws MalformedURLException {
+		EventBus.getDefault().register(this);
 		assert flower_button1 != null : "fx:id=\"flower_button1\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_button2 != null : "fx:id=\"flower_button2\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_button3 != null : "fx:id=\"flower_button3\" was not injected: check your FXML file 'primary.fxml'.";
@@ -492,51 +502,56 @@ public class PrimaryController {
 	}
 
 
-	void initializeData(){
-		if(!returnedFromSecondaryController){
 
-			Product flower1 = new Product(1,flower_button1.getId(),flower_name1.getContentText(),"",flower_price1.getContentText());
-			allProducts.add(flower1);
-			Product flower2 = new Product(2,flower_button2.getId(),flower_name2.getContentText(),"",flower_price2.getContentText());
-			allProducts.add(flower2);
-			Product flower3 = new Product(3,flower_button3.getId(),flower_name3.getContentText(),"",flower_price3.getContentText());
-			allProducts.add(flower3);
-			Product flower4 = new Product(4,flower_button4.getId(),flower_name4.getContentText(),"",flower_price4.getContentText());
-			allProducts.add(flower4);
-			Product flower5 = new Product(5,flower_button5.getId(),flower_name5.getContentText(),"",flower_price5.getContentText());
-			allProducts.add(flower5);
-			Product flower6 = new Product(6,flower_button6.getId(),flower_name6.getContentText(),"",flower_price6.getContentText());
-			allProducts.add(flower6);
 
-			List<Product> productList = new ArrayList<Product>() ;
-			productList.add(flower1);
-			productList.add(flower2);
-			productList.add(flower3);
-			productList.add(flower4);
-			productList.add(flower5);
-			productList.add(flower6);
-			try {
-				SimpleClient.getClient().sendToServer(productList); // sends the updated product to the server class
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Date datetemp = new Date();
-			Account testAccount = new Account("first name","new york","@gmail.com","123",123,323,datetemp,123);
-			try {
-				System.out.println("before sending the account to server");
-				SimpleClient.getClient().sendToServer(testAccount); // sends the updated product to the server class
-				System.out.println("after sending the account to server");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
+
+	void initializeData() {
+
+		try {
+			SimpleClient.getClient().sendToServer("first entry"); // sends the updated product to the server class
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		else{ // this is only for limited TIME SHOULD DELETE LATER !
+	}
 
-			Product flowerToAdd = new Product(7,"stam string","stam string 2","stam string 3","er fek");
+	@Subscribe
+	public void retRieveDatabase(RetrieveDataBaseEvent rtEvent){
+		System.out.println("arrived to the retreivedatabse event");
+		System.out.println("the current table is:");
+		for(int i=0 ;i< rtEvent.getRecievedList().size();i++){
+			System.out.println(rtEvent.getRecievedList().get(i).getButton());
+		}
+	}
+	@Subscribe
+	public void initDatabase(InitDatabaseEvent event){
+		System.out.println("arrived to databaseInit");
+		Product flower1 = new Product(1,flower_button1.getId(),flower_name1.getContentText(),"",flower_price1.getContentText());
+		allProducts.add(flower1);
+		Product flower2 = new Product(2,flower_button2.getId(),flower_name2.getContentText(),"",flower_price2.getContentText());
+		allProducts.add(flower2);
+		Product flower3 = new Product(3,flower_button3.getId(),flower_name3.getContentText(),"",flower_price3.getContentText());
+		allProducts.add(flower3);
+		Product flower4 = new Product(4,flower_button4.getId(),flower_name4.getContentText(),"",flower_price4.getContentText());
+		allProducts.add(flower4);
+		Product flower5 = new Product(5,flower_button5.getId(),flower_name5.getContentText(),"",flower_price5.getContentText());
+		allProducts.add(flower5);
+		Product flower6 = new Product(6,flower_button6.getId(),flower_name6.getContentText(),"",flower_price6.getContentText());
+		allProducts.add(flower6);
 
+		List<Product> productList = new ArrayList<Product>() ;
+		productList.add(flower1);
+		productList.add(flower2);
+		productList.add(flower3);
+		productList.add(flower4);
+		productList.add(flower5);
+		productList.add(flower6);
+		try {
+			SimpleClient.getClient().sendToServer(productList); // sends the updated product to the server class
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}

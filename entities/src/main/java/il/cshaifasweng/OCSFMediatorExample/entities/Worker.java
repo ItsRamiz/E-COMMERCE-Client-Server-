@@ -1,13 +1,25 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
-import java.util.Date;
+import javax.persistence.Column;
 
-public class Worker extends Customer{
-
-    public Worker(String fullName, String address, String email, String password, long phoneNumber, long creditCardNumber, Date creditCardExpire, int ccv, String Address, int personID)
+public class Worker
+{
+    @Column(name = "Full_Name")
+    private String fullName;
+    @Column(name = "Email")
+    private String email;
+    @Column(name = "Passowrd")
+    private String password;
+    private int personID;
+    private boolean loggedIn;
+    public Worker(String fullName, String email, String password,int personID)
     {
-        super(fullName, address, email, password, phoneNumber, creditCardNumber, creditCardExpire, ccv, Address, personID);
-        this.setPrivilage(2);
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.personID = personID;
+        this.loggedIn = false;
     }
     public Worker() {}
+
 }
