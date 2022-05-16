@@ -27,10 +27,10 @@ public class App extends Application {
         EventBus.getDefault().register(this);
         client = SimpleClient.getClient();
         client.openConnection();
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("LogInPrim"), 600, 500);
         stage.setScene(scene);
         stage.show();
-        stage.setMaximized(true);
+        stage.setMaximized(false);
     }
 
     static void setRoot(String fxml) throws IOException {
