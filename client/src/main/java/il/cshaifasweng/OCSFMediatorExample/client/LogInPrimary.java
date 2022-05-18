@@ -48,6 +48,7 @@ public class LogInPrimary {
 
     @FXML
     void gotoCatalog(ActionEvent event) throws IOException {
+        System.out.println("gotoCatalog");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
         Parent roott = loader.load();
         PrimaryController cc = loader.getController();

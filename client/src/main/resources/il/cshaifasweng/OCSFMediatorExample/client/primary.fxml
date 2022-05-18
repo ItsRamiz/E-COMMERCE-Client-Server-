@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="es" maxHeight="800.0" maxWidth="1000.0" minHeight="800.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1000.0" stylesheets="@mycsss.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.PrimaryController">
+<AnchorPane fx:id="name1" maxHeight="800.0" maxWidth="1000.0" minHeight="800.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1000.0" stylesheets="@mycsss.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.PrimaryController">
     <children>
         <Accordion layoutX="227.0" layoutY="575.0" />
       <AnchorPane id="cathr" layoutX="800.0" layoutY="50.0" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" stylesheets="@mycsss.css" AnchorPane.bottomAnchor="1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
@@ -42,7 +42,7 @@
             </ImageView>
               <DialogPane id="btttn" fx:id="flower_price2" contentText="100₪" layoutX="171.0" layoutY="47.0" prefHeight="0.0" prefWidth="50.0" style="-fx-border-color: black; -fx-background-radius: 1px 10px; -fx-border-radius: 1px 10px;" />
             <Button id="btttn" layoutX="150.0" layoutY="218.0" mnemonicParsing="false" text="add to cart" />
-            <Label fx:id="name2" layoutX="38.0" layoutY="204.0" prefHeight="18.0" prefWidth="74.0" text="daisy" textFill="WHITE">
+            <Label fx:id="flower_name2" layoutX="38.0" layoutY="204.0" prefHeight="18.0" prefWidth="74.0" text="daisy" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -58,7 +58,7 @@
             </ImageView>
               <DialogPane id="btttn" fx:id="flower_price1" contentText="150₪" layoutX="165.0" layoutY="48.0" prefHeight="40.0" prefWidth="50.0" style="-fx-border-color: black; -fx-background-radius: 1px 10px; -fx-border-radius: 1px 10px;" />
             <Button id="btttn" layoutX="153.0" layoutY="220.0" mnemonicParsing="false" text="add to cart" />
-            <Label fx:id="name1" layoutX="39.0" layoutY="206.0" prefHeight="27.0" prefWidth="100.0" text="Sun flower" textFill="WHITE">
+            <Label fx:id="flower_name1" layoutX="39.0" layoutY="206.0" prefHeight="27.0" prefWidth="100.0" text="Sun flower" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -74,7 +74,7 @@
             </ImageView>
               <DialogPane id="btttn" fx:id="flower_price6" contentText="120₪" layoutX="179.0" layoutY="47.0" prefHeight="57.0" prefWidth="50.0" style="-fx-border-color: black; -fx-border-radius: 1px 10px; -fx-background-radius: 1px 10px;" />
             <Button id="btttn" layoutX="157.0" layoutY="215.0" mnemonicParsing="false" text="add to cart" />
-            <Label fx:id="name6" layoutX="28.0" layoutY="203.0" prefHeight="18.0" prefWidth="74.0" text="nicole" textFill="WHITE">
+            <Label fx:id="flower_name6" layoutX="28.0" layoutY="203.0" prefHeight="18.0" prefWidth="74.0" text="nicole" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -90,7 +90,7 @@
             </ImageView>
               <DialogPane id="btttn" fx:id="flower_price4" contentText="60₪" layoutX="173.0" layoutY="47.0" prefHeight="50.0" prefWidth="50.0" style="-fx-border-color: black; -fx-background-radius: 1px 10px; -fx-border-radius: 1px 10px;" />
             <Button id="btttn" layoutX="150.0" layoutY="210.0" mnemonicParsing="false" text="add to cart" />
-            <Label fx:id="name4" layoutX="25.0" layoutY="196.0" prefHeight="27.0" prefWidth="100.0" text="tulip" textFill="WHITE">
+            <Label fx:id="flower_name4" layoutX="25.0" layoutY="196.0" prefHeight="27.0" prefWidth="100.0" text="tulip" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -106,7 +106,7 @@
             </ImageView>
               <DialogPane id="btttn" fx:id="flower_price5" contentText="15₪" layoutX="172.0" layoutY="47.0" prefHeight="57.0" prefWidth="50.0" style="-fx-border-color: black; -fx-background-radius: 1px 10px; -fx-border-radius: 1px 10px;" />
             <Button id="btttn" layoutX="150.0" layoutY="210.0" mnemonicParsing="false" text="add to cart" />
-            <Label fx:id="name5" layoutX="38.0" layoutY="196.0" prefHeight="18.0" prefWidth="74.0" text="rose" textFill="WHITE">
+            <Label fx:id="flower_name5" layoutX="38.0" layoutY="196.0" prefHeight="18.0" prefWidth="74.0" text="rose" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -122,7 +122,7 @@
             </ImageView>
               <DialogPane id="btttn" fx:id="flower_price3" contentText="80₪" layoutX="182.0" layoutY="47.0" prefHeight="41.0" prefWidth="50.0" style="-fx-border-color: black; -fx-border-radius: 1px 10px; -fx-background-radius: 1px 10px;" />
             <Button id="btttn" layoutX="159.0" layoutY="207.0" mnemonicParsing="false" text="add to cart" />
-            <Label fx:id="name3" layoutX="38.0" layoutY="193.0" prefHeight="18.0" prefWidth="74.0" text="lilly" textFill="WHITE">
+            <Label fx:id="flower_name3" layoutX="38.0" layoutY="193.0" prefHeight="18.0" prefWidth="74.0" text="lilly" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>

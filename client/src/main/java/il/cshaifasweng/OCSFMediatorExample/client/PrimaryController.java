@@ -4,6 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 
 import java.awt.*;
 import java.awt.Dialog;
+import java.awt.Label;
 import java.awt.MenuItem;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -17,6 +18,9 @@ import il.cshaifasweng.OCSFMediatorExample.entities.UpdateMessage;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -29,6 +33,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.EventBus;
 import org.hibernate.sql.Update;
@@ -37,7 +42,7 @@ import static com.sun.xml.bind.v2.schemagen.Util.equal;
 
 
 public class PrimaryController {
-	public  int flowersnum2=6;
+	public int flowersnum2 = 6;
 	static boolean returnedFromSecondaryController = false;
 	boolean firstRun = true;
 	@FXML // ResourceBundle that was given to the FXMLLoader
@@ -104,22 +109,22 @@ public class PrimaryController {
 	private ImageView flower_button6; // Value injected by FXMLLoader
 
 	@FXML // fx:id="flower_name1"
-	private DialogPane flower_name1; // Value injected by FXMLLoader
+	private javafx.scene.control.Label flower_name1; // Value injected by FXMLLoader
 
 	@FXML // fx:id="flower_name2"
-	private DialogPane flower_name2; // Value injected by FXMLLoader
+	private javafx.scene.control.Label flower_name2; // Value injected by FXMLLoader
 
 	@FXML // fx:id="flower_name3"
-	private DialogPane flower_name3; // Value injected by FXMLLoader
+	private javafx.scene.control.Label flower_name3; // Value injected by FXMLLoader
 
 	@FXML // fx:id="flower_name4"
-	private DialogPane flower_name4; // Value injected by FXMLLoader
+	private javafx.scene.control.Label flower_name4; // Value injected by FXMLLoader
 
 	@FXML // fx:id="flower_name5"
-	private DialogPane flower_name5; // Value injected by FXMLLoader
+	private javafx.scene.control.Label flower_name5; // Value injected by FXMLLoader
 
 	@FXML // fx:id="flower_name6"
-	private DialogPane flower_name6; // Value injected by FXMLLoader
+	private javafx.scene.control.Label flower_name6; // Value injected by FXMLLoader
 
 	@FXML // fx:id="flower_price1"
 	private DialogPane flower_price1; // Value injected by FXMLLoader
@@ -200,13 +205,14 @@ public class PrimaryController {
 		CancelCustomItem.setVisible(true);
 		FinishCustomItem.setVisible(true);
 
-		Product newProduct = new Product(0,"test","test","test","test");  // Please Insert Values
+		Product newProduct = new Product(0, "test", "test", "test", "test");  // Please Insert Values
 		//CREATE A NEW PRODUCT DYNAMICALLY
 		// Tips: A global variable called ProductID which is incremented after each product created.
 		// A function GetNextProductID that returns a fresh ID for the new product to be added.
 		// Static fields and functions.
 		return newProduct;
 	}
+
 	@FXML
 	void cancelCustomitem(ActionEvent event) {
 		//.setVisible(false);
@@ -244,21 +250,21 @@ public class PrimaryController {
 	}
 
 	@FXML
-	void adminAddItemFunc(ActionEvent event)
-	{
+	void adminAddItemFunc(ActionEvent event) {
 
 		String newType = EditItemType.getText();
 		String newDesc = EditItemDesc.getText();
 		String newPrice = EditItemPrice.getText();
 		// Create a new product with the current variables
-		Product new_flower=new Product();
+		Product new_flower = new Product();
 		new_flower.setPrice(newPrice);
 		new_flower.setButton(newType);
 		flowersnum2++;
 		new_flower.setID(flowersnum2);
-		UpdateMessage updateMessage1 = new UpdateMessage("product","add");
+		UpdateMessage updateMessage1 = new UpdateMessage("product", "add");
 		updateMessage1.setProduct(new_flower);
 		updateMessage1.setId(flowersnum2);
+		System.out.println("before try - edit");
 		try {
 			System.out.println("before sending updateMessage to server ");
 			SimpleClient.getClient().sendToServer(updateMessage1); // sends the updated product to the server class
@@ -286,8 +292,7 @@ public class PrimaryController {
 	}
 
 	@FXML
-	void adminRemoveItemFunc(ActionEvent event)
-	{
+	void adminRemoveItemFunc(ActionEvent event) {
 
 		String deleteID = EditItemExtra.getText();
 		// Remove the item with the currnet ID from the catalog
@@ -296,7 +301,7 @@ public class PrimaryController {
 		// send the object to the server
 		//System.out.println(deleteID);
 		//	System.out.println(deleteID);
-		UpdateMessage removeType = new UpdateMessage("product","remove");
+		UpdateMessage removeType = new UpdateMessage("product", "remove");
 		removeType.setDelteId(deleteID);
 
 		flowersnum2--;
@@ -326,8 +331,7 @@ public class PrimaryController {
 	}
 
 	@FXML
-	void adminUpdateItemFunc(ActionEvent event)
-	{
+	void adminUpdateItemFunc(ActionEvent event) {
 		String newType = EditItemType.getText();
 		System.out.println(newType);
 		String newDesc = EditItemDesc.getText();
@@ -336,8 +340,29 @@ public class PrimaryController {
 		System.out.println(newPrice);
 		String updateID = EditItemExtra.getText();
 		System.out.println(updateID);
+		Product currtProduct  = il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.getCurrent_button();
 
-		// Update the item with the current ID with the new variables
+
+		currtProduct.setPrice(newPrice);
+		currtProduct.setDetails(newDesc);
+		currtProduct.setName(newType);
+		int castedID = Integer.parseInt(updateID);
+		currtProduct.setID(castedID);
+
+		UpdateMessage updateMessage1 = new UpdateMessage("product","edit");
+		updateMessage1.setProduct(currtProduct);
+
+
+		updateMessage1.setId(castedID);
+		System.out.println("arrived here before sending the updatemessage1");
+		try {
+			SimpleClient.getClient().sendToServer(updateMessage1); // sends the updated product to the server class
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+			// Update the item with the current ID with the new variables
 		//remID.setVisible(false);
 		CreateCustomItem.setVisible(true);
 		adminEditCatalog.setVisible(true);
@@ -357,9 +382,9 @@ public class PrimaryController {
 
 
 	}
+
 	@FXML
-	void chooseAdminEditCatalog(ActionEvent event)
-	{
+	void chooseAdminEditCatalog(ActionEvent event) {
 		//	remID.setVisible(false);
 		CreateCustomItem.setVisible(false);
 		adminEditCatalog.setVisible(true);
@@ -375,8 +400,7 @@ public class PrimaryController {
 		String chosen = adminEditCatalog.getSelectionModel().getSelectedItem();
 		System.out.println(chosen);
 		System.out.println("OKAY OKAY");
-		if(chosen == "Add Item")
-		{
+		if (chosen == "Add Item") {
 			EditItemType.setText("New Item Type");
 			EditItemDesc.setText("New Item Desc");
 			EditItemPrice.setText("New Item Price");
@@ -389,8 +413,7 @@ public class PrimaryController {
 			UpdateItem.setVisible(false);
 			AddItem.setVisible(true);
 		}
-		if(chosen == "Remove Item")
-		{
+		if (chosen == "Remove Item") {
 			//EditItemExtra.setText("Item ID To Remove");
 			UpdateItem.setText("Remove");
 			EditItemType.setVisible(false);
@@ -405,8 +428,7 @@ public class PrimaryController {
 			RemoveItem.setVisible(true);
 			//send id to server
 		}
-		if(chosen == "Edit Item")
-		{
+		if (chosen == "Edit Item") {
 			EditItemType.setText("New Item Type");
 			EditItemDesc.setText("New Item Desc");
 			EditItemPrice.setText("New Item Price");
@@ -423,14 +445,13 @@ public class PrimaryController {
 	}
 
 
-	public void updateFields(List<Product> allProducts)
-	{
-		flower_name1.setContentText(allProducts.get(0).getName());
-		flower_name2.setContentText(allProducts.get(1).getName());
-		flower_name3.setContentText(allProducts.get(2).getName());
-		flower_name4.setContentText(allProducts.get(3).getName());
-		flower_name5.setContentText(allProducts.get(4).getName());
-		flower_name6.setContentText(allProducts.get(5).getName());
+	public void updateFields(List<Product> allProducts) {
+		flower_name1.setText(allProducts.get(0).getName());
+		flower_name2.setText(allProducts.get(1).getName());
+		flower_name3.setText(allProducts.get(2).getName());
+		flower_name4.setText(allProducts.get(3).getName());
+		flower_name5.setText(allProducts.get(4).getName());
+		flower_name6.setText(allProducts.get(5).getName());
 
 		flower_price1.setContentText(allProducts.get(0).getPrice());
 		flower_price2.setContentText(allProducts.get(1).getPrice());
@@ -439,19 +460,19 @@ public class PrimaryController {
 		flower_price5.setContentText(allProducts.get(4).getPrice());
 		flower_price6.setContentText(allProducts.get(5).getPrice());
 	}
+
 	static List<Product> allProducts = new ArrayList<>();
+
 	@FXML
-	void product_clicked(javafx.scene.input.MouseEvent event ) throws IOException {
-		current_button = ((ImageView)event.getSource()).getId();
+	void product_clicked(javafx.scene.input.MouseEvent event) throws IOException {
+		current_button = ((ImageView) event.getSource()).getId();
 		App.setRoot("secondary");
 	}
 
 
-
-
-
 	@FXML
 	void initialize() throws MalformedURLException {
+		System.out.println("arrived to initialize 1");
 		EventBus.getDefault().register(this);
 		assert flower_button1 != null : "fx:id=\"flower_button1\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_button2 != null : "fx:id=\"flower_button2\" was not injected: check your FXML file 'primary.fxml'.";
@@ -495,15 +516,10 @@ public class PrimaryController {
 
 
 		initializeData();
-		if(returnedFromSecondaryController)
-		{
+		if (returnedFromSecondaryController) {
 			updateFields(allProducts);
 		}
 	}
-
-
-
-
 
 
 	void initializeData() {
@@ -517,30 +533,32 @@ public class PrimaryController {
 	}
 
 	@Subscribe
-	public void retRieveDatabase(RetrieveDataBaseEvent rtEvent){
+	public void retRieveDatabase(RetrieveDataBaseEvent rtEvent) {
 		System.out.println("arrived to the retreivedatabse event");
 		System.out.println("the current table is:");
-		for(int i=0 ;i< rtEvent.getRecievedList().size();i++){
+		for (int i = 0; i < rtEvent.getRecievedList().size(); i++) {
 			System.out.println(rtEvent.getRecievedList().get(i).getButton());
 		}
 	}
+
 	@Subscribe
-	public void initDatabase(InitDatabaseEvent event){
+	public void initDatabase(InitDatabaseEvent event) {
+
 		System.out.println("arrived to databaseInit");
-		Product flower1 = new Product(1,flower_button1.getId(),flower_name1.getContentText(),"",flower_price1.getContentText());
+		Product flower1 = new Product(1, flower_button1.getId(), flower_name1.getText(), "", flower_price1.getContentText());
 		allProducts.add(flower1);
-		Product flower2 = new Product(2,flower_button2.getId(),flower_name2.getContentText(),"",flower_price2.getContentText());
+		Product flower2 = new Product(2, flower_button2.getId(), flower_name2.getText(), "", flower_price2.getContentText());
 		allProducts.add(flower2);
-		Product flower3 = new Product(3,flower_button3.getId(),flower_name3.getContentText(),"",flower_price3.getContentText());
+		Product flower3 = new Product(3, flower_button3.getId(), flower_name3.getText(), "", flower_price3.getContentText());
 		allProducts.add(flower3);
-		Product flower4 = new Product(4,flower_button4.getId(),flower_name4.getContentText(),"",flower_price4.getContentText());
+		Product flower4 = new Product(4, flower_button4.getId(), flower_name4.getText(), "", flower_price4.getContentText());
 		allProducts.add(flower4);
-		Product flower5 = new Product(5,flower_button5.getId(),flower_name5.getContentText(),"",flower_price5.getContentText());
+		Product flower5 = new Product(5, flower_button5.getId(), flower_name5.getText(), "", flower_price5.getContentText());
 		allProducts.add(flower5);
-		Product flower6 = new Product(6,flower_button6.getId(),flower_name6.getContentText(),"",flower_price6.getContentText());
+		Product flower6 = new Product(6, flower_button6.getId(), flower_name6.getText(), "", flower_price6.getContentText());
 		allProducts.add(flower6);
 
-		List<Product> productList = new ArrayList<Product>() ;
+		List<Product> productList = new ArrayList<Product>();
 		productList.add(flower1);
 		productList.add(flower2);
 		productList.add(flower3);
@@ -556,10 +574,9 @@ public class PrimaryController {
 
 	}
 
-	static Product getCurrent_button()
-	{
+	static Product getCurrent_button() {
 		for (int i = 0; i < allProducts.size(); i++) {
-			if (equal(allProducts.get(i).getButton(),current_button)) {
+			if (equal(allProducts.get(i).getButton(), current_button)) {
 				return allProducts.get(i);
 			}
 		}
@@ -570,7 +587,39 @@ public class PrimaryController {
 		returnedFromSecondaryController = retFromSecond;
 	}
 
-	static boolean getReturnedFromSecondaryController(){
-		return returnedFromSecondaryController ;
+	static boolean getReturnedFromSecondaryController() {
+		return returnedFromSecondaryController;
+	}
+
+	@FXML
+	private Button compln;
+
+	@FXML
+	void complinstart(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("complaint.fxml"));
+		Parent roott = loader.load();
+		ComplaintController cc = loader.getController();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(roott));
+		stage.setTitle("complaint application");
+		stage.show();
+	}
+
+	@FXML // fx:id="RemoveItem"
+	private Button accbtn; // Value injected by FXMLLoader
+
+	@FXML
+	void accbtnlogin(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInPrim.fxml"));
+		Parent roott = loader.load();
+		LogInPrimary cc = loader.getController();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(roott));
+		stage.setTitle("complaint application");
+		stage.show();
+
+		Stage stagee = (Stage) accbtn.getScene().getWindow();
+		// do what you have to do
+		stagee.close();
 	}
 }
