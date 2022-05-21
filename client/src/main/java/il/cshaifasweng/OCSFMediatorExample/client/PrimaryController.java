@@ -539,6 +539,7 @@ public class PrimaryController {
 		for (int i = 0; i < rtEvent.getRecievedList().size(); i++) {
 			System.out.println(rtEvent.getRecievedList().get(i).getButton());
 		}
+		allProducts = rtEvent.getRecievedList();
 	}
 
 	@Subscribe

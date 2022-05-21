@@ -28,7 +28,7 @@ import javax.persistence.criteria.Root;
 
 public class SimpleServer extends AbstractServer {
 
-	private static Session session;
+	public static Session session;
 	private static Session session1;
 	private List<Product> productGeneralList = new ArrayList<Product>();
 	private int flowersnum = 0;
@@ -107,16 +107,18 @@ public class SimpleServer extends AbstractServer {
 					if (countRows() == 0) { // if found the table, ask if it has more than 0 rows
 						System.out.println("didnt find a table (this message is from the server");
 						client.sendToClient("not found");
+						session.close();
 					} else {
 						List<Product> resultList = getAllProducts();
 
 						FoundTable foundTbl = new FoundTable("found", resultList);
 						client.sendToClient(foundTbl); // if found the table then tell the client, so they know they dont intialize 6 products again
-
+						session.close();
 					}
 				} else {
 
 					client.sendToClient("not found");
+					session.close();
 				}
 			}
 
@@ -124,6 +126,9 @@ public class SimpleServer extends AbstractServer {
 		}
 
 		if (msg instanceof UpdateMessage) {
+			SessionFactory sessionFactory = getSessionFactory();
+			session = sessionFactory.openSession();
+			Transaction tx1 = session.beginTransaction();
 
 			UpdateMessage recievedMessage = (UpdateMessage) msg;
 			String updateClassName = recievedMessage.getUpdateClass();
@@ -147,7 +152,7 @@ public class SimpleServer extends AbstractServer {
 						editCatalogProduct(recievedProd);
 					}
 
-
+					session.close();
 					break;
 
 
@@ -198,51 +203,67 @@ public class SimpleServer extends AbstractServer {
 	}
 
 	private static List<Product> getAllProducts() {
+		System.out.println("Arrived to getAllProducts 1");
 		CriteriaBuilder builder = session.getCriteriaBuilder();
+		System.out.println("Arrived to getAllProducts 2");
 		CriteriaQuery<Product> query = builder.createQuery(Product.class);
+		System.out.println("Arrived to getAllProducts 3");
 		query.from(Product.class);
+		System.out.println("Arrived to getAllProducts 4");
 		List<Product> result = session.createQuery(query).getResultList();
+		System.out.println("Arrived to getAllProducts 5");
 		return result;
 	}
 
 	Long countRows() {
+		System.out.println("Arrived to coutnrwos 1");
 		final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+		System.out.println("Arrived to coutnrwos 2");
 		CriteriaQuery<Long> criteria = criteriaBuilder.createQuery(Long.class);
+		System.out.println("Arrived to coutnrwos 3");
 		Root<Product> root = criteria.from(Product.class);
+		System.out.println("Arrived to coutnrwos 4");
 		criteria.select(criteriaBuilder.count(root));
+		System.out.println("Arrived to coutnrwos 5");
 		return session.createQuery(criteria).getSingleResult();
 	}
 
 
 	void addItemToCatalog(Product recievedProd) {
-
-		int recievedProductID = recievedProd.getID();
+		System.out.println("inside additemTocatalog1");
+		long numOfRows = countRows();
+		int castedId = (int) numOfRows;
+		int newProductId = castedId + 1;
+		recievedProd.setID(newProductId);
+		System.out.println("inside additemTocatalog2");
 		String recievedProductName = recievedProd.getName();
+		System.out.println("inside additemTocatalog3");
 		String recievedProductDetails = recievedProd.getDetails();
+		System.out.println("inside additemTocatalog4");
 		String recievedProductButton = recievedProd.getButton();
+		System.out.println("inside additemTocatalog5");
 		String recievedProductPrice = recievedProd.getPrice();
+		System.out.println("inside additemTocatalog6");
 		String recievedProductImage = recievedProd.getImage();
+		System.out.println("inside additemTocatalog7");
 
-		if (recievedProductID > flowersnum) { //adding new row in the database table
-			System.out.println("add a flower");
-			flowersnum++;
+		SessionFactory sessionFactory = getSessionFactory();
+		session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		System.out.println("inside additemTocatalog8");
+		System.out.println("the new index is:" + newProductId);
 
-			SessionFactory sessionFactory = getSessionFactory();
-			session = sessionFactory.openSession();
-			Transaction tx = session.beginTransaction();
-			session.save(recievedProd);
-			session.flush();
-			productGeneralList.add(recievedProd);
+		session.save(recievedProd);
+		System.out.println("inside additemTocatalog9");
+		session.flush();
+		System.out.println("inside additemTocatalog10");
+		tx.commit();
+		System.out.println("inside additemTocatalog11");
 
-			for (int i = 0; i < productGeneralList.size(); i++) {
+		System.out.println("inside additemTocatalog12");
 
-				session.save(productGeneralList.get(i)); // save the Product in the database
-				session.flush();
-			}
-			tx.commit();
-			session.close();
-		}
 	}
+
 
 	void editCatalogProduct(Product productEdit){
 		System.out.println("Arrived to edit catalog product 1");
@@ -308,177 +329,83 @@ public class SimpleServer extends AbstractServer {
 
 	void removeItemFromCatalog(String prodIdToRemove, ConnectionToClient _client) {
 
+
+		System.out.println("arrived to removeItemFromCatalog 1");
+
 		SessionFactory sessionFactory = getSessionFactory();
 		session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
+
 
 		flowersnum--;
 
 		int removedId = Integer.parseInt(prodIdToRemove);
-
-		try {
-			productGeneralList = getAllProducts();
-			System.out.println(productGeneralList.get(0).getButton());
-			int i ;
-			System.out.println("arrived here 1");
-			for ( i = 0; i < productGeneralList.size(); i++) {
-				if ( productGeneralList.get(i).getID() == removedId) {
-					productGeneralList.remove(i);
-					break;
-
-				}
-			}
-
-			// we must to update the items id
-			System.out.println("arrived here 2");
-			for(int j=i;j<productGeneralList.size();j++) // update the ID's
-			{
-
-				productGeneralList.get(j).updateid();
-			}
-
-			System.out.println("arrived here 3");
-
-			deleteAllProducts();
-
-			System.out.println("arrived here 4");
-
-			Saveinsess();
-			System.out.println("arrived here 5");
-			tx.commit();
-			System.out.println("send to client");
-			_client.sendToClient(productGeneralList);
-
-
-
-		} catch (Exception exception) {
-			if (session != null) {
-				session.getTransaction().rollback();
-			}
-			System.err.println("An error occured, changes have been rolled back.");
-			exception.printStackTrace();
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
-	}
-
-
-
-
-
-		/*Object persistentInstance = session.load(Product.class, removedId);
-		Product perProd = (Product) persistentInstance;
-		System.out.println(perProd.getButton());
-		if (persistentInstance != null) {
-			session.delete(perProd);
-		}
-		tx.commit();
-		session.close();
 		productGeneralList = getAllProducts();
-
-
-		try {
-
-			Product updateProd  = session.load(Product.class, 4);
-			System.out.println(updateProd.getButton());
-			//Product updateProd = (Product) persistentInstance1 ;
-			//updateProd.setID(16);
-			updateProd.setButton("afkljafkjal");
-			System.out.println(updateProd.getID());
-			session.update(updateProd);
-			tx.commit();
-			//updateIdAfterRemove(removedId+1,flowersnum+1);
-
-
-
-		} catch (Exception exception) {
-			if (session != null) {
-				session.getTransaction().rollback();
-			}
-			System.err.println("An error occured, changes have been rolled back.");
-			exception.printStackTrace();
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}*/
-
-
-
-
-		/*try {
-
-			int i ;
-			for ( i = 0; i < productGeneralList.size(); i++) {
-				if ( productGeneralList.get(i).getID() == removedId) {
-					productGeneralList.remove(i);
-					break;
-
-				}
-			}
-
-			// we must to update the items id
-			*//* USE UPDATE METHOD IN THE FUTURE *//*
-			for(int j=i;j<productGeneralList.size();j++)
-			{
-
-				productGeneralList.get(j).updateid();
-			}
-
-			Saveinsess();
-			tx.commit();
-			System.out.println("send to client");
-			_client.sendToClient(productGeneralList);
-
-
-
-		} catch (Exception exception) {
-			if (session != null) {
-				session.getTransaction().rollback();
-			}
-			System.err.println("An error occured, changes have been rolled back.");
-			exception.printStackTrace();
-		} finally {
-			if (session != null) {
-				session.close();
+		productGeneralList.remove(removedId-1); // remove the wanted item from the list
+		for(int i=0;i<productGeneralList.size();i++){ // update all the items id's
+			if(productGeneralList.get(i).getID() > removedId){
+				productGeneralList.get(i).setID((productGeneralList.get(i).getID()-1));
 			}
 		}
-	}*/
+		System.out.println("arrived to removeItemFromCatalog 2");
 
 
+		session = sessionFactory.openSession();
+		Transaction tx1 = session.beginTransaction();
+		long longID = countRows();
+		session.close();
+		//tx1.commit();
+		System.out.println("arrived to removeItemFromCatalog 3 and the longID is " + longID);
+		int castedID = (int) longID;
+		for(int l=0;l<castedID;l++){
 
-	public void updateIdAfterRemove(int start,int end){
-		for(int i = start ; i<end ; i++){
-			Object persistentInstance = session.load(Product.class, i);
-			Product updateProd = (Product) persistentInstance ;
-			updateProd.setName("Mary");
-			session.update(updateProd);
+			System.out.println("arrived to removeItemFromCatalog 2.5");
+			deleteProduct(l+1);
 		}
+
+		session = sessionFactory.openSession();
+		Transaction tx2 = session.beginTransaction();
+		for(int i=0;i<productGeneralList.size();i++){
+			session.save(productGeneralList.get(i));
+			session.flush();
+		}
+		tx2.commit();
+		session.close();
+
+		//session.close(); // here we finished deleting a product, everything else is for updating the id's
+		System.out.println("arrived to removeItemFromCatalog 2.8");
+
+
+
 	}
+
+
+
 
 	public void deleteProduct(int deleteIndex) {
-
+		System.out.println("arrived to deleteProd 1");
 		SessionFactory sessionFactory = getSessionFactory();
 		session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
+		System.out.println("arrived to deleteProd 2");
 
 		Object persistentInstance = session.load(Product.class, deleteIndex);
 		Product perProd = (Product) persistentInstance;
-
+		System.out.println("arrived to deleteProd 3");
 		if (persistentInstance != null) {
 			session.delete(perProd);
 		}
+		System.out.println("arrived to deleteProd 4");
 
 		tx.commit();
 		session.close();
+
 	}
 
 	public void deleteAllProducts(){
-		SessionFactory sessionFactory = getSessionFactory();
+		/*SessionFactory sessionFactory = getSessionFactory();
 		session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		Transaction tx = session.beginTransaction();*/
 		System.out.println("arrived to deleteAllProducts 1");
 		long rows = countRows();
 		System.out.println("arrived to deleteAllProducts 2");
@@ -489,4 +416,6 @@ public class SimpleServer extends AbstractServer {
 		}
 		System.out.println("arrived to deleteAllProducts 4");
 	}
+
+
 }
