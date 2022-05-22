@@ -547,7 +547,18 @@ public class PrimaryController {
 
 	@Subscribe
 	public void initDatabase(InitDatabaseEvent event) {
-
+		UpdateMessage new_msg=new UpdateMessage("account","add");
+		Date date=new Date();
+		Account new_acc=new Account("khaled","sakhnin","@eee","332",457,889,date,445,2);
+		new_msg.setAccount(new_acc);
+		try {
+			System.out.println("before sending updateMessage to server ");
+			SimpleClient.getClient().sendToServer(new_msg); // sends the updated product to the server class
+			System.out.println("afater sending updateMessage to server ");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("arrived to databaseInit");
 		Product flower1 = new Product(1, flower_button1.getId(), flower_name1.getText(), "", flower_price1.getContentText());
 		allProducts.add(flower1);

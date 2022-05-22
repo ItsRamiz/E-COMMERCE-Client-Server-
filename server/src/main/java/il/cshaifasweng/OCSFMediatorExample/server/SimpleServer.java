@@ -8,10 +8,7 @@ import java.io.IOException;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.hibernate.*;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -31,6 +28,7 @@ public class SimpleServer extends AbstractServer {
 	public static Session session;
 	private static Session session1;
 	private List<Product> productGeneralList = new ArrayList<Product>();
+	private List<Account> accountGeneralList = new ArrayList<Account>();
 	private int flowersnum = 0;
 
 	public SimpleServer(int port) {
@@ -56,6 +54,9 @@ public class SimpleServer extends AbstractServer {
 		// Add ALL of your entities here. You can also try adding a whole package.
 		configuration.addAnnotatedClass(Product.class);
 		configuration.addAnnotatedClass(Account.class);
+
+
+
 
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties())
@@ -157,7 +158,20 @@ public class SimpleServer extends AbstractServer {
 
 
 				case "account":
+					if (updateClassFunction.equals("add")) {
+						System.out.println("arrived to here inside add");
+						Account NewAcc = recievedMessage.getAccount();
+						addAccount(NewAcc);
 
+					} else if (updateClassFunction.equals("remove")) {
+						String idToRemove = recievedMessage.getDelteId();
+						removeAccount(idToRemove, client);
+					}
+					else if(updateClassFunction.equals("edit")){
+						System.out.println("Arrived edit worker case in switch !");
+						Account editAcc = recievedMessage.getAccount();
+						editAccount(editAcc);
+					}
 
 					break;
 
@@ -415,6 +429,208 @@ public class SimpleServer extends AbstractServer {
 			deleteProduct(i);
 		}
 		System.out.println("arrived to deleteAllProducts 4");
+	}
+	public static List<Account> getAllAccounts() {
+		System.out.println("Arrived to getAllProducts 1");
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		System.out.println("Arrived to getAllProducts 2");
+		CriteriaQuery<Account> query = builder.createQuery(Account.class);
+		System.out.println("Arrived to getAllProducts 3");
+		query.from(Account.class);
+		System.out.println("Arrived to getAllProducts 4");
+		List<Account> resultlest = session.createQuery(query).getResultList();
+		System.out.println("Arrived to getAllProducts 5");
+		return resultlest;
+	}
+
+	public void addAccount(Account newAcc) {
+
+		System.out.println("inside additemTocatalog1");
+		long numOfRows = countAccountRows();
+		int castedId = (int) numOfRows;
+		int newId = castedId + 1;
+		newAcc.setAccountID(newId);
+		System.out.println("inside additemTocatalog2");
+		String recievedName = newAcc.getFullName();
+		System.out.println("inside additemTocatalog3");
+		String Adress=newAcc.getAddress();
+		System.out.println("inside additemTocatalog4");
+		String Email=newAcc.getEmail();
+		String Password=newAcc.getPassword();
+		long Phonnum=newAcc.getPhoneNumber();
+		long creditcardnum=newAcc.getCreditCardNumber();
+		Date newdate=newAcc.getCreditCardExpire();
+		int Cvv=newAcc.getCcv();
+		boolean is_login=newAcc.getLogged();
+		int belongedshop=newAcc.getBelongShop();
+		SessionFactory sessionFactory = getSessionFactory();
+		session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		System.out.println("inside additemTocatalog8");
+		System.out.println("the new index is:" + newId);
+
+		session.save(newAcc);
+		session.flush();
+		tx.commit();
+		System.out.println("khaled");
+		session.close();
+	}
+	public void removeAccount(String AccIdToRemove, ConnectionToClient _client) {
+
+
+		System.out.println("arrived to removeItemFromCatalog 1");
+
+	/*	SessionFactory sessionFactory = getSessionFactory();
+		session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();*/
+
+
+		//Acc_num--;
+
+		int removedId = Integer.parseInt(AccIdToRemove);
+		System.out.println("mr7ba");
+		accountGeneralList = getAllAccounts();
+		accountGeneralList.remove(removedId-1); // remove the wanted item from the list
+		for(int i=0;i<accountGeneralList.size();i++){ // update all the items id's
+			if(accountGeneralList.get(i).getAccountID()> removedId){
+				accountGeneralList.get(i).setAccountID((accountGeneralList.get(i).getAccountID()-1));
+			}
+		}
+		System.out.println("mr7ba2");
+
+
+		SessionFactory sessionFactory = getSessionFactory();
+		session = sessionFactory.openSession();
+		Transaction tx1 = session.beginTransaction();
+		System.out.println("mr7ba3");
+		long longID = countAccountRows();
+		tx1.commit();
+		session.close();
+		System.out.println("mr7ba4");
+		System.out.println("arrived to removeItemFromCatalog 3 and the longID is " + longID);
+		int castedID = (int) longID;
+		System.out.println(castedID);
+		for(int l=0;l<castedID;l++){
+
+			System.out.println("arrived to removeItemFromCatalog 2.5");
+			deleteAccount(l+1);
+		}
+		System.out.println("mr7ba5");
+		sessionFactory = getSessionFactory();
+		session = sessionFactory.openSession();
+		Transaction tx2 = session.beginTransaction();
+		for(int i=0;i<accountGeneralList.size();i++){
+			session.save(accountGeneralList.get(i));
+			session.flush();
+		}
+		System.out.println("mr7ba6");
+		tx2.commit();
+		session.close();
+		System.out.println("mr7ba7");
+		session.close(); // here we finished deleting a product, everything else is for updating the id's
+		System.out.println("arrived to removeItemFromCatalog 2.8");
+
+
+
+	}
+	public void deleteAccount(int deleteIndex) {
+		System.out.println("arrived to deleteProd 1");
+		SessionFactory sessionFactory = getSessionFactory();
+		session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		System.out.println("arrived to deleteProd 2");
+
+		Object persistentInstance = session.load(Account.class, deleteIndex);
+		Account peracc = (Account) persistentInstance;
+		System.out.println("arrived to deleteProd 3");
+		if (persistentInstance != null) {
+			session.delete(peracc);
+		}
+		tx.commit();
+		session.close();
+
+	}
+	public Long countAccountRows() {
+		System.out.println("Arrived to coutnrwos 1");
+		final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+		System.out.println("Arrived to coutnrwos 2");
+		CriteriaQuery<Long> criteria = criteriaBuilder.createQuery(Long.class);
+		System.out.println("Arrived to coutnrwos 3");
+		Root<Account> root = criteria.from(Account.class);
+		System.out.println("Arrived to coutnrwos 4");
+		criteria.select(criteriaBuilder.count(root));
+		System.out.println("Arrived to coutnrwos 5");
+		System.out.println(session.createQuery(criteria).getSingleResult());
+		return session.createQuery(criteria).getSingleResult();
+	}
+	public void editAccount(Account accountEdit){
+		System.out.println("Arrived to edit catalog product 1");
+		SessionFactory sessionFactory = getSessionFactory();
+		session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+
+		int recievedAccountID = accountEdit.getAccountID();
+		String recievedAccountName = accountEdit.getFullName();
+
+
+		String Adress=accountEdit.getAddress();
+
+		String Email=accountEdit.getEmail();
+		String Password=accountEdit.getPassword();
+		long Phonnum=accountEdit.getPhoneNumber();
+		long creditcardnum=accountEdit.getCreditCardNumber();
+		Date newdate=accountEdit.getCreditCardExpire();
+		int Cvv=accountEdit.getCcv();
+		boolean is_login=accountEdit.getLogged();
+		int belongedshop=accountEdit.getBelongShop();
+
+		System.out.println("Arrived to edit catalog product 2");
+		Account updateAccount  = session.load(Account.class, recievedAccountID);
+
+
+		updateAccount.setFullName(recievedAccountName);
+		updateAccount.setAddress(Adress);
+		updateAccount.setEmail(Email);
+		updateAccount.setPassword(Password);
+		updateAccount.setPhoneNumber(Phonnum);
+		updateAccount.setCreditCardNumber(creditcardnum);
+		updateAccount.setCcv(Cvv);
+		updateAccount.setCreditCardExpire(newdate);
+		updateAccount.setLogged(is_login);
+		updateAccount.setBelongShop(belongedshop);
+		session.update(updateAccount);
+		tx.commit();
+		session.close();
+
+
+		/*try {
+
+			Product updatedProduct = new Product(recievedProductID, recievedProductButton, recievedProductName, recievedProductDetails, recievedProductPrice);
+
+
+			for (int i = 0; i < productGeneralList.size(); i++) {
+				if (productGeneralList.get(i).getID() == recievedProductID) {
+					productGeneralList.set(i, updatedProduct);
+				}
+			}
+
+
+			*//* USE UPDATE METHOD IN THE FUTURE *//*
+			Saveinsess();
+			tx.commit();
+
+
+		} catch (Exception exception) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			System.err.println("An error occured, changes have been rolled back.");
+			exception.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}*/
 	}
 
 

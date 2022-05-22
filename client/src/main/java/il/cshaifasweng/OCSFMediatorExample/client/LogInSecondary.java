@@ -2,8 +2,11 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Account;
+import il.cshaifasweng.OCSFMediatorExample.entities.UpdateMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,6 +76,18 @@ public class LogInSecondary {
     @FXML
     void CustomerLogIn(ActionEvent event) throws IOException {
         login_flag = "customer";
+      /*  UpdateMessage new_msg=new UpdateMessage("account","add");
+        Date date=new Date();
+        Account new_acc=new Account("khaled","sakhnin","@eee","332",457,889,date,445,2);
+        new_msg.setAccount(new_acc);
+        try {
+            System.out.println("before sending updateMessage to server ");
+            SimpleClient.getClient().sendToServer(new_msg); // sends the updated product to the server class
+            System.out.println("afater sending updateMessage to server ");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }*/
         Customer_login.setVisible(false);
         Employee_login.setVisible(false);
         ErrorMsg.setVisible(false);
