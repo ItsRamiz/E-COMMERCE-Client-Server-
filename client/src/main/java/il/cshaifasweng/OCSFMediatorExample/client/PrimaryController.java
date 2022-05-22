@@ -289,6 +289,7 @@ public class PrimaryController {
 		EditItemDesc.setVisible(false);
 		EditItemPrice.setVisible(false);
 		EditItemExtra.setVisible(false);
+	//	AddItem.setVisible(false);
 	}
 
 	@FXML
@@ -326,6 +327,7 @@ public class PrimaryController {
 		EditItemDesc.setVisible(false);
 		EditItemPrice.setVisible(false);
 		EditItemExtra.setVisible(false);
+	//	RemoveItem.setVisible(false);
 		//.setVisible(false);
 
 	}
@@ -379,6 +381,7 @@ public class PrimaryController {
 		EditItemDesc.setVisible(false);
 		EditItemPrice.setVisible(false);
 		EditItemExtra.setVisible(false);
+	//	UpdateItem.setVisible(false);
 
 
 	}
@@ -415,7 +418,7 @@ public class PrimaryController {
 		}
 		if (chosen == "Remove Item") {
 			//EditItemExtra.setText("Item ID To Remove");
-			UpdateItem.setText("Remove");
+			//UpdateItem.setText("Remove");
 			EditItemType.setVisible(false);
 			EditItemDesc.setVisible(false);
 			EditItemPrice.setVisible(false);
