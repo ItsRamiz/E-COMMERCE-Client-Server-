@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.server;
 import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
+import il.cshaifasweng.OCSFMediatorExample.server.ocsf.WorkerUpdateManager;
 //import il.cshaifasweng.OCSFMediatorExample.server.Product;
 import java.io.IOException;
 import java.sql.DatabaseMetaData;
@@ -48,13 +49,13 @@ public class SimpleServer extends AbstractServer {
 		session.close();
 	}
 
-	private static SessionFactory getSessionFactory() throws HibernateException {
+	public static SessionFactory getSessionFactory() throws HibernateException {
 		Configuration configuration = new Configuration();
 
 		// Add ALL of your entities here. You can also try adding a whole package.
 		configuration.addAnnotatedClass(Product.class);
 		configuration.addAnnotatedClass(Account.class);
-
+		configuration.addAnnotatedClass(Worker.class);
 
 
 
@@ -172,6 +173,26 @@ public class SimpleServer extends AbstractServer {
 						Account editAcc = recievedMessage.getAccount();
 						editAccount(editAcc);
 					}
+
+					break;
+
+				case "worker":
+					if (updateClassFunction.equals("add")) {
+						System.out.println("arrived to here inside worker add");
+						Worker recievedWorker = recievedMessage.getWorker();
+						WorkerUpdateManager.addWorker(recievedWorker);
+
+					} else if (updateClassFunction.equals("remove")) {
+						String idToRemove = recievedMessage.getDelteId();
+						WorkerUpdateManager.removeWorker(idToRemove, client);
+					}
+					else if(updateClassFunction.equals("edit")){
+						System.out.println("Arrived edit worker case in switch !");
+						Worker recievedWorker = recievedMessage.getWorker();
+						WorkerUpdateManager.editWorker(recievedWorker);
+					}
+
+					session.close();
 
 					break;
 

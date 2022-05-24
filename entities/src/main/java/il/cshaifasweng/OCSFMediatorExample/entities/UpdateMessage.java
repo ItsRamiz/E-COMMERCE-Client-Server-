@@ -10,6 +10,8 @@ public class UpdateMessage implements Serializable {
     private int id;
     private Product product = null;
     private Account account = null;
+    private Worker worker = null;
+
 
     public UpdateMessage(String update_class,String update_function){
         this.updateClass = update_class;
@@ -52,6 +54,14 @@ public class UpdateMessage implements Serializable {
     }
     public void setDelteId(String delete_id){
         this.deleteId = delete_id;
+    }
+
+    public void setWorker(Worker worker) {
+        this.worker = worker;
+    }
+
+    public Worker getWorker() {
+        return worker;
     }
 }
 

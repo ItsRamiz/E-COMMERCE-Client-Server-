@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 import il.cshaifasweng.OCSFMediatorExample.entities.Product;
 import il.cshaifasweng.OCSFMediatorExample.entities.Account;
+import il.cshaifasweng.OCSFMediatorExample.entities.Worker;
 
 import java.awt.*;
 import java.awt.Dialog;
@@ -43,6 +44,7 @@ import static com.sun.xml.bind.v2.schemagen.Util.equal;
 
 public class PrimaryController {
 	public int flowersnum2 = 6;
+	public int workernum2 =0;
 	static boolean returnedFromSecondaryController = false;
 	boolean firstRun = true;
 	@FXML // ResourceBundle that was given to the FXMLLoader
