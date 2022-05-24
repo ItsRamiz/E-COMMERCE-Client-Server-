@@ -11,6 +11,7 @@ public class UpdateMessage implements Serializable {
     private Product product = null;
     private Account account = null;
     private Worker worker = null;
+    private Manager manager = null;
 
 
     public UpdateMessage(String update_class,String update_function){
@@ -62,6 +63,14 @@ public class UpdateMessage implements Serializable {
 
     public Worker getWorker() {
         return worker;
+    }
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 }
 

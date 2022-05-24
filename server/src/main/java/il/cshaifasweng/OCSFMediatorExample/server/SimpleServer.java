@@ -4,6 +4,8 @@ import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.WorkerUpdateManager;
+import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ManagerUpdateManager;
+
 //import il.cshaifasweng.OCSFMediatorExample.server.Product;
 import java.io.IOException;
 import java.sql.DatabaseMetaData;
@@ -56,7 +58,7 @@ public class SimpleServer extends AbstractServer {
 		configuration.addAnnotatedClass(Product.class);
 		configuration.addAnnotatedClass(Account.class);
 		configuration.addAnnotatedClass(Worker.class);
-
+		configuration.addAnnotatedClass(Manager.class);
 
 
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
@@ -190,6 +192,26 @@ public class SimpleServer extends AbstractServer {
 						System.out.println("Arrived edit worker case in switch !");
 						Worker recievedWorker = recievedMessage.getWorker();
 						WorkerUpdateManager.editWorker(recievedWorker);
+					}
+
+					session.close();
+
+					break;
+
+				case "manager":
+					if (updateClassFunction.equals("add")) {
+						System.out.println("arrived to here inside manager add");
+						Manager recievedManager = recievedMessage.getManager();
+						ManagerUpdateManager.addManager(recievedManager);
+
+					} else if (updateClassFunction.equals("remove")) {
+						String idToRemove = recievedMessage.getDelteId();
+						ManagerUpdateManager.removeManager(idToRemove, client);
+					}
+					else if(updateClassFunction.equals("edit")){
+						System.out.println("Arrived edit manager case in switch !");
+						Manager recievedManager = recievedMessage.getManager();
+						ManagerUpdateManager.editManager(recievedManager);
 					}
 
 					session.close();
