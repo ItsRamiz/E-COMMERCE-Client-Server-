@@ -4,22 +4,23 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="483.0" prefWidth="600.0" stylesheets="@mycsss.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.RegisterController">
+<AnchorPane prefHeight="551.0" prefWidth="600.0" stylesheets="@mycsss.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.RegisterController">
     <children>
-        <TextField fx:id="Name" layoutX="158.0" layoutY="125.0" prefHeight="26.0" prefWidth="283.0" promptText="Name" />
-        <TextField fx:id="Street_Address" layoutX="158.0" layoutY="167.0" prefHeight="26.0" prefWidth="283.0" promptText="Street address" />
-        <TextField fx:id="City_Address" layoutX="158.0" layoutY="215.0" prefHeight="26.0" prefWidth="283.0" promptText="City" />
-        <TextField fx:id="ZipCode" layoutX="158.0" layoutY="265.0" prefHeight="26.0" prefWidth="283.0" promptText="Zip Code" />
-        <TextField fx:id="PhoneNumber" layoutX="158.0" layoutY="315.0" prefHeight="26.0" prefWidth="283.0" promptText="Phone Number" />
-        <Button fx:id="RegisterButton" layoutX="174.0" layoutY="371.0" mnemonicParsing="false" onAction="#AddCustomerToDB" prefHeight="26.0" prefWidth="79.0" text="Register" />
-        <TextField fx:id="Email" layoutX="158.0" layoutY="78.0" prefHeight="26.0" prefWidth="283.0" promptText="Email" />
-      <Label layoutX="214.0" layoutY="27.0" prefHeight="26.0" prefWidth="160.0" text="Lilach Customer Registration" textFill="WHITE">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Button fx:id="backk" layoutX="318.0" layoutY="371.0" mnemonicParsing="false" onAction="#backkk" prefHeight="26.0" prefWidth="79.0" text="cancel" />
+        <TextField fx:id="Name" layoutX="114.0" layoutY="143.0" prefHeight="26.0" prefWidth="283.0" promptText="Name" />
+        <TextField fx:id="Street_Address" layoutX="114.0" layoutY="181.0" prefHeight="26.0" prefWidth="283.0" promptText="Street address" />
+        <TextField fx:id="City_Address" layoutX="114.0" layoutY="218.0" prefHeight="26.0" prefWidth="283.0" promptText="City" />
+        <TextField fx:id="ZipCode" layoutX="114.0" layoutY="256.0" prefHeight="26.0" prefWidth="283.0" promptText="Zip Code" />
+        <TextField fx:id="PhoneNumber" layoutX="114.0" layoutY="294.0" prefHeight="26.0" prefWidth="283.0" promptText="Phone Number" />
+        <Button fx:id="RegisterButton" layoutX="224.0" layoutY="505.0" mnemonicParsing="false" onAction="#AddCustomerToDB" prefHeight="26.0" prefWidth="79.0" text="Register" />
+        <TextField fx:id="Email" layoutX="114.0" layoutY="61.0" prefHeight="26.0" prefWidth="283.0" promptText="Email" />
+      <TextField fx:id="CardNumber" layoutX="114.0" layoutY="396.0" prefHeight="26.0" prefWidth="283.0" promptText="Card Number" />
+      <TextField fx:id="Validity" layoutX="114.0" layoutY="432.0" prefHeight="26.0" prefWidth="79.0" promptText="MM/YYYY" />
+      <TextField fx:id="CVV" layoutX="114.0" layoutY="468.0" prefHeight="26.0" prefWidth="53.0" promptText="CVV" />
+      <TextField fx:id="Password" layoutX="114.0" layoutY="103.0" prefHeight="26.0" prefWidth="283.0" promptText="Password" />
+      <Label fx:id="ErrorMsg" layoutX="420.0" layoutY="65.0" text="This Email already exists!" textFill="WHITE" />
+      <Button fx:id="backk" layoutX="317.0" layoutY="505.0" mnemonicParsing="false" onAction="#backkk" prefHeight="26.0" prefWidth="79.0" text="back" />
+      <Label layoutX="38.0" layoutY="24.0" text="Lilach Customer Registration" textFill="WHITE" />
+      <Label layoutX="38.0" layoutY="358.0" text="Default Credit Card" textFill="WHITE" />
     </children>
 </AnchorPane>

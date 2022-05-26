@@ -11,118 +11,118 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="name1" maxHeight="800.0" maxWidth="1000.0" minHeight="800.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1000.0" stylesheets="@mycsss.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.PrimaryController">
+<AnchorPane fx:id="es" maxHeight="800.0" maxWidth="1000.0" minHeight="800.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1000.0" stylesheets="@mycsss.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.PrimaryController">
     <children>
         <Accordion layoutX="227.0" layoutY="575.0" />
-      <AnchorPane id="cathr" layoutX="800.0" layoutY="50.0" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" stylesheets="@mycsss.css" AnchorPane.bottomAnchor="1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <AnchorPane id="menuu-content" layoutX="800.0" layoutY="50.0" maxWidth="200.0" minWidth="181.0" prefHeight="749.0" prefWidth="181.0" stylesheets="@mycsss.css" AnchorPane.bottomAnchor="1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
-            <TextField fx:id="EditItemPrice" layoutX="25.0" layoutY="138.0" text="New Item Price" />
-            <ComboBox id="btttn" fx:id="adminEditCatalog" layoutX="20.0" layoutY="26.0" onAction="#chooseAdminEditCatalog" prefHeight="26.0" prefWidth="157.0" promptText="           Edit Catalog" />
-            <TextField fx:id="EditItemExtra" layoutX="25.0" layoutY="173.0" text="EXTRA" />
-            <Button id="btttn" fx:id="RemoveItem" layoutX="69.0" layoutY="327.0" mnemonicParsing="false" onAction="#adminRemoveItemFunc" prefHeight="26.0" prefWidth="62.0" text="Remove" />
-            <Button id="btttn" fx:id="UpdateItem" layoutX="63.0" layoutY="287.0" mnemonicParsing="false" onAction="#adminUpdateItemFunc" prefHeight="25.0" prefWidth="72.0" text="Update" />
-            <Button id="btttn" fx:id="AddItem" layoutX="63.0" layoutY="216.0" mnemonicParsing="false" onAction="#adminAddItemFunc" prefHeight="26.0" prefWidth="62.0" text="Add" />
-            <TextField fx:id="EditItemDesc" layoutX="25.0" layoutY="104.0" text="New Item Description" />
-            <TextField fx:id="EditItemType" layoutX="24.0" layoutY="69.0" text="New Item Type" />
-            <Button id="btttn" fx:id="FinishCustomItem" layoutX="7.0" layoutY="658.0" mnemonicParsing="false" onAction="#cancelCustomitem" prefHeight="33.0" prefWidth="175.0" text="Add Custom Item To Cart" />
-            <Button id="btttn" fx:id="CancelCustomItem" layoutX="7.0" layoutY="699.0" mnemonicParsing="false" onAction="#cancelCustomitem" prefHeight="40.0" prefWidth="175.0" text="Cancel Custom Item Designer" />
-            <TextField fx:id="customPrice" layoutX="25.0" layoutY="561.0" text="Enter Price Range" />
-            <TextField fx:id="customColor" layoutX="24.0" layoutY="525.0" text="Enter Dominant Color" />
-            <TextField fx:id="customType" layoutX="24.0" layoutY="623.0" text="Enter Item Type" />
-            <Button id="btttn" fx:id="CreateCustomItem" layoutX="10.0" layoutY="468.0" mnemonicParsing="false" onAction="#createCustomitem" prefHeight="40.0" prefWidth="169.0" text="Create Custom Item" />
-            <TextField fx:id="customid" layoutX="24.0" layoutY="593.0" text="Item ID" />
+            <TextField fx:id="EditItemPrice" layoutX="16.0" layoutY="140.0" text="New Item Price" />
+            <ComboBox id="btttn" fx:id="adminEditCatalog" layoutX="19.0" layoutY="28.0" onAction="#chooseAdminEditCatalog" prefHeight="26.0" prefWidth="150.0" promptText="           Edit Catalog" />
+            <TextField fx:id="EditItemExtra" layoutX="16.0" layoutY="173.0" text="EXTRA" />
+            <Button id="btttn" fx:id="RemoveItem" layoutX="59.0" layoutY="248.0" mnemonicParsing="false" onAction="#adminRemoveItemFunc" prefHeight="26.0" prefWidth="62.0" text="Remove" />
+            <Button id="btttn" fx:id="UpdateItem" layoutX="54.0" layoutY="287.0" mnemonicParsing="false" onAction="#adminUpdateItemFunc" prefHeight="25.0" prefWidth="72.0" text="Update" />
+            <Button id="btttn" fx:id="AddItem" layoutX="59.0" layoutY="211.0" mnemonicParsing="false" onAction="#adminAddItemFunc" prefHeight="26.0" prefWidth="62.0" text="Add" />
+            <TextField fx:id="EditItemDesc" layoutX="16.0" layoutY="103.0" text="New Item Description" />
+            <TextField fx:id="EditItemType" layoutX="16.0" layoutY="69.0" text="New Item Type" />
+            <Button id="btttn" fx:id="FinishCustomItem" layoutX="31.0" layoutY="669.0" mnemonicParsing="false" onAction="#cancelCustomitem" prefHeight="34.0" prefWidth="115.0" text="Add To Cart" />
+            <Button id="btttn" fx:id="CancelCustomItem" layoutX="58.0" layoutY="710.0" mnemonicParsing="false" onAction="#cancelCustomitem" prefHeight="30.0" prefWidth="62.0" text="Cancel" />
+            <TextField fx:id="customPrice" layoutX="15.0" layoutY="561.0" text="Enter Price Range" />
+            <TextField fx:id="customColor" layoutX="15.0" layoutY="524.0" text="Enter Dominant Color" />
+            <TextField fx:id="customType" layoutX="15.0" layoutY="632.0" text="Enter Item Type" />
+            <Button id="btttn" fx:id="CreateCustomItem" layoutX="15.0" layoutY="470.0" mnemonicParsing="false" onAction="#createCustomitem" prefHeight="40.0" prefWidth="150.0" text="Create Custom Item" />
+            <TextField fx:id="customid" layoutX="15.0" layoutY="597.0" text="Item ID" />
          </children>
       </AnchorPane>
-      <AnchorPane id="ee" fx:id="container2" layoutX="273.0" layoutY="148.0" prefHeight="243.0" prefWidth="226.0" AnchorPane.rightAnchor="500.6" AnchorPane.topAnchor="148.0">
+      <AnchorPane id="ee" fx:id="container2" layoutX="273.0" layoutY="148.0" prefHeight="202.0" prefWidth="206.0" AnchorPane.rightAnchor="526.0" AnchorPane.topAnchor="148.0">
          <children>
             <ImageView id="imgg" fx:id="flower_button2" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#product_clicked" pickOnBounds="true" preserveRatio="true" styleClass="imgg" AnchorPane.topAnchor="0.0">
                <image>
                   <Image url="@../../../../images/flower1.jpg" />
                </image>
             </ImageView>
-              <DialogPane id="btttn" fx:id="flower_price2" contentText="100₪" layoutX="171.0" layoutY="47.0" prefHeight="0.0" prefWidth="50.0" style="-fx-border-color: black; -fx-background-radius: 1px 10px; -fx-border-radius: 1px 10px;" />
-            <Button id="btttn" layoutX="150.0" layoutY="218.0" mnemonicParsing="false" text="add to cart" />
-            <Label fx:id="flower_name2" layoutX="38.0" layoutY="204.0" prefHeight="18.0" prefWidth="74.0" text="daisy" textFill="WHITE">
+              <DialogPane id="btttn" fx:id="flower_price2" contentText="100₪" layoutX="150.0" layoutY="48.0" prefHeight="0.0" prefWidth="50.0" style="-fx-border-color: black; -fx-background-radius: 1px 10px; -fx-border-radius: 1px 10px;" />
+            <Button id="btttn" layoutX="113.0" layoutY="162.0" mnemonicParsing="false" text="add to cart" />
+            <Label fx:id="flower_name2" layoutX="24.0" layoutY="161.0" prefHeight="18.0" prefWidth="74.0" text="daisy" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane id="ee" fx:id="container1" layoutX="28.0" layoutY="141.0" prefHeight="246.0" prefWidth="226.0" AnchorPane.rightAnchor="754.0" AnchorPane.topAnchor="141.0">
+      <AnchorPane id="ee" fx:id="container1" layoutX="28.0" layoutY="141.0" prefHeight="202.0" prefWidth="206.0" AnchorPane.rightAnchor="774.0" AnchorPane.topAnchor="141.0">
          <children>
-            <ImageView fx:id="flower_button1" fitHeight="150.0" fitWidth="200.0" layoutX="1.0" layoutY="1.0" onMouseClicked="#product_clicked" pickOnBounds="true" preserveRatio="true" styleClass="imgg">
+            <ImageView fx:id="flower_button1" fitHeight="150.0" fitWidth="200.0" layoutY="1.0" onMouseClicked="#product_clicked" pickOnBounds="true" preserveRatio="true" styleClass="imgg">
               <image>
                   <Image url="@../../../../images/flower2.jpg" />
               </image>
             </ImageView>
-              <DialogPane id="btttn" fx:id="flower_price1" contentText="150₪" layoutX="165.0" layoutY="48.0" prefHeight="40.0" prefWidth="50.0" style="-fx-border-color: black; -fx-background-radius: 1px 10px; -fx-border-radius: 1px 10px;" />
-            <Button id="btttn" layoutX="153.0" layoutY="220.0" mnemonicParsing="false" text="add to cart" />
-            <Label fx:id="flower_name1" layoutX="39.0" layoutY="206.0" prefHeight="27.0" prefWidth="100.0" text="Sun flower" textFill="WHITE">
+              <DialogPane id="btttn" fx:id="flower_price1" contentText="150₪" layoutX="150.0" layoutY="48.0" prefHeight="40.0" prefWidth="50.0" style="-fx-border-color: black; -fx-background-radius: 1px 10px; -fx-border-radius: 1px 10px;" />
+            <Button id="btttn" layoutX="113.0" layoutY="165.0" mnemonicParsing="false" text="add to cart" />
+            <Label fx:id="flower_name1" layoutX="14.0" layoutY="164.0" prefHeight="27.0" prefWidth="100.0" text="Sun flower" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane id="ee" fx:id="container6" layoutX="517.0" layoutY="415.0" prefHeight="116.0" prefWidth="142.0" AnchorPane.bottomAnchor="143.39999999999998" AnchorPane.rightAnchor="251.0">
+      <AnchorPane id="ee" fx:id="container6" layoutX="522.0" layoutY="455.0" prefHeight="202.0" prefWidth="206.0" AnchorPane.bottomAnchor="142.60000000000002" AnchorPane.rightAnchor="271.6">
          <children>
             <ImageView fx:id="flower_button6" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#product_clicked" pickOnBounds="true" preserveRatio="true" styleClass="imgg">
                <image>
                   <Image url="@../../../../images/flower5.jpg" />
                </image>
             </ImageView>
-              <DialogPane id="btttn" fx:id="flower_price6" contentText="120₪" layoutX="179.0" layoutY="47.0" prefHeight="57.0" prefWidth="50.0" style="-fx-border-color: black; -fx-border-radius: 1px 10px; -fx-background-radius: 1px 10px;" />
-            <Button id="btttn" layoutX="157.0" layoutY="215.0" mnemonicParsing="false" text="add to cart" />
-            <Label fx:id="flower_name6" layoutX="28.0" layoutY="203.0" prefHeight="18.0" prefWidth="74.0" text="nicole" textFill="WHITE">
+              <DialogPane id="btttn" fx:id="flower_price6" contentText="120₪" layoutX="150.0" layoutY="47.0" prefHeight="57.0" prefWidth="50.0" style="-fx-border-color: black; -fx-border-radius: 1px 10px; -fx-background-radius: 1px 10px;" />
+            <Button id="btttn" layoutX="113.0" layoutY="163.0" mnemonicParsing="false" text="add to cart" />
+            <Label fx:id="flower_name6" layoutX="14.0" layoutY="162.0" prefHeight="18.0" prefWidth="74.0" text="orchid" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane id="ee" fx:id="container4" layoutX="14.0" layoutY="416.0" prefHeight="238.0" prefWidth="226.0" AnchorPane.bottomAnchor="145.0" AnchorPane.rightAnchor="750.0">
+      <AnchorPane id="ee" fx:id="container4" layoutX="19.0" layoutY="455.0" prefHeight="202.0" prefWidth="206.0" AnchorPane.bottomAnchor="142.60000000000002" AnchorPane.rightAnchor="774.6">
          <children>
             <ImageView fx:id="flower_button4" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#product_clicked" pickOnBounds="true" preserveRatio="true" styleClass="imgg">
                <image>
                   <Image url="@../../../../images/flower3.jpg" />
                </image>
             </ImageView>
-              <DialogPane id="btttn" fx:id="flower_price4" contentText="60₪" layoutX="173.0" layoutY="47.0" prefHeight="50.0" prefWidth="50.0" style="-fx-border-color: black; -fx-background-radius: 1px 10px; -fx-border-radius: 1px 10px;" />
-            <Button id="btttn" layoutX="150.0" layoutY="210.0" mnemonicParsing="false" text="add to cart" />
-            <Label fx:id="flower_name4" layoutX="25.0" layoutY="196.0" prefHeight="27.0" prefWidth="100.0" text="tulip" textFill="WHITE">
+              <DialogPane id="btttn" fx:id="flower_price4" contentText="60₪" layoutX="150.0" layoutY="47.0" prefHeight="50.0" prefWidth="50.0" style="-fx-border-color: black; -fx-background-radius: 1px 10px; -fx-border-radius: 1px 10px;" />
+            <Button id="btttn" layoutX="113.0" layoutY="170.0" mnemonicParsing="false" text="add to cart" />
+            <Label fx:id="flower_name4" layoutX="25.0" layoutY="169.0" prefHeight="27.0" prefWidth="100.0" text="tulip" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane id="ee" fx:id="container5" layoutX="274.0" layoutY="456.0" prefHeight="166.0" prefWidth="226.0" AnchorPane.bottomAnchor="146.39999999999998" AnchorPane.rightAnchor="500.0">
+      <AnchorPane id="ee" fx:id="container5" layoutX="267.0" layoutY="455.0" prefHeight="202.0" prefWidth="206.0" AnchorPane.bottomAnchor="142.60000000000002" AnchorPane.rightAnchor="526.6">
          <children>
             <ImageView fx:id="flower_button5" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#product_clicked" pickOnBounds="true" preserveRatio="true" styleClass="imgg">
                <image>
                   <Image url="@../../../../images/flower6.jpg" />
                </image>
             </ImageView>
-              <DialogPane id="btttn" fx:id="flower_price5" contentText="15₪" layoutX="172.0" layoutY="47.0" prefHeight="57.0" prefWidth="50.0" style="-fx-border-color: black; -fx-background-radius: 1px 10px; -fx-border-radius: 1px 10px;" />
-            <Button id="btttn" layoutX="150.0" layoutY="210.0" mnemonicParsing="false" text="add to cart" />
-            <Label fx:id="flower_name5" layoutX="38.0" layoutY="196.0" prefHeight="18.0" prefWidth="74.0" text="rose" textFill="WHITE">
+              <DialogPane id="btttn" fx:id="flower_price5" contentText="15₪" layoutX="150.0" layoutY="46.0" prefHeight="57.0" prefWidth="50.0" style="-fx-border-color: black; -fx-background-radius: 1px 10px; -fx-border-radius: 1px 10px;" />
+            <Button id="btttn" layoutX="113.0" layoutY="170.0" mnemonicParsing="false" text="add to cart" />
+            <Label fx:id="flower_name5" layoutX="28.0" layoutY="169.0" prefHeight="18.0" prefWidth="74.0" text="rose" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane id="ee" fx:id="container3" layoutX="514.0" layoutY="153.0" prefHeight="234.0" prefWidth="234.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="153.0">
+      <AnchorPane id="ee" fx:id="container3" layoutX="515.0" layoutY="148.0" prefHeight="202.0" prefWidth="206.0" AnchorPane.rightAnchor="271.0" AnchorPane.topAnchor="148.0">
          <children>
             <ImageView id="imgg" fx:id="flower_button3" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#product_clicked" pickOnBounds="true" preserveRatio="true" styleClass="imgg">
                <image>
                   <Image url="@../../../../images/flower4.jpg" />
                </image>
             </ImageView>
-              <DialogPane id="btttn" fx:id="flower_price3" contentText="80₪" layoutX="182.0" layoutY="47.0" prefHeight="41.0" prefWidth="50.0" style="-fx-border-color: black; -fx-border-radius: 1px 10px; -fx-background-radius: 1px 10px;" />
-            <Button id="btttn" layoutX="159.0" layoutY="207.0" mnemonicParsing="false" text="add to cart" />
-            <Label fx:id="flower_name3" layoutX="38.0" layoutY="193.0" prefHeight="18.0" prefWidth="74.0" text="lilly" textFill="WHITE">
+              <DialogPane id="btttn" fx:id="flower_price3" contentText="80₪" layoutX="150.0" layoutY="47.0" prefHeight="41.0" prefWidth="50.0" style="-fx-border-color: black; -fx-border-radius: 1px 10px; -fx-background-radius: 1px 10px;" />
+            <Button id="btttn" layoutX="113.0" layoutY="167.0" mnemonicParsing="false" text="add to cart" />
+            <Label fx:id="flower_name3" layoutX="21.0" layoutY="166.0" prefHeight="18.0" prefWidth="74.0" text="lilly" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>

@@ -1,16 +1,24 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 
-public class Manager{
+@Entity
+@Table(name = "managers_table")
+public class Manager implements Serializable{
+    @Id
+    private int personID;
     @Column(name = "Full_Name")
     private String fullName;
     @Column(name = "Email")
     private String email;
     @Column(name = "Passowrd")
     private String password;
+    @Column(name = "ShopID")
     private int ShopID;
-    private int personID;
     private boolean loggedIn;
     public Manager(String fullName,String email, String password,int personID)
     {

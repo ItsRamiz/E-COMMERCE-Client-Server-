@@ -1,7 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 import il.cshaifasweng.OCSFMediatorExample.entities.Product;
 import il.cshaifasweng.OCSFMediatorExample.entities.Account;
-
+import il.cshaifasweng.OCSFMediatorExample.entities.Worker;
+import il.cshaifasweng.OCSFMediatorExample.entities.Manager;
 import java.awt.*;
 import java.awt.Dialog;
 import java.awt.Label;
@@ -43,6 +44,8 @@ import static com.sun.xml.bind.v2.schemagen.Util.equal;
 
 public class PrimaryController {
 	public int flowersnum2 = 6;
+	public int workernum2 =0;
+	public int managernum2 =0;
 	static boolean returnedFromSecondaryController = false;
 	boolean firstRun = true;
 	@FXML // ResourceBundle that was given to the FXMLLoader
@@ -289,6 +292,7 @@ public class PrimaryController {
 		EditItemDesc.setVisible(false);
 		EditItemPrice.setVisible(false);
 		EditItemExtra.setVisible(false);
+	//	AddItem.setVisible(false);
 	}
 
 	@FXML
@@ -326,6 +330,7 @@ public class PrimaryController {
 		EditItemDesc.setVisible(false);
 		EditItemPrice.setVisible(false);
 		EditItemExtra.setVisible(false);
+	//	RemoveItem.setVisible(false);
 		//.setVisible(false);
 
 	}
@@ -379,6 +384,7 @@ public class PrimaryController {
 		EditItemDesc.setVisible(false);
 		EditItemPrice.setVisible(false);
 		EditItemExtra.setVisible(false);
+	//	UpdateItem.setVisible(false);
 
 
 	}
@@ -415,7 +421,7 @@ public class PrimaryController {
 		}
 		if (chosen == "Remove Item") {
 			//EditItemExtra.setText("Item ID To Remove");
-			UpdateItem.setText("Remove");
+			//UpdateItem.setText("Remove");
 			EditItemType.setVisible(false);
 			EditItemDesc.setVisible(false);
 			EditItemPrice.setVisible(false);
@@ -544,7 +550,18 @@ public class PrimaryController {
 
 	@Subscribe
 	public void initDatabase(InitDatabaseEvent event) {
-
+		UpdateMessage new_msg=new UpdateMessage("account","add");
+		Date date=new Date();
+		Account new_acc=new Account("khaled","sakhnin","@eee","332",457,889,date,445,2);
+		new_msg.setAccount(new_acc);
+		try {
+			System.out.println("before sending updateMessage to server ");
+			SimpleClient.getClient().sendToServer(new_msg); // sends the updated product to the server class
+			System.out.println("afater sending updateMessage to server ");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("arrived to databaseInit");
 		Product flower1 = new Product(1, flower_button1.getId(), flower_name1.getText(), "", flower_price1.getContentText());
 		allProducts.add(flower1);
