@@ -226,6 +226,50 @@ public class SimpleServer extends AbstractServer {
 			}
 		}
 
+		if(msg instanceof CheckMail){
+
+			SessionFactory sessionFactory = getSessionFactory();
+			session = sessionFactory.openSession();
+			Transaction tx1 = session.beginTransaction();
+
+			CheckMail recievedMessage = (CheckMail) msg;
+			String recievedMailStr = recievedMessage.getEmail();
+			String recievedPasswordStr = recievedMessage.getPassword();
+
+			boolean foundTheMail = false ;
+			boolean foundThePassword = false ;
+			// 1. apply query to check if the mail exists in the accounts table
+			List<Account> accountsList = getAllAccounts();
+			for (int i=0;i<accountsList.size();i++){
+				System.out.println(accountsList.get(i).getEmail());
+				if(accountsList.get(i).getEmail().equals(recievedMailStr)){
+					foundTheMail = true ;
+					System.out.println("found the mail ! the iteration is: " + i);
+				}
+
+			}
+			// 2. if the account exists then check if the password matches
+			if(foundTheMail){
+				for (int i=0;i<accountsList.size();i++){
+					System.out.println(accountsList.get(i).getPassword());
+					if(accountsList.get(i).getPassword().equals(recievedPasswordStr)){
+						foundThePassword = true ;
+						System.out.println("found the password ! the iteration is: " + i);
+					}
+
+				}
+			}
+			else if(!foundTheMail){ // 3. if the account not found then send a message to the client
+				// send a message to the client
+				client.sendToClient("mail not found");
+			}
+
+			if(foundTheMail && !foundThePassword){ // 4. if the account found but password not found then send a message to the client
+				// send a message to the client
+				client.sendToClient("wrong password");
+			}
+		}
+
 
 		if (msg instanceof ArrayList) { // arrived from the initializing of the program, so we initialize the database
 			// with the starting Products
@@ -258,6 +302,8 @@ public class SimpleServer extends AbstractServer {
 		}
 
 	}
+
+
 
 	private static List<Product> getAllProducts() {
 		System.out.println("Arrived to getAllProducts 1");
@@ -474,15 +520,15 @@ public class SimpleServer extends AbstractServer {
 		System.out.println("arrived to deleteAllProducts 4");
 	}
 	public static List<Account> getAllAccounts() {
-		System.out.println("Arrived to getAllProducts 1");
+		System.out.println("Arrived to getAllAccounts 1");
 		CriteriaBuilder builder = session.getCriteriaBuilder();
-		System.out.println("Arrived to getAllProducts 2");
+		System.out.println("Arrived to getAllAccounts 2");
 		CriteriaQuery<Account> query = builder.createQuery(Account.class);
-		System.out.println("Arrived to getAllProducts 3");
+		System.out.println("Arrived to getAllAccounts 3");
 		query.from(Account.class);
-		System.out.println("Arrived to getAllProducts 4");
+		System.out.println("Arrived to getAllAccounts 4");
 		List<Account> resultlest = session.createQuery(query).getResultList();
-		System.out.println("Arrived to getAllProducts 5");
+		System.out.println("Arrived to getAllAccounts 5");
 		return resultlest;
 	}
 

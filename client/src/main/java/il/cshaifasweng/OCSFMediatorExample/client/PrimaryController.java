@@ -546,6 +546,45 @@ public class PrimaryController {
 			System.out.println(rtEvent.getRecievedList().get(i).getButton());
 		}
 		allProducts = rtEvent.getRecievedList();
+
+
+		// TESTING THE ACCOUNTS ADD MANUALLY
+		UpdateMessage new_msg=new UpdateMessage("account","add");
+		Date date=new Date();
+		Account new_acc=new Account("khaled","sakhnin","@eee","332",457,889,date,445,2);
+		new_msg.setAccount(new_acc);
+		try {
+			System.out.println("before sending updateMessage to server ");
+			SimpleClient.getClient().sendToServer(new_msg); // sends the updated product to the server class
+			System.out.println("afater sending updateMessage to server ");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		new_acc=new Account("abu-nebal","haifa","@nebal.com","111",457,889,date,445,2);
+		new_msg.setAccount(new_acc);
+		try {
+			System.out.println("before sending updateMessage to server ");
+			SimpleClient.getClient().sendToServer(new_msg); // sends the updated product to the server class
+			System.out.println("afater sending updateMessage to server ");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		new_acc=new Account("molazem-ra2oof","haifa","@ra2of.com","111",457,889,date,445,2);
+		new_msg.setAccount(new_acc);
+		try {
+			System.out.println("before sending updateMessage to server ");
+			SimpleClient.getClient().sendToServer(new_msg); // sends the updated product to the server class
+			System.out.println("afater sending updateMessage to server ");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Subscribe

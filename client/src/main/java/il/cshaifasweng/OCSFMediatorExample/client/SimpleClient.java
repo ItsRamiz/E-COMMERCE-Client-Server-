@@ -36,7 +36,19 @@ public class SimpleClient extends AbstractClient {
 				// now tell the primary controller that the table isnt found
 				InitDatabaseEvent event = new InitDatabaseEvent(true);
 				EventBus.getDefault().post(event);
-			}
+			   }
+				if(recievedStr.equals("mail not found")){
+					// post an event that the mail is not found
+					MailChecker mailCheckEvent = new MailChecker(false);
+					EventBus.getDefault().post(mailCheckEvent);
+				}
+				if(recievedStr.equals("wrong password")){
+					// post an event that the password is incorrect
+					MailChecker mailCheckEvent = new MailChecker(true);
+					mailCheckEvent.setPasswordExists(false);
+					EventBus.getDefault().post(mailCheckEvent);
+				}
+
 
 
 		}

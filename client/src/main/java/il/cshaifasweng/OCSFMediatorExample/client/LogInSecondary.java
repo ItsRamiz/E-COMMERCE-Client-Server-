@@ -1,5 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
-
+import il.cshaifasweng.OCSFMediatorExample.entities.CheckMail;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
@@ -126,9 +126,9 @@ public class LogInSecondary {
     }
 
     public void LogIn(javafx.event.ActionEvent actionEvent) throws IOException {
-        CheckMail checkML  = new CheckMail(Email.getText(),login_flag); // check if employee's/customer's email exists
+        CheckMail checkML  = new CheckMail(Email.getText(),login_flag,Password.getText()); // check if employee's/customer's email exists
         try {
-            SimpleClient.getClient().sendToServer(checkML); // sends the updated product to the server class
+            SimpleClient.getClient().sendToServer(checkML); // send the mail to the server to check if exists
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -136,18 +136,21 @@ public class LogInSecondary {
     }
 
     @Subscribe
-    public void checkMailInDB(CheckMail checkML){
-        if(checkML.getExists()==true){
-            MailPassMatch checkEmailPass = new MailPassMatch(Email.getText(),Password.getText(),login_flag);
+    public void checkMailInDB(MailChecker checkML){
+        if(checkML.getExistsMail()==false){ // case incorrect email
+            System.out.println("arrived to case incorrect email succesfully");
+            ErrorMsg.setVisible(true);
+
+            /*MailPassMatch checkEmailPass = new MailPassMatch(Email.getText(),Password.getText(),login_flag);
             try {
-                SimpleClient.getClient().sendToServer(checkEmailPass); // sends the updated product to the server class
+                SimpleClient.getClient().sendToServer(checkEmailPass);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            }
+            }*/
         }
-        else{
-            ErrorMsg.setVisible(true);
+        else if(checkML.getExistsPassword()==false){ // case email found but the password is incorrect
+            System.out.println("arrived to case incorrect password succesfully");
         }
     }
 
