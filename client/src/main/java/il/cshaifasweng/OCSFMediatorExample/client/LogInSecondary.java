@@ -150,7 +150,7 @@ public class LogInSecondary {
             }*/
         }
         else if(checkML.getExistsPassword()==false){ // case email found but the password is incorrect
-            System.out.println("arrived to case incorrect password succesfully");
+            System.out.println("arrived to case incorrect password  succesfully");
         }
     }
 
