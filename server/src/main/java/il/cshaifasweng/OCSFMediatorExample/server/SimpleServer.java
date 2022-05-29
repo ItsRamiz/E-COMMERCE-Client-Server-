@@ -5,6 +5,8 @@ import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.WorkerUpdateManager;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ManagerUpdateManager;
+import il.cshaifasweng.OCSFMediatorExample.server.ocsf.OrderUpdateManager;
+
 
 //import il.cshaifasweng.OCSFMediatorExample.server.Product;
 import java.io.IOException;
@@ -59,6 +61,7 @@ public class SimpleServer extends AbstractServer {
 		configuration.addAnnotatedClass(Account.class);
 		configuration.addAnnotatedClass(Worker.class);
 		configuration.addAnnotatedClass(Manager.class);
+		configuration.addAnnotatedClass(Order.class);
 
 
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
@@ -171,7 +174,7 @@ public class SimpleServer extends AbstractServer {
 						removeAccount(idToRemove, client);
 					}
 					else if(updateClassFunction.equals("edit")){
-						System.out.println("Arrived edit worker case in switch !");
+						System.out.println("Arrived edit account case in switch !");
 						Account editAcc = recievedMessage.getAccount();
 						editAccount(editAcc);
 					}
@@ -213,6 +216,26 @@ public class SimpleServer extends AbstractServer {
 						Manager recievedManager = recievedMessage.getManager();
 						ManagerUpdateManager.editManager(recievedManager);
 					}
+
+					session.close();
+
+					break;
+
+				case "order":
+					if (updateClassFunction.equals("add")) {
+						System.out.println("arrived to here inside order add");
+						Order recievedOrder = recievedMessage.getOrder();
+						OrderUpdateManager.addOrder(recievedOrder);
+
+					} else if (updateClassFunction.equals("remove")) {
+						String idToRemove = recievedMessage.getDelteId();
+						OrderUpdateManager.removeOrder(idToRemove, client);
+					}
+					/*else if(updateClassFunction.equals("edit")){
+						System.out.println("Arrived edit order case in switch !");
+						Order recievedOrder = recievedMessage.getOrder();
+						OrderUpdateManager.editOrder(recievedOrder);
+					}*/
 
 					session.close();
 

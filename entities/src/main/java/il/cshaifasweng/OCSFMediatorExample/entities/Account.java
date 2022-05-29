@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "accounts_table")
@@ -30,8 +31,13 @@ public class Account implements Serializable {
     private Boolean loggedIn;
     //private List<Complaint> accountComplaints = new List<Complaint>;
     //private List<Order> accountOrders = new List<Order>;
+    //@OneToOne
     //private Cart accCart;
+    @OneToMany
+    private List<Order> AccountOrders;
     private int belongShop;
+    //private int wallet;
+
 
 
     public Account(String fullName, String address,String email, String password,long phoneNumber, long creditCardNumber,Date creditCardExpire,int ccv,int belongShop)
@@ -46,6 +52,8 @@ public class Account implements Serializable {
         this.ccv = ccv;
         this.loggedIn = false;
         this.belongShop = belongShop;
+        //this.wallet = 0;
+        this.AccountOrders = null;
     }
     public Account()
     {
@@ -139,4 +147,12 @@ public class Account implements Serializable {
     public int getBelongShop() {
         return belongShop;
     }
+
+   /* public void setWallet(int wallet) {
+        this.wallet = wallet;
+    }
+
+    public int getWallet() {
+        return wallet;
+    }*/
 }

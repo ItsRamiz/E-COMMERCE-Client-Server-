@@ -12,9 +12,10 @@ public class UpdateMessage implements Serializable {
     private Account account = null;
     private Worker worker = null;
     private Manager manager = null;
+    private Order order = null;
 
 
-    public UpdateMessage(String update_class,String update_function){
+    public UpdateMessage(String update_class, String update_function){
         this.updateClass = update_class;
         this.updateFunction = update_function;
 
@@ -71,6 +72,14 @@ public class UpdateMessage implements Serializable {
 
     public void setManager(Manager manager) {
         this.manager = manager;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }
 
