@@ -358,7 +358,8 @@ public class PrimaryController {
 		// Create a new product with the current variables
 		Product new_flower = new Product();
 		new_flower.setPrice(newPrice);
-		new_flower.setButton(newType);
+		new_flower.setName(newType);
+		new_flower.setDetails(newDesc);
 		flowersnum2++;
 		new_flower.setID(flowersnum2);
 		UpdateMessage updateMessage1 = new UpdateMessage("product", "add");
