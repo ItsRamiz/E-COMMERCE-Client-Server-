@@ -196,14 +196,14 @@ public class PrimaryController {
 	void prevPageUpate(ActionEvent event)
 	{
 		int difference = CatalogSTARTIndex - 6;
-		if(difference >= 0)
+		if(difference >= 6)
 		{
 			CatalogENDIndex = CatalogSTARTIndex;
-			CatalogSTARTIndex = CatalogSTARTIndex - 6;
+			CatalogSTARTIndex = CatalogSTARTIndex - 7;
 		}
 		else
 		{
-			CatalogENDIndex = CatalogSTARTIndex + 1;
+			CatalogENDIndex = CatalogSTARTIndex;
 			CatalogSTARTIndex = 0;
 		}
 		updateFields(allProducts,1);
@@ -355,7 +355,6 @@ public class PrimaryController {
 		String newType = EditItemType.getText();
 		String newDesc = EditItemDesc.getText();
 		String newPrice = EditItemPrice.getText();
-		// Create a new product with the current variables
 		Product new_flower = new Product();
 		new_flower.setPrice(newPrice);
 		new_flower.setName(newType);
@@ -435,6 +434,11 @@ public class PrimaryController {
 
 	@FXML
 	void adminUpdateItemFunc(ActionEvent event) {
+
+		String TempType = allProducts.get(0).getName();
+		String TempDesc = allProducts.get(0).getDetails();
+		String TempPrice = allProducts.get(0).getPrice();
+
 		String newType = EditItemType.getText();
 		System.out.println(newType);
 		String newDesc = EditItemDesc.getText();
@@ -443,6 +447,14 @@ public class PrimaryController {
 		System.out.println(newPrice);
 		String updateID = EditItemExtra.getText();
 		System.out.println(updateID);
+
+		List<Product> tempList = allProducts;
+		int TargerID = Integer.parseInt(updateID) - 1;
+
+		allProducts.get(TargerID).setName(newType);
+		allProducts.get(TargerID).setPrice(newPrice);
+		allProducts.get(TargerID).setDetails(newDesc);
+
 		Product currtProduct  = il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.getCurrent_button();
 
 
@@ -465,7 +477,12 @@ public class PrimaryController {
 			e.printStackTrace();
 		}
 
-			// Update the item with the current ID with the new variables
+
+		allProducts.get(0).setName(TempType);
+		allProducts.get(0).setPrice(TempPrice);
+		allProducts.get(0).setDetails(TempDesc);
+
+		// Update the item with the current ID with the new variables
 		//remID.setVisible(false);
 		CreateCustomItem.setVisible(true);
 		adminEditCatalog.setVisible(true);
@@ -482,9 +499,9 @@ public class PrimaryController {
 		EditItemDesc.setVisible(false);
 		EditItemPrice.setVisible(false);
 		EditItemExtra.setVisible(false);
-	//	UpdateItem.setVisible(false);
+		//	UpdateItem.setVisible(false);
 
-
+		updateFields(allProducts,1);
 	}
 
 	@FXML
