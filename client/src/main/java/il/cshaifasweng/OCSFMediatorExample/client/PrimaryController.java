@@ -34,6 +34,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.EventBus;
@@ -160,6 +161,102 @@ public class PrimaryController {
 	@FXML // fx:id="UpdateItem"
 	private Button UpdateItem; // Value injected by FXMLLoader
 
+	@FXML
+	private Button printProd;
+
+	@FXML
+	private Button justButton;
+
+	@FXML
+	private Text justText;
+
+	@FXML
+	private Button nextPage;
+
+	@FXML
+	private Button prevPage;
+
+	@FXML
+	void nextPageUpate(ActionEvent event)
+	{
+		int difference = allProducts.size() - CatalogENDIndex;
+		CatalogSTARTIndex = CatalogENDIndex;
+		if(difference < 7)
+		{
+			CatalogENDIndex = CatalogENDIndex + difference;
+		}
+		else
+		{
+			CatalogENDIndex = CatalogENDIndex + 6;
+		}
+		updateFields(allProducts,1);
+	}
+
+	@FXML
+	void prevPageUpate(ActionEvent event)
+	{
+		int difference = CatalogSTARTIndex - 6;
+		if(difference >= 0)
+		{
+			CatalogENDIndex = CatalogSTARTIndex;
+			CatalogSTARTIndex = CatalogSTARTIndex - 6;
+		}
+		else
+		{
+			CatalogENDIndex = CatalogSTARTIndex + 1;
+			CatalogSTARTIndex = 0;
+		}
+		updateFields(allProducts,1);
+
+	}
+
+	@FXML
+	void justView(ActionEvent event) {
+		updateFields(allProducts,2);
+		new java.util.Timer().schedule(
+				new java.util.TimerTask() {
+					@Override
+					public void run()
+					{
+						// Unused Timer, Please Keep
+					}
+				},0
+		);
+		flower_button1.setVisible(true);
+		flower_button2.setVisible(true);
+		flower_button3.setVisible(true);
+		flower_button4.setVisible(true);
+		flower_button5.setVisible(true);
+		flower_button6.setVisible(true);
+
+		flower_price1.setVisible(true);
+		flower_price2.setVisible(true);
+		flower_price3.setVisible(true);
+		flower_price4.setVisible(true);
+		flower_price5.setVisible(true);
+		flower_price6.setVisible(true);
+
+		flower_name1.setVisible(true);
+		flower_name2.setVisible(true);
+		flower_name3.setVisible(true);
+		flower_name4.setVisible(true);
+		flower_name5.setVisible(true);
+		flower_name6.setVisible(true);
+
+		justText.setVisible(false);
+		justButton.setVisible(false);
+	}
+	@FXML
+	void printProducts(ActionEvent event)
+	{
+		for(int i = 0 ; i < allProducts.size() ; i++)
+		{
+			System.out.println("ID: " + allProducts.get(i).getID());
+			System.out.println("Name: " + allProducts.get(i).getName());
+			System.out.println("Price: " + allProducts.get(i).getPrice());
+			System.out.println("### END ###");
+		}
+	}
 	public static String current_button;
 
 	@FXML
@@ -451,21 +548,102 @@ public class PrimaryController {
 	}
 
 
-	public void updateFields(List<Product> allProducts) {
-		flower_name1.setText(allProducts.get(0).getName());
-		flower_name2.setText(allProducts.get(1).getName());
-		flower_name3.setText(allProducts.get(2).getName());
-		flower_name4.setText(allProducts.get(3).getName());
-		flower_name5.setText(allProducts.get(4).getName());
-		flower_name6.setText(allProducts.get(5).getName());
+	public void updateFields(List<Product> allProducts,int mode)
+	{
 
-		flower_price1.setContentText(allProducts.get(0).getPrice());
-		flower_price2.setContentText(allProducts.get(1).getPrice());
-		flower_price3.setContentText(allProducts.get(2).getPrice());
-		flower_price4.setContentText(allProducts.get(3).getPrice());
-		flower_price5.setContentText(allProducts.get(4).getPrice());
-		flower_price6.setContentText(allProducts.get(5).getPrice());
+		System.out.println("START INDEX = " + CatalogSTARTIndex);
+		System.out.println("END INDEX = " + CatalogENDIndex);
+		System.out.println("Length = " + allProducts.size());
+		if (mode == 0) {
+			flower_name1.setText(allProducts.get(0).getName());
+			flower_name2.setText(allProducts.get(1).getName());
+			flower_name3.setText(allProducts.get(2).getName());
+			flower_name4.setText(allProducts.get(3).getName());
+			flower_name5.setText(allProducts.get(4).getName());
+			flower_name6.setText(allProducts.get(5).getName());
+
+			flower_price1.setContentText(allProducts.get(0).getPrice());
+			flower_price2.setContentText(allProducts.get(1).getPrice());
+			flower_price3.setContentText(allProducts.get(2).getPrice());
+			flower_price4.setContentText(allProducts.get(3).getPrice());
+			flower_price5.setContentText(allProducts.get(4).getPrice());
+			flower_price6.setContentText(allProducts.get(5).getPrice());
+
+			flower_price1.setContentText(allProducts.get(0).getPrice());
+			flower_price2.setContentText(allProducts.get(1).getPrice());
+			flower_price3.setContentText(allProducts.get(2).getPrice());
+			flower_price4.setContentText(allProducts.get(3).getPrice());
+			flower_price5.setContentText(allProducts.get(4).getPrice());
+			flower_price6.setContentText(allProducts.get(5).getPrice());
+		}
+		else
+		{
+			if(mode == 2)
+			{
+				// MODE = 1 Does Normal Updating , CatalogSTARTIndex and CatalogENDIndex
+				CatalogSTARTIndex = 0;          // Were updated from outside the function.
+				if (allProducts.size() > 5)    // MODE = 2, Do not use Mode 2, Ramiz knows what this shit does, ask him
+					CatalogENDIndex = 6;
+				else
+					CatalogENDIndex = allProducts.size();
+				System.out.println("START INDEX = " + CatalogSTARTIndex);
+				System.out.println("END INDEX = " + CatalogENDIndex);
+			}
+
+			flower_name1.setText("NULL");
+			flower_name2.setText("NULL");
+			flower_name3.setText("NULL");
+			flower_name4.setText("NULL");
+			flower_name5.setText("NULL");
+			flower_name6.setText("NULL");
+
+			flower_price1.setContentText("NaN");
+			flower_price2.setContentText("NaN");
+			flower_price3.setContentText("NaN");
+			flower_price4.setContentText("NaN");
+			flower_price5.setContentText("NaN");
+			flower_price6.setContentText("NaN");
+
+			if(CatalogENDIndex - CatalogSTARTIndex > 0)
+			{
+				flower_name1.setText(allProducts.get(CatalogSTARTIndex).getName());
+				flower_price1.setContentText(allProducts.get(CatalogSTARTIndex).getPrice());
+			}
+
+			if (CatalogENDIndex - CatalogSTARTIndex > 1)
+			{
+				flower_name2.setText(allProducts.get(CatalogSTARTIndex + 1).getName());
+				flower_price2.setContentText(allProducts.get(CatalogSTARTIndex + 1).getPrice());
+			}
+			if (CatalogENDIndex - CatalogSTARTIndex > 2)
+			{
+				flower_name3.setText(allProducts.get(CatalogSTARTIndex + 2).getName());
+				flower_price3.setContentText(allProducts.get(CatalogSTARTIndex + 2).getPrice());
+			}
+			if (CatalogENDIndex - CatalogSTARTIndex > 3)
+			{
+				flower_name4.setText(allProducts.get(CatalogSTARTIndex + 3).getName());
+				flower_price4.setContentText(allProducts.get(CatalogSTARTIndex + 3).getPrice());
+			}
+			if (CatalogENDIndex - CatalogSTARTIndex > 4)
+			{
+				flower_name5.setText(allProducts.get(CatalogSTARTIndex + 4).getName());
+				flower_price5.setContentText(allProducts.get(CatalogSTARTIndex + 4).getPrice());
+			}
+			if (CatalogENDIndex - CatalogSTARTIndex > 5)
+			{
+				flower_name5.setText(allProducts.get(CatalogSTARTIndex + 4).getName());
+				flower_price5.setContentText(allProducts.get(CatalogSTARTIndex + 4).getPrice());
+			}
+			if (CatalogENDIndex - CatalogSTARTIndex == 6)
+			{
+				flower_name6.setText(allProducts.get(CatalogSTARTIndex + 5).getName());
+				flower_price6.setContentText(allProducts.get(CatalogSTARTIndex + 5).getPrice());
+			}
+		}
 	}
+	int CatalogSTARTIndex;
+	int CatalogENDIndex;
 
 	static List<Product> allProducts = new ArrayList<>();
 
@@ -478,6 +656,8 @@ public class PrimaryController {
 
 	@FXML
 	void initialize() throws MalformedURLException {
+		justText.setVisible(true);
+		justButton.setVisible(false);
 		System.out.println("arrived to initialize 1");
 		EventBus.getDefault().register(this);
 		assert flower_button1 != null : "fx:id=\"flower_button1\" was not injected: check your FXML file 'primary.fxml'.";
@@ -516,6 +696,27 @@ public class PrimaryController {
 		CancelCustomItem.setVisible(false);
 		FinishCustomItem.setVisible(false);
 
+		flower_button1.setVisible(false);
+		flower_button2.setVisible(false);
+		flower_button3.setVisible(false);
+		flower_button4.setVisible(false);
+		flower_button5.setVisible(false);
+		flower_button6.setVisible(false);
+
+		flower_price1.setVisible(false);
+		flower_price2.setVisible(false);
+		flower_price3.setVisible(false);
+		flower_price4.setVisible(false);
+		flower_price5.setVisible(false);
+		flower_price6.setVisible(false);
+
+		flower_name1.setVisible(false);
+		flower_name2.setVisible(false);
+		flower_name3.setVisible(false);
+		flower_name4.setVisible(false);
+		flower_name5.setVisible(false);
+		flower_name6.setVisible(false);
+
 		adminEditCatalog.getItems().add("Add Item");
 		adminEditCatalog.getItems().add("Remove Item");
 		adminEditCatalog.getItems().add("Edit Item");
@@ -523,8 +724,17 @@ public class PrimaryController {
 
 		initializeData();
 		if (returnedFromSecondaryController) {
-			updateFields(allProducts);
+			updateFields(allProducts,0);
 		}
+		new java.util.Timer().schedule(
+				new java.util.TimerTask() {
+					@Override
+					public void run() {
+						justButton.setVisible(true);
+					}
+				},2000
+		);
+
 	}
 
 
