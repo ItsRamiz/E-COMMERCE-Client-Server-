@@ -33,8 +33,8 @@ public class Account implements Serializable {
     //private List<Order> accountOrders = new List<Order>;
     //@OneToOne
     //private Cart accCart;
-    @OneToMany
-    private List<Order> AccountOrders;
+    /*@OneToMany
+    private List<Order> AccountOrders;*/
     private int belongShop;
     //private int wallet;
 
@@ -53,7 +53,7 @@ public class Account implements Serializable {
         this.loggedIn = false;
         this.belongShop = belongShop;
         //this.wallet = 0;
-        this.AccountOrders = null;
+       // this.AccountOrders = null;
     }
     public Account()
     {

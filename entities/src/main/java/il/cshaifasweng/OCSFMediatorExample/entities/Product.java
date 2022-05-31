@@ -20,9 +20,9 @@ public class Product implements Serializable {
     private String price;
     @Column(name = "product_image")
     private String image;
-    @ManyToMany (mappedBy = "products")
+   /* @ManyToMany (mappedBy = "products")
     private List<Order> orders;
-
+*/
     public Product(int id, String button, String name,String details, String price) {
         super();
         this.button = button;

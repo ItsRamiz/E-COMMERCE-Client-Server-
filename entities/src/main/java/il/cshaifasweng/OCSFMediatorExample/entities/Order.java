@@ -37,14 +37,14 @@ public class Order implements Serializable {
     private long creditCardNumber;
     @Column(name = "CVV")
     private int cvv;
-    @ManyToMany
+    /*@ManyToMany
     private List<Product> products;
     @ManyToOne
     private Account accOrder;
-
+*/
     public Order(){}
 
-    public Order(int orderID, boolean pickUp, int shopID, String greeting, int totalPrice, String deliveredAddress, boolean gift, boolean delivered, Date arrivalTime, Date orderTime, Date creditCardExpire, long creditCardNumber, int cvv, Account accOrder) {
+    public Order(int orderID, boolean pickUp, int shopID, String greeting, int totalPrice, String deliveredAddress, boolean gift, boolean delivered, Date arrivalTime, Date orderTime, Date creditCardExpire, long creditCardNumber, int cvv/*, Account accOrder*/) {
         this.orderID = orderID;
         this.pickUp = pickUp;
         this.shopID = shopID;
@@ -58,7 +58,7 @@ public class Order implements Serializable {
         this.creditCardExpire = creditCardExpire;
         this.creditCardNumber = creditCardNumber;
         this.cvv = cvv;
-        this.accOrder = accOrder;
+        //this.accOrder = accOrder;
     }
 
     public int getOrderID() {
@@ -165,7 +165,7 @@ public class Order implements Serializable {
     public void setCvv(int cvv) {
         this.cvv = cvv;
     }
-
+/*
     public Account getAccOrder() {
         return accOrder;
     }
@@ -173,4 +173,6 @@ public class Order implements Serializable {
     public void setAccOrder(Account accOrder) {
         this.accOrder = accOrder;
     }
+
+ */
 }

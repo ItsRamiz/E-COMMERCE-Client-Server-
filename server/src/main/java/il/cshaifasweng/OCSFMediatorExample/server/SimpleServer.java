@@ -89,6 +89,7 @@ public class SimpleServer extends AbstractServer {
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) throws SQLException, IOException {
 
 		System.out.println("handleeeeeeeeeeee");
+		System.out.println("msg class is " +msg.getClass());
 		if (msg instanceof String) {
 			SessionFactory sessionFactory = getSessionFactory();
 			session = sessionFactory.openSession();
@@ -296,24 +297,31 @@ public class SimpleServer extends AbstractServer {
 
 		if (msg instanceof ArrayList) { // arrived from the initializing of the program, so we initialize the database
 			// with the starting Products
+			System.out.println("Arrived here: msg instance of arrayList ");
+
+			System.out.println("list size 11111 = "+ flowersnum);
+
 			SessionFactory sessionFactory = getSessionFactory();
 			session = sessionFactory.openSession();
 			Transaction tx1 = session.beginTransaction();
+			System.out.println("msg instance of arrayList ");
 
 
 			List<Product> resultList = (List<Product>) msg;
 			flowersnum = resultList.size();
+			System.out.println("list size 2222 = "+ flowersnum);
 			for (int i = 0; i < resultList.size(); i++) {
 				//productGeneralList.set(i,resultList.get(i));
 				session.save(resultList.get(i)); // save the Product in the database
 				session.flush();
+				System.out.println(resultList.get(i).getName());
 			}
 			tx1.commit();
 
 
 			for (int i = 0; i < resultList.size(); i++) {
 				productGeneralList.add(resultList.get(i));
-
+				System.out.println(resultList.get(i).getName());
 			}
 
 
@@ -424,22 +432,15 @@ public class SimpleServer extends AbstractServer {
 		System.out.println("Arrived to edit catalog product 5");
 
 		/*try {
-
 			Product updatedProduct = new Product(recievedProductID, recievedProductButton, recievedProductName, recievedProductDetails, recievedProductPrice);
-
-
 			for (int i = 0; i < productGeneralList.size(); i++) {
 				if (productGeneralList.get(i).getID() == recievedProductID) {
 					productGeneralList.set(i, updatedProduct);
 				}
 			}
-
-
 			*//* USE UPDATE METHOD IN THE FUTURE *//*
 			Saveinsess();
 			tx.commit();
-
-
 		} catch (Exception exception) {
 			if (session != null) {
 				session.getTransaction().rollback();
@@ -716,22 +717,15 @@ public class SimpleServer extends AbstractServer {
 
 
 		/*try {
-
 			Product updatedProduct = new Product(recievedProductID, recievedProductButton, recievedProductName, recievedProductDetails, recievedProductPrice);
-
-
 			for (int i = 0; i < productGeneralList.size(); i++) {
 				if (productGeneralList.get(i).getID() == recievedProductID) {
 					productGeneralList.set(i, updatedProduct);
 				}
 			}
-
-
 			*//* USE UPDATE METHOD IN THE FUTURE *//*
 			Saveinsess();
 			tx.commit();
-
-
 		} catch (Exception exception) {
 			if (session != null) {
 				session.getTransaction().rollback();
