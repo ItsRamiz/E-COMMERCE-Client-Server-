@@ -41,6 +41,9 @@ public class LogInSecondary {
     private Button Employee_login;
 
     @FXML
+    private Button Manager_login;
+
+    @FXML
     private Label ErrorMsg;
 
     @FXML
@@ -76,6 +79,7 @@ public class LogInSecondary {
     @FXML
     void CustomerLogIn(ActionEvent event) throws IOException {
         login_flag = "customer";
+        catalog_flag.setFlagg(1);
       /*  UpdateMessage new_msg=new UpdateMessage("account","add");
         Date date=new Date();
         Account new_acc=new Account("khaled","sakhnin","@eee","332",457,889,date,445,2);
@@ -100,6 +104,21 @@ public class LogInSecondary {
 
     @FXML
     void EmployeeLogIn(ActionEvent event) throws IOException {
+        catalog_flag.setFlagg(2);
+        login_flag = "employee";
+        Customer_login.setVisible(false);
+        Employee_login.setVisible(false);
+        Email.setVisible(true);
+        Password.setVisible(true);
+        LogIn.setVisible(true);
+        ErrorMsg.setVisible(false);
+      //  bak.setVisible(true);
+        ErrorMsgPass.setVisible(false);
+    }
+
+    @FXML
+    void ManagerLogIn(ActionEvent event) throws IOException {
+        catalog_flag.setFlagg(3);
         login_flag = "employee";
         Customer_login.setVisible(false);
         Employee_login.setVisible(false);

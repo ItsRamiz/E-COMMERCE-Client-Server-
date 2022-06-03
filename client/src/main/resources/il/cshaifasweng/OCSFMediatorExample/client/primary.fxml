@@ -32,6 +32,7 @@
                 <TextField fx:id="customType" layoutX="15.0" layoutY="632.0" text="Enter Item Type" />
                 <Button id="btttn" fx:id="CreateCustomItem" layoutX="15.0" layoutY="470.0" mnemonicParsing="false" onAction="#createCustomitem" prefHeight="40.0" prefWidth="150.0" text="Create Custom Item" />
                 <TextField fx:id="customid" layoutX="15.0" layoutY="597.0" text="Item ID" />
+            <ComboBox id="btttn" fx:id="worker_edit" layoutX="15.0" layoutY="361.0" onAction="#chooseAdminEditCatalog" prefHeight="26.0" prefWidth="150.0" promptText="           Edit workers" />
             </children>
         </AnchorPane>
         <AnchorPane id="ee" fx:id="container2" layoutX="273.0" layoutY="148.0" prefHeight="202.0" prefWidth="206.0" AnchorPane.rightAnchor="526.0" AnchorPane.topAnchor="148.0">
@@ -135,18 +136,22 @@
         <AnchorPane id="cath" layoutY="-3.0" maxHeight="50.0" minHeight="50.0" prefHeight="52.0" prefWidth="1014.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-100.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Button id="btttn" fx:id="accbtn" layoutX="188.0" layoutY="13.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#accbtnlogin" prefHeight="30.0" prefWidth="100.0" text="account" AnchorPane.rightAnchor="700.0" AnchorPane.topAnchor="12.0" />
-                <Button id="btttn" layoutX="399.0" layoutY="12.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="info" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="12.0" />
-                <Button id="btttn" layoutX="617.0" layoutY="12.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="cart" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="12.0" />
+                <Button id="btttn" fx:id="infoo" layoutX="399.0" layoutY="12.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="info" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="12.0" />
+                <Button id="btttn" fx:id="cartt" layoutX="617.0" layoutY="12.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="cart" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="12.0" />
                 <Button id="btttn" fx:id="compln" layoutX="108.0" layoutY="12.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#complinstart" prefHeight="30.0" prefWidth="100.0" text="complaint" AnchorPane.rightAnchor="900.0" AnchorPane.topAnchor="12.0" />
             </children>
         </AnchorPane>
         <Button fx:id="printProd" layoutX="77.0" layoutY="388.0" mnemonicParsing="false" onAction="#printProducts" text="Print Products" />
-        <Button fx:id="justButton" layoutX="509.0" layoutY="376.0" mnemonicParsing="false" onAction="#justView" prefHeight="34.0" prefWidth="171.0" text="Click To Continue" />
-        <Text fx:id="justText" layoutX="182.0" layoutY="327.0" stroke="#e83d3d" strokeLineCap="ROUND" styleClass="back" text="Initializing The Database for You :)" wrappingWidth="333.13671875">
-            <font>
-                <Font name="Comic Sans MS" size="49.0" />
-            </font>
-        </Text>
+      <AnchorPane id="ee" fx:id="init_container" layoutX="124.0" layoutY="310.0" prefHeight="200.0" prefWidth="503.0">
+         <children>
+              <Text fx:id="justText" layoutX="163.0" layoutY="43.0" stroke="#796c6c" strokeLineCap="ROUND" styleClass="back" text="initializing database.." textAlignment="CENTER">
+                  <font>
+                      <Font name="Comic Sans MS" size="18.0" />
+                  </font>
+              </Text>
+              <Button fx:id="justButton" layoutX="165.0" layoutY="83.0" mnemonicParsing="false" onAction="#justView" prefHeight="34.0" prefWidth="171.0" text="Click To Continue" />
+         </children>
+      </AnchorPane>
 
     </children>
 </AnchorPane>

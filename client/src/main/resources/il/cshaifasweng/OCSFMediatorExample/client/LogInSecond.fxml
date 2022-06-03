@@ -15,5 +15,6 @@
       <Label fx:id="ErrorMsg" layoutX="378.0" layoutY="174.0" text="This Email doesn't exist!" textFill="WHITE" />
       <Label fx:id="ErrorMsgPass" layoutX="378.0" layoutY="212.0" text="Password doesn't match Email!" textFill="WHITE" />
       <Button fx:id="LogIn" layoutX="238.0" layoutY="255.0" mnemonicParsing="false" onAction="#LogIn" prefHeight="38.0" prefWidth="87.0" text="Log in" />
+      <Button fx:id="Manager_login" layoutX="214.0" layoutY="294.0" mnemonicParsing="false" onAction="#ManagerLogIn" prefHeight="50.0" prefWidth="135.0" text="Manager Login" />
     </children>
 </AnchorPane>

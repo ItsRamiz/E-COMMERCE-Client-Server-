@@ -34,6 +34,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.greenrobot.eventbus.Subscribe;
@@ -58,6 +59,11 @@ public class PrimaryController {
 	@FXML // fx:id="adminEditCatalog"
 	private ComboBox<String> adminEditCatalog; // Value injected by FXMLLoader
 
+	@FXML // fx:id="adminEditCatalog"
+	private ComboBox<String> worker_edit; // Value injected by FXMLLoader
+
+	@FXML
+	private AnchorPane init_container;
 
 	@FXML // fx:id="EditItemDesc"
 	private TextField EditItemDesc; // Value injected by FXMLLoader
@@ -85,7 +91,12 @@ public class PrimaryController {
 	private TextField customType; // Value injected by FXMLLoader
 
 	@FXML // fx:id="CreateCustomItem"
-	public Button CreateCustomItem; // Value injected by FXMLLoader
+	public Button CreateCustomItem; // Value injected by FXMLLoader@FXML // fx:id="CreateCustomItem"
+
+	@FXML
+	public Button infoo;
+	@FXML
+	public Button cartt; // Value injected by FXMLLoader
 
 	@FXML // fx:id="CancelCustomItem"
 	private Button CancelCustomItem; // Value injected by FXMLLoader
@@ -212,6 +223,7 @@ public class PrimaryController {
 
 	@FXML
 	void justView(ActionEvent event) {
+		init_container.setVisible(false);
 		updateFields(allProducts,2);
 		new java.util.Timer().schedule(
 				new java.util.TimerTask() {
@@ -245,6 +257,10 @@ public class PrimaryController {
 
 		justText.setVisible(false);
 		justButton.setVisible(false);
+		System.out.println(catalog_flag.getFlagg());
+
+
+
 	}
 	@FXML
 	void printProducts(ActionEvent event)
@@ -696,7 +712,53 @@ public class PrimaryController {
 		assert flower_price4 != null : "fx:id=\"flower_price4\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_price5 != null : "fx:id=\"flower_price5\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_price6 != null : "fx:id=\"flower_price6\" was not injected: check your FXML file 'primary.fxml'.";
-
+		catalog_flag.setFlagg(3);
+		switch (catalog_flag.getFlagg()){
+			case 0:{
+				System.out.println("case 0");
+				accbtn.setText("Log In");
+				infoo.setVisible(false);
+				cartt.setVisible(false);
+				compln.setVisible(false);
+				adminEditCatalog.setVisible(false);
+				CreateCustomItem.setVisible(false);
+				worker_edit.setVisible(false);
+				break;
+			}
+			case 1:{
+				System.out.println("case 1");
+				accbtn.setText("Log Out");
+				infoo.setVisible(true);
+				cartt.setVisible(true);
+				compln.setVisible(true);
+				adminEditCatalog.setVisible(false);
+				CreateCustomItem.setVisible(true);
+				worker_edit.setVisible(false);
+				break;
+			}
+			case 2:{
+				System.out.println("case 2");
+				accbtn.setText("Log Out");
+				infoo.setVisible(true);
+				cartt.setVisible(true);
+				compln.setVisible(true);
+				adminEditCatalog.setVisible(true);
+				CreateCustomItem.setVisible(true);
+				worker_edit.setVisible(false);
+				break;
+			}
+			case 3:{
+				System.out.println("case 3");
+				accbtn.setText("Log Out");
+				infoo.setVisible(true);
+				cartt.setVisible(true);
+				compln.setVisible(true);
+				adminEditCatalog.setVisible(true);
+				CreateCustomItem.setVisible(true);
+				worker_edit.setVisible(true);
+				break;
+			}
+		}
 		customColor.setVisible(false);
 		customPrice.setVisible(false);
 		customid.setVisible(false);
@@ -734,16 +796,24 @@ public class PrimaryController {
 		flower_name4.setVisible(false);
 		flower_name5.setVisible(false);
 		flower_name6.setVisible(false);
+		init_container.setVisible(false);
+
 
 		adminEditCatalog.getItems().add("Add Item");
 		adminEditCatalog.getItems().add("Remove Item");
 		adminEditCatalog.getItems().add("Edit Item");
 
 
+		worker_edit.getItems().add("Add worker");
+		worker_edit.getItems().add("Remove worker");
+		worker_edit.getItems().add("Edit worker");
+
+
 		initializeData();
 		if (returnedFromSecondaryController) {
 			updateFields(allProducts,0);
 		}
+		init_container.setVisible(true);
 		new java.util.Timer().schedule(
 				new java.util.TimerTask() {
 					@Override
@@ -752,6 +822,7 @@ public class PrimaryController {
 					}
 				},2000
 		);
+
 
 	}
 
@@ -895,6 +966,9 @@ public class PrimaryController {
 
 	@FXML
 	void accbtnlogin(ActionEvent event) throws IOException {
+		if(catalog_flag.getFlagg() !=0){
+			catalog_flag.setFlagg(0);
+		}
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInPrim.fxml"));
 		Parent roott = loader.load();
 		LogInPrimary cc = loader.getController();
