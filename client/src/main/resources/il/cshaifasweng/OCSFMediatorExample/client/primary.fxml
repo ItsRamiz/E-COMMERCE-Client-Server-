@@ -27,12 +27,12 @@
                 <TextField fx:id="EditItemType" layoutX="16.0" layoutY="69.0" text="New Item Type" />
                 <Button id="btttn" fx:id="FinishCustomItem" layoutX="31.0" layoutY="669.0" mnemonicParsing="false" onAction="#cancelCustomitem" prefHeight="34.0" prefWidth="115.0" text="Add To Cart" />
                 <Button id="btttn" fx:id="CancelCustomItem" layoutX="58.0" layoutY="710.0" mnemonicParsing="false" onAction="#cancelCustomitem" prefHeight="30.0" prefWidth="62.0" text="Cancel" />
-                <TextField fx:id="customPrice" layoutX="15.0" layoutY="561.0" text="Enter Price Range" />
-                <TextField fx:id="customColor" layoutX="15.0" layoutY="524.0" text="Enter Dominant Color" />
-                <TextField fx:id="customType" layoutX="15.0" layoutY="632.0" text="Enter Item Type" />
+                <TextField fx:id="customPrice" layoutX="15.0" layoutY="632.0" text="Enter Price Range" />
                 <Button id="btttn" fx:id="CreateCustomItem" layoutX="15.0" layoutY="470.0" mnemonicParsing="false" onAction="#createCustomitem" prefHeight="40.0" prefWidth="150.0" text="Create Custom Item" />
                 <TextField fx:id="customid" layoutX="15.0" layoutY="597.0" text="Item ID" />
             <ComboBox id="btttn" fx:id="worker_edit" layoutX="15.0" layoutY="361.0" onAction="#chooseAdminEditCatalog" prefHeight="26.0" prefWidth="150.0" promptText="           Edit workers" />
+            <ComboBox fx:id="chooseCustomType" layoutX="13.0" layoutY="524.0" prefWidth="150.0" promptText="Choose Type" />
+            <ComboBox fx:id="chooseCustomColor" layoutX="14.0" layoutY="559.0" prefWidth="150.0" promptText="Choose Dominant Color" />
             </children>
         </AnchorPane>
         <AnchorPane id="ee" fx:id="container2" layoutX="273.0" layoutY="148.0" prefHeight="202.0" prefWidth="206.0" AnchorPane.rightAnchor="526.0" AnchorPane.topAnchor="148.0">

@@ -187,20 +187,31 @@ public class PrimaryController {
 	@FXML
 	private Button prevPage;
 
+
+	@FXML
+	private ComboBox<String> chooseCustomColor;
+
+	@FXML
+	private ComboBox<String> chooseCustomType;
+
 	@FXML
 	void nextPageUpate(ActionEvent event)
 	{
 		int difference = allProducts.size() - CatalogENDIndex;
-		CatalogSTARTIndex = CatalogENDIndex;
-		if(difference < 7)
+		if(difference == 0)
 		{
-			CatalogENDIndex = CatalogENDIndex + difference;
+
 		}
 		else
 		{
-			CatalogENDIndex = CatalogENDIndex + 6;
+			CatalogSTARTIndex = CatalogENDIndex;
+			if (difference < 7) {
+				CatalogENDIndex = CatalogENDIndex + difference;
+			} else {
+				CatalogENDIndex = CatalogENDIndex + 6;
+			}
+			updateFields(allProducts, 1);
 		}
-		updateFields(allProducts,1);
 	}
 
 	@FXML
@@ -214,13 +225,14 @@ public class PrimaryController {
 		}
 		else
 		{
-			CatalogENDIndex = CatalogSTARTIndex;
-			CatalogSTARTIndex = 0;
+			if(difference > -1 )
+			{
+				CatalogENDIndex = CatalogSTARTIndex;
+				CatalogSTARTIndex = 0;
+			}
 		}
 		updateFields(allProducts,1);
-
 	}
-
 	@FXML
 	void justView(ActionEvent event) {
 		init_container.setVisible(false);
@@ -313,10 +325,10 @@ public class PrimaryController {
 		RemoveItem.setVisible(false);
 		UpdateItem.setVisible(false);
 
-		customColor.setVisible(true);
+		chooseCustomColor.setVisible(true);
 		customPrice.setVisible(true);
 		customid.setVisible(true);
-		customType.setVisible(true);
+		chooseCustomType.setVisible(true);
 
 		CancelCustomItem.setVisible(true);
 		FinishCustomItem.setVisible(true);
@@ -356,14 +368,38 @@ public class PrimaryController {
 		CreateCustomItem.setVisible(true);
 		adminEditCatalog.setVisible(true);
 
-		customColor.setVisible(false);
-		customPrice.setVisible(false);
 		customid.setVisible(false);
-		customType.setVisible(false);
+		chooseCustomType.setVisible(false);
+		chooseCustomColor.setVisible(false);
+		customPrice.setVisible(false);
 
 		CancelCustomItem.setVisible(false);
 		FinishCustomItem.setVisible(false);
 	}
+
+	@FXML
+	void addCartCustomitem(ActionEvent event)
+	{
+		String color = chooseCustomColor.getSelectionModel().getSelectedItem();
+		String Type = chooseCustomType.getSelectionModel().getSelectedItem();
+		int avg = (Integer.parseInt(color) + Integer.parseInt(Type)) / 2;
+		Product product = new Product(0, "btn", "Custom Item", "A " + chooseCustomType + " With dominant color " + chooseCustomColor, Integer.toString(avg));
+
+
+		// TODO: Add the item to the cart :)
+
+
+		customid.setVisible(false);
+
+		CancelCustomItem.setVisible(false);
+		FinishCustomItem.setVisible(false);
+
+		chooseCustomType.setVisible(false);
+		chooseCustomColor.setVisible(false);
+		customPrice.setVisible(false);
+
+	}
+
 
 	@FXML
 	void adminAddItemFunc(ActionEvent event) {
@@ -393,10 +429,10 @@ public class PrimaryController {
 		adminEditCatalog.setVisible(true);
 
 		//	remID.setVisible(false);
-		customColor.setVisible(false);
+		chooseCustomColor.setVisible(false);
 		customPrice.setVisible(false);
 		customid.setVisible(false);
-		customType.setVisible(false);
+		chooseCustomType.setVisible(false);
 
 		CancelCustomItem.setVisible(false);
 		FinishCustomItem.setVisible(false);
@@ -431,10 +467,10 @@ public class PrimaryController {
 		CreateCustomItem.setVisible(true);
 		adminEditCatalog.setVisible(true);
 
-		customColor.setVisible(false);
+		chooseCustomColor.setVisible(false);
 		customPrice.setVisible(false);
 		customid.setVisible(false);
-		customType.setVisible(false);
+		chooseCustomType.setVisible(false);
 
 		CancelCustomItem.setVisible(false);
 		FinishCustomItem.setVisible(false);
@@ -503,10 +539,10 @@ public class PrimaryController {
 		CreateCustomItem.setVisible(true);
 		adminEditCatalog.setVisible(true);
 
-		customColor.setVisible(false);
+		chooseCustomColor.setVisible(false);
 		customPrice.setVisible(false);
 		customid.setVisible(false);
-		customType.setVisible(false);
+		chooseCustomType.setVisible(false);
 
 		CancelCustomItem.setVisible(false);
 		FinishCustomItem.setVisible(false);
@@ -526,10 +562,10 @@ public class PrimaryController {
 		CreateCustomItem.setVisible(false);
 		adminEditCatalog.setVisible(true);
 
-		customColor.setVisible(false);
+		chooseCustomColor.setVisible(false);
 		customPrice.setVisible(false);
 		customid.setVisible(false);
-		customType.setVisible(false);
+		chooseCustomType.setVisible(false);
 
 		CancelCustomItem.setVisible(false);
 		FinishCustomItem.setVisible(false);
@@ -759,10 +795,10 @@ public class PrimaryController {
 				break;
 			}
 		}
-		customColor.setVisible(false);
+		chooseCustomType.setVisible(false);
 		customPrice.setVisible(false);
 		customid.setVisible(false);
-		customType.setVisible(false);
+		chooseCustomColor.setVisible(false);
 
 		EditItemType.setVisible(false);
 		EditItemDesc.setVisible(false);
@@ -803,6 +839,16 @@ public class PrimaryController {
 		adminEditCatalog.getItems().add("Remove Item");
 		adminEditCatalog.getItems().add("Edit Item");
 
+		chooseCustomColor.getItems().add("Red");
+		chooseCustomColor.getItems().add("Blue");
+		chooseCustomColor.getItems().add("Yellow");
+		chooseCustomColor.getItems().add("White");
+		chooseCustomColor.getItems().add("Purple");
+
+		chooseCustomType.getItems().add("Arrangement");
+		chooseCustomType.getItems().add("Bloom & Pot");
+		chooseCustomType.getItems().add("Bouquet");
+		chooseCustomType.getItems().add("Colletion");
 
 		worker_edit.getItems().add("Add worker");
 		worker_edit.getItems().add("Remove worker");
