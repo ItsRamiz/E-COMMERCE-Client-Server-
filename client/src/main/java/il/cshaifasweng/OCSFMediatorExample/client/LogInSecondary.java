@@ -160,6 +160,13 @@ public class LogInSecondary {
             System.out.println("arrived to case incorrect email succesfully");
             ErrorMsg.setVisible(true);
 
+            /*MailPassMatch checkEmailPass = new MailPassMatch(Email.getText(),Password.getText(),login_flag);
+            try {
+                SimpleClient.getClient().sendToServer(checkEmailPass);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }*/
         }
         else if(checkML.getExistsPassword()==false){ // case email found but the password is incorrect
             System.out.println("arrived to case incorrect password  succesfully");
