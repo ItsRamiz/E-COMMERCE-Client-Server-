@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -70,19 +71,45 @@ public class RegisterController {
     private LinkedList<String> RegisteredAccounts = new LinkedList<>(); // list of all registered emails
 
 
+
+    int accountnum2 = 0;
     @FXML
     void AddCustomerToDB(ActionEvent event) throws IOException {
         if(!RegisteredAccounts.contains(Email.getText())){
             String Address = Street_Address.getText() + ", " + City_Address.getText() + ", Zip Code " + ZipCode.getText();
-            Account new_account = new Account(Name.getText(),Address,Email.getText(),Password.getText(),Integer.parseInt(PhoneNumber.getText()),Integer.parseInt(CardNumber.getText()), Date.valueOf(Validity.getText()),Integer.parseInt(CVV.getText()),1);
-            RegisteredAccounts.add(Email.getText());
-            // TODO : ADD ACCOUNT TO DB
-            UpdateMessage new_msg2=new UpdateMessage("account","add");
-            java.util.Date date=new java.util.Date();
+            Account new_account = new Account();
+            String name =Name.getText();
+            String e_mail=Email.getText();
+            String NEW_PAS=Password.getText();
+            int phone_num=Integer.parseInt(PhoneNumber.getText());
+            int cardnum=Integer.parseInt(CardNumber.getText());
 
-            Account new_acc=new Account("khaled","ssakhnen","@gmail","555",457,777,date,445,4);
-            // new_acc.setAccountID(1);
-            new_msg2.setAccount(new_acc);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, 1988);
+            cal.set(Calendar.MONTH, Calendar.JANUARY);
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+            java.util.Date new_date = cal.getTime();
+
+            int cvv=Integer.parseInt(CVV.getText());
+            RegisteredAccounts.add(Email.getText());
+            new_account.setAddress(Address);
+            new_account.setEmail(e_mail);
+            new_account.setPassword(NEW_PAS);
+            new_account.setCreditCardExpire(new_date);
+            new_account.setCreditCardNumber(cardnum);
+            new_account.setCcv(cvv);
+            new_account.setFullName(name);
+            new_account.setPhoneNumber(phone_num);
+            new_account.setBelongShop(1);
+            new_account.setAccountID(2);
+            accountnum2++;
+            // TODO : ADD ACCOUNT TO DB
+
+
+            UpdateMessage new_msg2=new UpdateMessage("account","add");
+
+
+            new_msg2.setAccount(new_account);
             try {
                 System.out.println("before sending updateMessage to server ");
                 SimpleClient.getClient().sendToServer(new_msg2); // sends the updated product to the server class
@@ -93,7 +120,7 @@ public class RegisterController {
             }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInSecond.fxml"));
             // TODO : CHECK IF EMAIL EXISTS IN DB
-           // String Address = Street_Address.getText() + ", " + City_Address.getText() + ", Zip Code " + ZipCode.getText();
+            // String Address = Street_Address.getText() + ", " + City_Address.getText() + ", Zip Code " + ZipCode.getText();
             //Customer new_customer = new Customer(1,Email.getText(), Name.getText(),Address,PhoneNumber.getText());
             // TODO : ADD CUSTOMER TO DB
 

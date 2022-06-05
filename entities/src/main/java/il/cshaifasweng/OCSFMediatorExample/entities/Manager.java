@@ -17,7 +17,7 @@ public class Manager implements Serializable{
     private String email;
     @Column(name = "Passowrd")
     private String password;
-    @Column(name = "ShopID")
+    @Column(name = "ShopID") // 0 = Chain Manager, Else = Shop Manager
     private int ShopID;
     private boolean loggedIn;
     public Manager(String fullName,String email, String password,int personID)

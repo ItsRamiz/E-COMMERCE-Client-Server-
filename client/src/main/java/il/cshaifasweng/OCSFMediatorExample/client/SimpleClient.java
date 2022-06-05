@@ -23,9 +23,16 @@ public class SimpleClient extends AbstractClient {
 		System.out.println("handle start");
 
 		if(msg instanceof List){
-			System.out.println("msg insof list");
+			System.out.println("arrived to msg instanceof LIST in simple client");
 			List<Product> listt = (List<Product>) msg;
-			for(int i=0 ; i<5;i++) System.out.println(listt.get(i).getID());
+			//for(int i=0 ; i<5;i++) System.out.println(listt.get(i).getID());
+
+
+			for(int i=0 ;i<listt.size();i++){
+				System.out.println(listt.get(i).getName());
+			}
+			UpdateGuiEvent updateEvent = new UpdateGuiEvent(listt);
+			EventBus.getDefault().post(updateEvent);
 
 		}
 		if(msg instanceof String){

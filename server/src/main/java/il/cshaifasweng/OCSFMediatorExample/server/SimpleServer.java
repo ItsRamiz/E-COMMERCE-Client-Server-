@@ -134,6 +134,7 @@ public class SimpleServer extends AbstractServer {
 		}
 
 		if (msg instanceof UpdateMessage) {
+			System.out.println("Arrived At UpdateMessage 1");
 			SessionFactory sessionFactory = getSessionFactory();
 			session = sessionFactory.openSession();
 			Transaction tx1 = session.beginTransaction();
@@ -141,6 +142,7 @@ public class SimpleServer extends AbstractServer {
 			UpdateMessage recievedMessage = (UpdateMessage) msg;
 			String updateClassName = recievedMessage.getUpdateClass();
 			String updateClassFunction = recievedMessage.getUpdateFunction();
+			System.out.println("Arrived At UpdateMessage 2");
 
 			switch (updateClassName) { // checks which class to be updated
 				case "product":
@@ -149,15 +151,24 @@ public class SimpleServer extends AbstractServer {
 						System.out.println("arrived to here inside add");
 						Product recievedProd = recievedMessage.getProduct();
 						addItemToCatalog(recievedProd);
+						client.sendToClient(getAllProducts());
+						System.out.println("send the updated list to the client !");
+
 
 					} else if (updateClassFunction.equals("remove")) {
 						String idToRemove = recievedMessage.getDelteId();
 						removeItemFromCatalog(idToRemove, client);
+						System.out.println("TESTING REMOVING BEFORE PORDUCT");
+						//client.sendToClient(getAllProducts());
+						System.out.println("TESTING REMOVING AFTER PORDUCT");
+
 					}
 					else if(updateClassFunction.equals("edit")){
 						System.out.println("Arrived edit case in the switch !");
 						Product recievedProd = recievedMessage.getProduct();
 						editCatalogProduct(recievedProd);
+						client.sendToClient(getAllProducts());
+
 					}
 
 					session.close();
@@ -249,6 +260,7 @@ public class SimpleServer extends AbstractServer {
 
 			}
 		}
+		System.out.println("Arrived At UpdateMessage 3");
 
 		if(msg instanceof CheckMail){
 
@@ -454,7 +466,7 @@ public class SimpleServer extends AbstractServer {
 		}*/
 	}
 
-	void removeItemFromCatalog(String prodIdToRemove, ConnectionToClient _client) {
+	void removeItemFromCatalog(String prodIdToRemove, ConnectionToClient _client) throws IOException {
 
 
 		System.out.println("arrived to removeItemFromCatalog 1");
@@ -558,29 +570,32 @@ public class SimpleServer extends AbstractServer {
 
 	public void addAccount(Account newAcc) {
 
-		System.out.println("inside additemTocatalog1");
+		System.out.println("inside Add Account To Catalog");
+		/*
 		long numOfRows = countAccountRows();
 		int castedId = (int) numOfRows;
 		int newId = castedId + 1;
 		newAcc.setAccountID(newId);
-		System.out.println("inside additemTocatalog2");
 		String recievedName = newAcc.getFullName();
-		System.out.println("inside additemTocatalog3");
 		String Adress=newAcc.getAddress();
-		System.out.println("inside additemTocatalog4");
 		String Email=newAcc.getEmail();
 		String Password=newAcc.getPassword();
 		long Phonnum=newAcc.getPhoneNumber();
 		long creditcardnum=newAcc.getCreditCardNumber();
+
 		Date newdate=newAcc.getCreditCardExpire();
+
 		int Cvv=newAcc.getCcv();
 		boolean is_login=newAcc.getLogged();
 		int belongedshop=newAcc.getBelongShop();
+		*/
+
+		System.out.println("Session Testing 000###");
+
 		SessionFactory sessionFactory = getSessionFactory();
 		session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		System.out.println("inside additemTocatalog8");
-		System.out.println("the new index is:" + newId);
+		System.out.println("Done Session Testing 000###");
 
 		session.save(newAcc);
 		session.flush();

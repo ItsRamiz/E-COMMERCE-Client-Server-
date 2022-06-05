@@ -884,6 +884,11 @@ public class PrimaryController {
 	}
 
 	@Subscribe
+	public void updateGui(UpdateGuiEvent upEvent){
+		System.out.println("arrived to the update GUI  event");
+		allProducts =upEvent.getRecievedList();
+	}
+	@Subscribe
 	public void retRieveDatabase(RetrieveDataBaseEvent rtEvent) {
 		System.out.println("arrived to the retreivedatabse event");
 		System.out.println("the current table is:");
@@ -908,7 +913,7 @@ public class PrimaryController {
 		}
 
 
-		new_acc=new Account("abu-nebal","haifa","@nebal.com","111",457,889,date,445,2);
+		/*new_acc=new Account("abu-nebal","haifa","@nebal.com","111",457,889,date,445,2);
 		new_msg.setAccount(new_acc);
 		try {
 			System.out.println("before sending updateMessage to server ");
@@ -930,6 +935,7 @@ public class PrimaryController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 	}
 
 	@Subscribe
