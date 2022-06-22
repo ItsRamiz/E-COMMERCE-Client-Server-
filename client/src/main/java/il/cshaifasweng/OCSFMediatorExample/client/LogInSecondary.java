@@ -1,4 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
+import com.mysql.cj.log.Log;
+import com.mysql.cj.x.protobuf.MysqlxCursor;
 import il.cshaifasweng.OCSFMediatorExample.entities.CheckMail;
 import java.io.IOException;
 import java.net.URL;
@@ -16,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import jdk.jfr.Event;
 import org.greenrobot.eventbus.EventBus;
@@ -58,10 +61,18 @@ public class LogInSecondary {
     @FXML
     private Label ErrorMsgPass;
 
+    @FXML
+    private Text logSucc;
+
+    @FXML
+    private Button OpenCatalogplz;
+
     String login_flag = "";
 
     @FXML
     void initialize() {
+        logSucc.setVisible(false);
+        OpenCatalogplz.setVisible(false);
         EventBus.getDefault().register(this);
         assert Customer_login != null : "fx:id=\"Customer_login\" was not injected: check your FXML file 'LogInSecond.fxml'.";
         assert Employee_login != null : "fx:id=\"Employee_login\" was not injected: check your FXML file 'LogInSecond.fxml'.";
@@ -75,6 +86,19 @@ public class LogInSecondary {
         ErrorMsgPass.setVisible(false);
 
     }
+    @FXML
+    void openCatalogFunc(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
+        Parent roott = loader.load();
+        PrimaryController cc = loader.getController();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(roott));
+        stage.setTitle("Catalog");
+        stage.show();
+        Stage stagee = (Stage)LogIn.getScene().getWindow();
+        stagee.close();
+    }
+
 
     @FXML
     void CustomerLogIn(ActionEvent event) throws IOException {
@@ -146,17 +170,34 @@ public class LogInSecondary {
 
     public void LogIn(javafx.event.ActionEvent actionEvent) throws IOException {
         CheckMail checkML  = new CheckMail(Email.getText(),login_flag,Password.getText()); // check if employee's/customer's email exists
-        try {
+        try
+        {
             SimpleClient.getClient().sendToServer(checkML); // send the mail to the server to check if exists
-        } catch (IOException e) {
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            if(itWorked == true)
+                            {
+                                logSucc.setVisible(true);
+                                OpenCatalogplz.setVisible(true);
+                            }
+                        }
+                    },1500
+            );
+
+        }
+        catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
     @Subscribe
-    public void checkMailInDB(MailChecker checkML) throws IOException {
-        if(checkML.getExistsMail()==false){ // case incorrect email
+    public void checkMailInDB(MailChecker checkML) throws IOException
+    {
+        System.out.println("IM HERE :DDD");
+        if(checkML.getExistsMail() == false){ // case incorrect email
             System.out.println("arrived to case incorrect email succesfully");
             ErrorMsg.setVisible(true);
 
@@ -168,7 +209,7 @@ public class LogInSecondary {
                 e.printStackTrace();
             }*/
         }
-        else if(checkML.getExistsPassword()==false)
+        else if(checkML.getExistsPassword() == false)
         { // case email found but the password is incorrect
             System.out.println("arrived to case incorrect password  succesfully");
             ErrorMsgPass.setVisible(true);
@@ -176,17 +217,10 @@ public class LogInSecondary {
         else
         {
             System.out.println("WE GOT HERE, GOOD EMAIL");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
-            Parent roott = loader.load();
-            PrimaryController cc = loader.getController();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(roott));
-            stage.setTitle("Catalog");
-            stage.show();
-            Stage stagee = (Stage)LogIn.getScene().getWindow();
-            stagee.close();
+            itWorked = true;
         }
     }
+    boolean itWorked = false;
 
     @Subscribe
     public void checkMailPass(MailPassMatch checkEmailPass) throws IOException {

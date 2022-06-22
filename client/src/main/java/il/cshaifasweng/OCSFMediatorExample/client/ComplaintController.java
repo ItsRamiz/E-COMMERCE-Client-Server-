@@ -34,7 +34,7 @@ import org.hibernate.sql.Update;
 
 import static com.sun.xml.bind.v2.schemagen.Util.equal;
 
-public class ComplaintController {
+public class  ComplaintController {
 
     @FXML
     private Button cancelcomp;

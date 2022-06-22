@@ -250,6 +250,12 @@ public class PrimaryController {
 	@FXML
 	private Text cartTopText;
 
+	@FXML
+	private Button viewMyComplaints;
+
+	@FXML
+	private Button viewMyOrders;
+
 
 	@FXML
 	private ListView<String> CartItemsList;
@@ -375,6 +381,16 @@ public class PrimaryController {
 		}
 	}
 
+
+	@FXML
+	void openMyComplaints(ActionEvent event) {
+
+	}
+
+	@FXML
+	void openMyOrders(ActionEvent event) {
+
+	}
 	@FXML
 	void prevPageUpate(ActionEvent event)
 	{
@@ -969,6 +985,7 @@ public class PrimaryController {
 
 	@FXML
 	void initialize() throws MalformedURLException {
+
 		justText.setVisible(true);
 		justButton.setVisible(false);
 		System.out.println("arrived to initialize 1");

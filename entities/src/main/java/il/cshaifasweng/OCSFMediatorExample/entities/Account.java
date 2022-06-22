@@ -40,7 +40,6 @@ public class Account implements Serializable {
     /*@OneToMany
     private List<Order> AccountOrders;*/
     private int belongShop;
-    //private int wallet;
     static List<Product> allProducts = new ArrayList<>();
 
 
@@ -58,7 +57,6 @@ public class Account implements Serializable {
         this.ccv = ccv;
         this.loggedIn = false;
         this.belongShop = belongShop;
-        //this.wallet = 0;
        // this.AccountOrders = null;
     }
     public Account()

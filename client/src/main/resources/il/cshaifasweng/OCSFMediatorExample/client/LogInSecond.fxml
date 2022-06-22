@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="600.0" stylesheets="@mycsss.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.LogInSecondary">
     <children>
@@ -16,5 +17,7 @@
       <Label fx:id="ErrorMsgPass" layoutX="378.0" layoutY="212.0" text="Password doesn't match Email!" textFill="WHITE" />
       <Button fx:id="LogIn" layoutX="238.0" layoutY="255.0" mnemonicParsing="false" onAction="#LogIn" prefHeight="38.0" prefWidth="87.0" text="Log in" />
       <Button fx:id="Manager_login" layoutX="214.0" layoutY="294.0" mnemonicParsing="false" onAction="#ManagerLogIn" prefHeight="50.0" prefWidth="135.0" text="Manager Login" />
+      <Text fx:id="logSucc" layoutX="238.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Successful" wrappingWidth="126.39999999999986" />
+      <Button fx:id="OpenCatalogplz" layoutX="230.0" layoutY="391.0" mnemonicParsing="false" onAction="#openCatalogFunc" prefHeight="26.0" prefWidth="126.0" text="Button" />
     </children>
 </AnchorPane>

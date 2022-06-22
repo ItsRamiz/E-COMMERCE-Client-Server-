@@ -55,6 +55,13 @@ public class SimpleClient extends AbstractClient {
 					mailCheckEvent.setPasswordExists(false);
 					EventBus.getDefault().post(mailCheckEvent);
 				}
+				if(recievedStr.equals("found mail and password"))
+				{
+					MailChecker mailCheckEvent = new MailChecker(true);
+					mailCheckEvent.setPasswordExists(true);
+					EventBus.getDefault().post(mailCheckEvent);
+				}
+
 
 
 

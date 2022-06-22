@@ -296,6 +296,8 @@ public class SimpleServer extends AbstractServer {
 					{
 						foundThePassword = true;
 						System.out.println("found the password ! the iteration is: " + i);
+						client.sendToClient("found mail and password");
+
 					}
 
 				}
