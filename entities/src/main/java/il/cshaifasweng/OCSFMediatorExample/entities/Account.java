@@ -2,7 +2,9 @@ package il.cshaifasweng.OCSFMediatorExample.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -25,6 +27,9 @@ public class Account implements Serializable {
     private long creditCardNumber;
     @Column(name = "Expire_Date")
     private Date creditCardExpire;
+    private int creditDayExpire;
+    private int creditMonthExpire;
+    private int creditYearExpire;
     @Column(name = "CVV")
     private int ccv;
     @Column(name = "Logged_In")
@@ -37,6 +42,7 @@ public class Account implements Serializable {
     private List<Order> AccountOrders;*/
     private int belongShop;
     //private int wallet;
+    static List<Product> allProducts = new ArrayList<>();
 
 
 
