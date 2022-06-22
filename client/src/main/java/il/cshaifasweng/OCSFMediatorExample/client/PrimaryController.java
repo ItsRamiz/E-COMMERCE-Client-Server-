@@ -991,7 +991,6 @@ public class PrimaryController {
 		assert flower_price4 != null : "fx:id=\"flower_price4\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_price5 != null : "fx:id=\"flower_price5\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_price6 != null : "fx:id=\"flower_price6\" was not injected: check your FXML file 'primary.fxml'.";
-		catalog_flag.setFlagg(3);
 		switch (catalog_flag.getFlagg()){
 			case 0:{
 				System.out.println("case 0");
@@ -1119,6 +1118,8 @@ public class PrimaryController {
 					}
 				},4000
 		);
+		System.out.println("PRINTING FLAG");
+		System.out.println(catalog_flag.getFlagg());
 
 
 	}
@@ -1152,7 +1153,7 @@ public class PrimaryController {
 		// TESTING THE ACCOUNTS ADD MANUALLY
 		UpdateMessage new_msg=new UpdateMessage("account","add");
 		Date date=new Date();
-		Account new_acc=new Account("khaled","sakhnin","@eee","332",457,889,date,445,2);
+		Account new_acc=new Account("khaled","sakhnin","@eee","332",457,889,1,2,445,2);
 		new_msg.setAccount(new_acc);
 		try {
 			System.out.println("before sending updateMessage to server ");
@@ -1193,7 +1194,7 @@ public class PrimaryController {
 	public void initDatabase(InitDatabaseEvent event) {
 		UpdateMessage new_msg=new UpdateMessage("account","add");
 		Date date=new Date();
-		Account new_acc=new Account("khaled","sakhnin","@eee","332",457,889,date,445,2);
+		Account new_acc=new Account("khaled","sakhnin","@eee","332",457,889,1,2,445,2);
 		new_msg.setAccount(new_acc);
 		try {
 			System.out.println("before sending updateMessage to server ");

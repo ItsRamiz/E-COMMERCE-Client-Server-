@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,13 +15,19 @@
         <TextField fx:id="PhoneNumber" layoutX="114.0" layoutY="294.0" prefHeight="26.0" prefWidth="283.0" promptText="Phone Number" />
         <Button fx:id="RegisterButton" layoutX="224.0" layoutY="505.0" mnemonicParsing="false" onAction="#AddCustomerToDB" prefHeight="26.0" prefWidth="79.0" text="Register" />
         <TextField fx:id="Email" layoutX="114.0" layoutY="61.0" prefHeight="26.0" prefWidth="283.0" promptText="Email" />
-      <TextField fx:id="CardNumber" layoutX="114.0" layoutY="396.0" prefHeight="26.0" prefWidth="283.0" promptText="Card Number" />
-      <TextField fx:id="Validity" layoutX="114.0" layoutY="432.0" prefHeight="26.0" prefWidth="79.0" promptText="MM/YYYY" />
-      <TextField fx:id="CVV" layoutX="114.0" layoutY="468.0" prefHeight="26.0" prefWidth="53.0" promptText="CVV" />
-      <TextField fx:id="Password" layoutX="114.0" layoutY="103.0" prefHeight="26.0" prefWidth="283.0" promptText="Password" />
-      <Label fx:id="ErrorMsg" layoutX="420.0" layoutY="65.0" text="This Email already exists!" textFill="WHITE" />
-      <Button fx:id="backk" layoutX="317.0" layoutY="505.0" mnemonicParsing="false" onAction="#backkk" prefHeight="26.0" prefWidth="79.0" text="back" />
-      <Label layoutX="38.0" layoutY="24.0" text="Lilach Customer Registration" textFill="WHITE" />
-      <Label layoutX="38.0" layoutY="358.0" text="Default Credit Card" textFill="WHITE" />
+        <TextField fx:id="CardNumber" layoutX="114.0" layoutY="396.0" prefHeight="26.0" prefWidth="283.0" promptText="Card Number" />
+        <TextField fx:id="CVV" layoutX="114.0" layoutY="468.0" prefHeight="26.0" prefWidth="53.0" promptText="CVV" />
+        <TextField fx:id="Password" layoutX="114.0" layoutY="103.0" prefHeight="26.0" prefWidth="283.0" promptText="Password" />
+        <Label fx:id="ErrorMsg" disable="true" layoutX="420.0" layoutY="65.0" text="This Email already exists!" textFill="WHITE" />
+        <Button fx:id="backk" layoutX="317.0" layoutY="505.0" mnemonicParsing="false" onAction="#backkk" prefHeight="26.0" prefWidth="79.0" text="back" />
+        <Label layoutX="38.0" layoutY="24.0" text="Lilach Customer Registration" textFill="WHITE" />
+        <Label layoutX="38.0" layoutY="358.0" text="Default Credit Card" textFill="WHITE" />
+        <Label fx:id="email_regex_error" layoutX="409.0" layoutY="66.0" prefHeight="17.0" prefWidth="178.0" text="Email should contain @ and ." textFill="WHITE" />
+        <Label fx:id="phone_regex_error" layoutX="415.0" layoutY="294.0" prefHeight="35.0" prefWidth="166.0" text="Phone number should be&#10;10 digits" textAlignment="CENTER" textFill="WHITE" />
+        <Label fx:id="card_regex_error" layoutX="415.0" layoutY="392.0" prefHeight="35.0" prefWidth="166.0" text="Card number should be&#10;16 digits" textAlignment="CENTER" textFill="WHITE" />
+        <Label fx:id="CVV_regex_error" layoutX="182.0" layoutY="464.0" prefHeight="35.0" prefWidth="148.0" text="CVV should be 3 digits" textAlignment="CENTER" textFill="WHITE" />
+        <ComboBox fx:id="acc_type" layoutX="420.0" layoutY="195.0" prefWidth="150.0" promptText="account type" />
+      <ComboBox fx:id="chooseMonth" layoutX="115.0" layoutY="427.0" prefHeight="26.0" prefWidth="79.0" promptText="Month" />
+      <ComboBox fx:id="chooseYear" layoutX="206.0" layoutY="427.0" prefWidth="150.0" promptText="Year" />
     </children>
 </AnchorPane>

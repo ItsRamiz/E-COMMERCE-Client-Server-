@@ -155,7 +155,7 @@ public class LogInSecondary {
     }
 
     @Subscribe
-    public void checkMailInDB(MailChecker checkML){
+    public void checkMailInDB(MailChecker checkML) throws IOException {
         if(checkML.getExistsMail()==false){ // case incorrect email
             System.out.println("arrived to case incorrect email succesfully");
             ErrorMsg.setVisible(true);
@@ -168,16 +168,40 @@ public class LogInSecondary {
                 e.printStackTrace();
             }*/
         }
-        else if(checkML.getExistsPassword()==false){ // case email found but the password is incorrect
+        else if(checkML.getExistsPassword()==false)
+        { // case email found but the password is incorrect
             System.out.println("arrived to case incorrect password  succesfully");
             ErrorMsgPass.setVisible(true);
+        }
+        else
+        {
+            System.out.println("WE GOT HERE, GOOD EMAIL");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
+            Parent roott = loader.load();
+            PrimaryController cc = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(roott));
+            stage.setTitle("Catalog");
+            stage.show();
+            Stage stagee = (Stage)LogIn.getScene().getWindow();
+            stagee.close();
         }
     }
 
     @Subscribe
     public void checkMailPass(MailPassMatch checkEmailPass) throws IOException {
-        if(checkEmailPass.getexists()==true){
-            App.setRoot("primary");
+        System.out.println("Checking Mail IN DB");
+        if(checkEmailPass.getexists()==true)
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
+            Parent roott = loader.load();
+            PrimaryController cc = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(roott));
+            stage.setTitle("Catalog");
+            stage.show();
+            Stage stagee = (Stage)LogIn.getScene().getWindow();
+            stagee.close();
         }
         else{
             ErrorMsgPass.setVisible(true);

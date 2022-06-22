@@ -276,31 +276,38 @@ public class SimpleServer extends AbstractServer {
 			boolean foundThePassword = false ;
 			// 1. apply query to check if the mail exists in the accounts table
 			List<Account> accountsList = getAllAccounts();
-			for (int i=0;i<accountsList.size();i++){
+			for (int i=0;i<accountsList.size();i++)
+			{
 				System.out.println(accountsList.get(i).getEmail());
-				if(accountsList.get(i).getEmail().equals(recievedMailStr)){
+				if(accountsList.get(i).getEmail().equals(recievedMailStr))
+				{
 					foundTheMail = true ;
 					System.out.println("found the mail ! the iteration is: " + i);
 				}
 
 			}
 			// 2. if the account exists then check if the password matches
-			if(foundTheMail){
-				for (int i=0;i<accountsList.size();i++){
+			if(foundTheMail)
+			{
+				for (int i=0;i<accountsList.size();i++)
+				{
 					System.out.println(accountsList.get(i).getPassword());
-					if(accountsList.get(i).getPassword().equals(recievedPasswordStr)){
-						foundThePassword = true ;
+					if(accountsList.get(i).getPassword().equals(recievedPasswordStr))
+					{
+						foundThePassword = true;
 						System.out.println("found the password ! the iteration is: " + i);
 					}
 
 				}
 			}
-			else if(!foundTheMail){ // 3. if the account not found then send a message to the client
+			else if(!foundTheMail)
+			{ // 3. if the account not found then send a message to the client
 				// send a message to the client
 				client.sendToClient("mail not found");
 			}
 
-			if(foundTheMail && !foundThePassword){ // 4. if the account found but password not found then send a message to the client
+			if(foundTheMail && !foundThePassword)
+			{ // 4. if the account found but password not found then send a message to the client
 				// send a message to the client
 				client.sendToClient("wrong password");
 			}
@@ -707,9 +714,10 @@ public class SimpleServer extends AbstractServer {
 		String Password=accountEdit.getPassword();
 		long Phonnum=accountEdit.getPhoneNumber();
 		long creditcardnum=accountEdit.getCreditCardNumber();
-		Date newdate=accountEdit.getCreditCardExpire();
+		int creditExpireMonth = accountEdit.getCreditMonthExpire();
+		int creditExpireYear = accountEdit.getCreditYearExpire();
 		int Cvv=accountEdit.getCcv();
-		boolean is_login=accountEdit.getLogged();
+		boolean is_login=accountEdit.getLoggedIn();
 		int belongedshop=accountEdit.getBelongShop();
 
 		System.out.println("Arrived to edit catalog product 2");
@@ -723,8 +731,9 @@ public class SimpleServer extends AbstractServer {
 		updateAccount.setPhoneNumber(Phonnum);
 		updateAccount.setCreditCardNumber(creditcardnum);
 		updateAccount.setCcv(Cvv);
-		updateAccount.setCreditCardExpire(newdate);
-		updateAccount.setLogged(is_login);
+		updateAccount.setCreditMonthExpire(creditExpireMonth);
+		updateAccount.setCreditYearExpire(creditExpireYear);
+		updateAccount.setLoggedIn(is_login);
 		updateAccount.setBelongShop(belongedshop);
 		session.update(updateAccount);
 		tx.commit();

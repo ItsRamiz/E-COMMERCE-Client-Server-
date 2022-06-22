@@ -25,9 +25,8 @@ public class Account implements Serializable {
     private long phoneNumber;
     @Column(name = "Credit_Card_Number")
     private long creditCardNumber;
-    @Column(name = "Expire_Date")
-    private Date creditCardExpire;
-    private int creditDayExpire;
+    //@Column(name = "Expire_Date")
+    //private Date creditCardExpire;
     private int creditMonthExpire;
     private int creditYearExpire;
     @Column(name = "CVV")
@@ -46,7 +45,7 @@ public class Account implements Serializable {
 
 
 
-    public Account(String fullName, String address,String email, String password,long phoneNumber, long creditCardNumber,Date creditCardExpire,int ccv,int belongShop)
+    public Account(String fullName, String address,String email, String password,long phoneNumber, long creditCardNumber,int creditYearExpire,int creditMonthExpire,int ccv,int belongShop)
     {
         this.fullName = fullName;
         this.address = address;
@@ -54,7 +53,8 @@ public class Account implements Serializable {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.creditCardNumber = creditCardNumber;
-        this.creditCardExpire = creditCardExpire;
+        this.creditYearExpire = creditYearExpire;
+        this.creditMonthExpire = creditMonthExpire;
         this.ccv = ccv;
         this.loggedIn = false;
         this.belongShop = belongShop;
@@ -94,20 +94,28 @@ public class Account implements Serializable {
         this.creditCardNumber = creditCardNumber;
     }
 
-    public void setCreditCardExpire(Date creditCardExpire) {
-        this.creditCardExpire = creditCardExpire;
+    public void setCreditMonthExpire(int creditMonthExpire) {
+        this.creditMonthExpire = creditMonthExpire;
+    }
+
+    public void setCreditYearExpire(int creditYearExpire) {
+        this.creditYearExpire = creditYearExpire;
     }
 
     public void setCcv(int ccv) {
         this.ccv = ccv;
     }
 
-    public void setLogged(Boolean logged) {
-        this.loggedIn = logged;
+    public void setLoggedIn(Boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 
     public void setBelongShop(int belongShop) {
         this.belongShop = belongShop;
+    }
+
+    public static void setAllProducts(List<Product> allProducts) {
+        Account.allProducts = allProducts;
     }
 
     public int getAccountID() {
@@ -138,15 +146,19 @@ public class Account implements Serializable {
         return creditCardNumber;
     }
 
-    public Date getCreditCardExpire() {
-        return creditCardExpire;
+    public int getCreditMonthExpire() {
+        return creditMonthExpire;
+    }
+
+    public int getCreditYearExpire() {
+        return creditYearExpire;
     }
 
     public int getCcv() {
         return ccv;
     }
 
-    public Boolean getLogged() {
+    public Boolean getLoggedIn() {
         return loggedIn;
     }
 
@@ -154,7 +166,10 @@ public class Account implements Serializable {
         return belongShop;
     }
 
-   /* public void setWallet(int wallet) {
+    public static List<Product> getAllProducts() {
+        return allProducts;
+    }
+    /* public void setWallet(int wallet) {
         this.wallet = wallet;
     }
 
