@@ -34,5 +34,6 @@
       <ComboBox fx:id="hourCheckout" layoutX="419.0" layoutY="58.0" prefHeight="26.0" prefWidth="69.0" promptText="Hour" />
       <CheckBox fx:id="deliverToHome" layoutX="24.0" layoutY="96.0" mnemonicParsing="false" onAction="#DeliverToMyHome" prefHeight="18.0" prefWidth="130.0" text="Deliver To Home" />
       <ComboBox fx:id="chooseShopID" layoutX="512.0" layoutY="60.0" prefHeight="26.0" prefWidth="154.0" promptText="Choose Shop" />
+      <Button fx:id="back" layoutX="241.0" layoutY="442.0" mnemonicParsing="false" onAction="#openCatalog" prefHeight="25.0" prefWidth="206.0" text="Back To Catalog" />
    </children>
 </AnchorPane>

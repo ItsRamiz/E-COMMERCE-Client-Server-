@@ -294,6 +294,21 @@ public class PrimaryController {
 	@FXML
 	private TextField cartText;
 
+	@FXML
+	void openDelivery(ActionEvent event) throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("delivery.fxml"));
+		Parent roott = loader.load();
+		DeliveryController cc = loader.getController();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(roott));
+		stage.setTitle("Delivery Panel");
+		stage.show();
+		Stage stagee = (Stage)infoo.getScene().getWindow();
+		stagee.close();
+	}
+
+
 	int cartViewBinary = 0;
 	@FXML
 	void viewUserCart(ActionEvent event)
@@ -985,7 +1000,7 @@ public class PrimaryController {
 
 	@FXML
 	void initialize() throws MalformedURLException {
-
+		catalog_flag.setFlagg(3);
 		justText.setVisible(true);
 		justButton.setVisible(false);
 		System.out.println("arrived to initialize 1");

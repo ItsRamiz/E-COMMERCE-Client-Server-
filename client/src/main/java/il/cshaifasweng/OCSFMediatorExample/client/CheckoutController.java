@@ -4,13 +4,18 @@ import com.sun.javafx.image.IntPixelGetter;
 import il.cshaifasweng.OCSFMediatorExample.entities.Order;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 
 public class CheckoutController {
@@ -84,10 +89,27 @@ public class CheckoutController {
     @FXML
     private ComboBox<Integer> yearCheckout;
 
+    @FXML
+    private Button back;
 
     @FXML
     private CheckBox deliverToHome;
 
+
+    @FXML
+    void openCatalog(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
+        Parent roott = loader.load();
+        PrimaryController cc = loader.getController();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(roott));
+        stage.setTitle("Catalog");
+        stage.show();
+        Stage stagee = (Stage)back.getScene().getWindow();
+        // do what you have to do
+        stagee.close();
+
+    }
     @FXML
     void PlaceOrder(ActionEvent event)
     {
