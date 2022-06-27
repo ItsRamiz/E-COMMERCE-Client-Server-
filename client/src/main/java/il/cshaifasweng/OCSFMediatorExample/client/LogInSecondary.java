@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Account;
+import il.cshaifasweng.OCSFMediatorExample.entities.MailClass;
 import il.cshaifasweng.OCSFMediatorExample.entities.UpdateMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -88,6 +89,19 @@ public class LogInSecondary {
     }
     @FXML
     void openCatalogFunc(ActionEvent event) throws IOException {
+
+        String theEmail = Email.getText();
+        System.out.println("the email is " + theEmail);
+        MailClass mailObject = new MailClass(theEmail);
+        // 1. send to server the current email
+        try {
+            System.out.println("before sending the mailObject " + theEmail);
+            SimpleClient.getClient().sendToServer(mailObject); // sends the updated product to the server class
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
         Parent roott = loader.load();
         PrimaryController cc = loader.getController();
@@ -98,6 +112,7 @@ public class LogInSecondary {
         Stage stagee = (Stage)LogIn.getScene().getWindow();
         stagee.close();
     }
+
 
 
     @FXML

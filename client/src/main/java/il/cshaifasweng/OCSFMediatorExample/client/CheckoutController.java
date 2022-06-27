@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import com.sun.javafx.image.IntPixelGetter;
+import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 import il.cshaifasweng.OCSFMediatorExample.entities.Order;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -168,9 +170,22 @@ public class CheckoutController {
     @FXML
     private ComboBox<String> chooseShopID;
 
+    @Subscribe
+    public void PassAccountEvent(PassAccountEventCheckout passAcc){ // added today
+        System.out.println("Arrived To Pass Account - CheckoutController");
+        Account recvAccount = passAcc.getRecievedAccount();
+        System.out.println(recvAccount.getPassword());
+        System.out.println(recvAccount.getAccountID());
+        System.out.println(recvAccount.getEmail());
+        System.out.println(recvAccount.getFullName());
+        System.out.println(recvAccount.getAddress());
+        System.out.println(recvAccount.getCreditCardNumber());
+        System.out.println(recvAccount.getCreditMonthExpire());
+    }
     @FXML
     void initialize() throws MalformedURLException
     {
+        EventBus.getDefault().register(this);
         int i;
         for(i = 1 ; i < 31 ; i++)
         {

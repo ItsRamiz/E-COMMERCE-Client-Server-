@@ -1,11 +1,9 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.FoundTable;
-import il.cshaifasweng.OCSFMediatorExample.entities.Product;
+import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import org.greenrobot.eventbus.EventBus;
 
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
-import il.cshaifasweng.OCSFMediatorExample.entities.Warning;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +69,56 @@ public class SimpleClient extends AbstractClient {
 			List<Product> ftList = ft.getRecievedProducts();
 			RetrieveDataBaseEvent retEvent = new RetrieveDataBaseEvent(ftList);
 			EventBus.getDefault().post(retEvent);
+		}
+		else if(msg instanceof Account){ // added today
+			System.out.println("the server sent me the account , NICE !!");
+			Account recAcc = (Account)msg;
+			System.out.println("the server sent me the account , NICE 2 !!");
+			PassAccountEvent recievedAcc = new PassAccountEvent(recAcc);
+			System.out.println("the server sent me the account , NICE 3 !!");
+			new java.util.Timer().schedule(
+					new java.util.TimerTask() {
+						@Override
+						public void run() {
+							EventBus.getDefault().post(recievedAcc);
+							System.out.println("the server sent me the account , NICE 4 !!");
+						}
+					},4000
+			);
+		}
+
+		else if(msg instanceof Manager){ // added today
+			System.out.println("the server sent me the account , NICE !!");
+			Manager recAcc = (Manager) msg;
+			System.out.println("the server sent me the account , NICE 2 !!");
+			PassAccountEvent recievedAcc = new PassAccountEvent(recAcc);
+			System.out.println("the server sent me the account , NICE 3 !!");
+			new java.util.Timer().schedule(
+					new java.util.TimerTask() {
+						@Override
+						public void run() {
+							EventBus.getDefault().post(recievedAcc);
+							System.out.println("the server sent me the account , NICE 4 !!");
+						}
+					},4000
+			);
+		}
+
+		else if(msg instanceof Worker){ // added today
+			System.out.println("the server sent me the account , NICE !!");
+			Account recAcc = (Account)msg;
+			System.out.println("the server sent me the account , NICE 2 !!");
+			PassAccountEvent recievedAcc = new PassAccountEvent(recAcc);
+			System.out.println("the server sent me the account , NICE 3 !!");
+			new java.util.Timer().schedule(
+					new java.util.TimerTask() {
+						@Override
+						public void run() {
+							EventBus.getDefault().post(recievedAcc);
+							System.out.println("the server sent me the account , NICE 4 !!");
+						}
+					},4000
+			);
 		}
 	}
 

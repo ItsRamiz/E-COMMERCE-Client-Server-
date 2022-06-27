@@ -314,8 +314,94 @@ public class SimpleServer extends AbstractServer {
 				client.sendToClient("wrong password");
 			}
 		}
+		if(msg instanceof MailClass){ // added today
+			System.out.println("arrived to msg instance of MailClass ");
+			SessionFactory sessionFactory = getSessionFactory();
+			session = sessionFactory.openSession();
+			Transaction tx1 = session.beginTransaction();
+			List<Account> accountsList = getAllAccounts();
 
 
+			MailClass recievedMessage = (MailClass) msg;
+			String recievedMailStr = recievedMessage.getMail();
+			Account tempAccount = new Account() ; // in case the user is a customer
+
+
+			boolean foundAlready = false ;
+
+			for (int i=0;i<accountsList.size();i++) // search the email in all customer accounts and save the result object in the tempAccount object
+			{
+				System.out.println(accountsList.get(i).getEmail());
+				if(accountsList.get(i).getEmail().equals(recievedMailStr))
+				{
+					foundAlready = true ;
+					tempAccount.setAccountID(accountsList.get(i).getAccountID());
+					tempAccount.setAddress(accountsList.get(i).getAddress());
+					tempAccount.setBelongShop(accountsList.get(i).getBelongShop());
+					tempAccount.setCcv(accountsList.get(i).getCcv());
+					tempAccount.setCreditCardNumber(accountsList.get(i).getCreditCardNumber());
+					tempAccount.setEmail(accountsList.get(i).getEmail());
+					tempAccount.setFullName(accountsList.get(i).getFullName());
+					tempAccount.setLoggedIn(accountsList.get(i).getLoggedIn());
+					tempAccount.setPassword(accountsList.get(i).getPassword());
+					tempAccount.setPhoneNumber(accountsList.get(i).getPhoneNumber());
+					tempAccount.setCreditMonthExpire(accountsList.get(i).getCreditMonthExpire());
+
+				}
+
+				client.sendToClient(tempAccount);
+
+			}
+
+
+			if(foundAlready == false){
+				List<Manager> managersList = getAllAccountsManager();
+				Manager tempManager = new Manager() ; // in case the user is manager
+				for (int i=0;i<managersList.size();i++) // search the email in all manager accounts and save the result object in the tempManager object
+				{
+
+					if(managersList.get(i).getEmail().equals(recievedMailStr))
+					{
+						foundAlready = true ;
+						tempManager.setEmail(managersList.get(i).getEmail());
+						tempManager.setFullName(managersList.get(i).getFullName());
+						tempManager.setPassword(managersList.get(i).getPassword());
+						tempManager.setLoggedIn(managersList.get(i).isLoggedIn());
+						tempManager.setPersonID(managersList.get(i).getPersonID());
+						tempManager.setShopID(managersList.get(i).getShopID());
+
+
+					}
+
+					client.sendToClient(tempManager);
+
+				}
+			}
+
+
+			if(foundAlready == false){
+				List<Worker> workersList = getAllAccountsWorker();
+				Worker tempWorker = new Worker(); // in case the user is worker
+				for (int i=0;i<workersList.size();i++) // search the email in all worker accounts and save the result object in the tempWorker object
+				{
+
+					if(workersList.get(i).getEmail().equals(recievedMailStr))
+					{
+						tempWorker.setEmail(workersList.get(i).getEmail());
+						tempWorker.setFullName(workersList.get(i).getFullName());
+						tempWorker.setLoggedIn(workersList.get(i).isLoggedIn());
+						tempWorker.setPersonID(workersList.get(i).getPersonID());
+
+					}
+
+					client.sendToClient(tempWorker);
+
+				}
+			}
+
+
+
+		}
 		if (msg instanceof ArrayList) { // arrived from the initializing of the program, so we initialize the database
 			// with the starting Products
 			System.out.println("Arrived here: msg instance of arrayList ");
@@ -576,16 +662,40 @@ public class SimpleServer extends AbstractServer {
 		System.out.println("Arrived to getAllAccounts 5");
 		return resultlest;
 	}
+	public static List<Manager> getAllAccountsManager() { // added today
+		System.out.println("Arrived to getAllAccounts manager 1");
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		System.out.println("Arrived to getAllAccounts manager 2");
+		CriteriaQuery<Manager> query = builder.createQuery(Manager.class);
+		System.out.println("Arrived to getAllAccounts manager 3");
+		query.from(Manager.class);
+		System.out.println("Arrived to getAllAccounts manager 4");
+		List<Manager> resultlest = session.createQuery(query).getResultList();
+		System.out.println("Arrived to getAllAccounts manager 5");
+		return resultlest;
+	}
+
+	public static List<Worker> getAllAccountsWorker() { // added today
+		System.out.println("Arrived to getAllAccounts worker  1");
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		System.out.println("Arrived to getAllAccounts worker 2");
+		CriteriaQuery<Worker> query = builder.createQuery(Worker.class);
+		System.out.println("Arrived to getAllAccounts worker 3");
+		query.from(Manager.class);
+		System.out.println("Arrived to getAllAccounts worker 4");
+		List<Worker> resultlest = session.createQuery(query).getResultList();
+		System.out.println("Arrived to getAllAccounts worker 5");
+		return resultlest;
+	}
 
 	public void addAccount(Account newAcc) {
 
 		System.out.println("inside Add Account To Catalog");
-		/*
 		long numOfRows = countAccountRows();
 		int castedId = (int) numOfRows;
 		int newId = castedId + 1;
 		newAcc.setAccountID(newId);
-		String recievedName = newAcc.getFullName();
+		/*String recievedName = newAcc.getFullName();   // CHANGED WITH YARA
 		String Adress=newAcc.getAddress();
 		String Email=newAcc.getEmail();
 		String Password=newAcc.getPassword();

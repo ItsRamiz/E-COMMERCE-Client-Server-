@@ -30,11 +30,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import org.greenrobot.eventbus.EventBus;
 import org.hibernate.sql.Update;
 
 import static com.sun.xml.bind.v2.schemagen.Util.equal;
 
-public class  ComplaintController {
+public class  ComplaintController{
 
     @FXML
     private Button cancelcomp;
@@ -67,5 +68,12 @@ public class  ComplaintController {
         // do what you have to do
         stage.close();
     }
+
+    @FXML
+    void initialize() throws MalformedURLException
+    {
+    }
+
+
 
 }

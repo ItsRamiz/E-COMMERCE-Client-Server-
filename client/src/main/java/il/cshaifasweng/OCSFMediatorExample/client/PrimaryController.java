@@ -263,33 +263,47 @@ public class PrimaryController {
 	@FXML
 	void addToCartFlower1(ActionEvent event)
 	{
-
-
+		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex).getName());
+		cartPrice = cartPrice + Integer.parseInt(cartPrice + allProducts.get(CatalogSTARTIndex).getPrice());
+		cartTextPrice.setText(String.valueOf(cartPrice));
 	}
 
 	@FXML
 	void addToCartFlower2(ActionEvent event) {
-
+		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+1).getName());
+		cartPrice = cartPrice + Integer.parseInt(cartPrice + allProducts.get(CatalogSTARTIndex+1).getPrice());
+		cartTextPrice.setText(String.valueOf(cartPrice));
 	}
 
 	@FXML
 	void addToCartFlower3(ActionEvent event) {
+		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+2).getName());
+		cartPrice = cartPrice + Integer.parseInt(cartPrice + allProducts.get(CatalogSTARTIndex+2).getPrice());
+		cartTextPrice.setText(String.valueOf(cartPrice));
 
 	}
 
 	@FXML
 	void addToCartFlower4(ActionEvent event) {
+		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+3).getName());
+		cartPrice = cartPrice + Integer.parseInt(cartPrice + allProducts.get(CatalogSTARTIndex+3).getPrice());
+		cartTextPrice.setText(String.valueOf(cartPrice));
 
 	}
 
 	@FXML
 	void addToCartFlower5(ActionEvent event) {
+		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+4).getName());
+		cartPrice =cartPrice + Integer.parseInt(cartPrice + allProducts.get(CatalogSTARTIndex+4).getPrice());
+		cartTextPrice.setText(String.valueOf(cartPrice));
 
 	}
 
 	@FXML
 	void addToCartFlower6(ActionEvent event) 	{
-
+		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+5).getName());
+		cartPrice = cartPrice + Integer.parseInt(cartPrice + allProducts.get(CatalogSTARTIndex+5).getPrice());
+		cartTextPrice.setText(String.valueOf(cartPrice));
 	}
 	@FXML
 	private TextField cartText;
@@ -361,8 +375,8 @@ public class PrimaryController {
 		stagee.close();
 	}
 	@FXML
-	void openCheckout(ActionEvent event) throws IOException {
-
+	void openCheckout(ActionEvent event) throws IOException
+	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("checkout.fxml"));
 		Parent roott = loader.load();
 		CheckoutController cc = loader.getController();
@@ -372,6 +386,8 @@ public class PrimaryController {
 		stage.show();
 		Stage stagee = (Stage)checkout.getScene().getWindow();
 		stagee.close();
+		PassAccountEventCheckout recievedAcc = new PassAccountEventCheckout(currentLoggedAccount);
+		EventBus.getDefault().post(recievedAcc);
 	}
 
 
@@ -997,7 +1013,8 @@ public class PrimaryController {
 		worker_edit.setVisible(mode);
 		CreateCustomItem.setVisible(mode);
 	}
-
+	int cartPrice = 0;
+	Account currentLoggedAccount;
 	@FXML
 	void initialize() throws MalformedURLException {
 		catalog_flag.setFlagg(3);
@@ -1171,6 +1188,19 @@ public class PrimaryController {
 	public void updateGui(UpdateGuiEvent upEvent){
 		System.out.println("arrived to the update GUI  event");
 		allProducts = upEvent.getRecievedList();
+	}
+	@Subscribe
+	public void PassAccountEvent(PassAccountEvent passAcc){ // added today
+		System.out.println("arrived to passAccountToPrimary sucessfuly");
+		Account recvAccount = passAcc.getRecievedAccount();
+		System.out.println(recvAccount.getPassword());
+		System.out.println(recvAccount.getAccountID());
+		System.out.println(recvAccount.getEmail());
+		System.out.println(recvAccount.getFullName());
+		System.out.println(recvAccount.getAddress());
+		System.out.println(recvAccount.getCreditCardNumber());
+		System.out.println(recvAccount.getCreditMonthExpire());
+		currentLoggedAccount = recvAccount;
 	}
 	@Subscribe
 	public void retRieveDatabase(RetrieveDataBaseEvent rtEvent) {
