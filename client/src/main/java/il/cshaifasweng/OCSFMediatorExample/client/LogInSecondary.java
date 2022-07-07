@@ -198,7 +198,7 @@ public class LogInSecondary {
                                 OpenCatalogplz.setVisible(true);
                             }
                         }
-                    },1500
+                    },2000
             );
 
         }

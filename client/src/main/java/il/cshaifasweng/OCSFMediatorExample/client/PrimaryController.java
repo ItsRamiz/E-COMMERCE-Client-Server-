@@ -263,47 +263,58 @@ public class PrimaryController {
 	@FXML
 	void addToCartFlower1(ActionEvent event)
 	{
+		int basePrice = Integer.parseInt(cartTextPrice.getText());
+		int addedPrice = Integer.parseInt(allProducts.get(CatalogSTARTIndex).getPrice());
 		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex).getName());
-		cartPrice = cartPrice + Integer.parseInt(cartPrice + allProducts.get(CatalogSTARTIndex).getPrice());
-		cartTextPrice.setText(String.valueOf(cartPrice));
+		basePrice = basePrice + addedPrice;
+		cartTextPrice.setText(String.valueOf(basePrice));
 	}
 
 	@FXML
 	void addToCartFlower2(ActionEvent event) {
+		int basePrice = Integer.parseInt(cartTextPrice.getText());
+		int addedPrice = Integer.parseInt(allProducts.get(CatalogSTARTIndex+1).getPrice());
 		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+1).getName());
-		cartPrice = cartPrice + Integer.parseInt(cartPrice + allProducts.get(CatalogSTARTIndex+1).getPrice());
-		cartTextPrice.setText(String.valueOf(cartPrice));
+		basePrice = basePrice + addedPrice;
+		cartTextPrice.setText(String.valueOf(basePrice));
 	}
 
 	@FXML
 	void addToCartFlower3(ActionEvent event) {
+		int basePrice = Integer.parseInt(cartTextPrice.getText());
+		int addedPrice = Integer.parseInt(allProducts.get(CatalogSTARTIndex+2).getPrice());
 		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+2).getName());
-		cartPrice = cartPrice + Integer.parseInt(cartPrice + allProducts.get(CatalogSTARTIndex+2).getPrice());
-		cartTextPrice.setText(String.valueOf(cartPrice));
+		basePrice = basePrice + addedPrice;
+		cartTextPrice.setText(String.valueOf(basePrice));
 
 	}
 
 	@FXML
 	void addToCartFlower4(ActionEvent event) {
+		int basePrice = Integer.parseInt(cartTextPrice.getText());
+		int addedPrice = Integer.parseInt(allProducts.get(CatalogSTARTIndex+3).getPrice());
 		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+3).getName());
-		cartPrice = cartPrice + Integer.parseInt(cartPrice + allProducts.get(CatalogSTARTIndex+3).getPrice());
-		cartTextPrice.setText(String.valueOf(cartPrice));
-
+		basePrice = basePrice + addedPrice;
+		cartTextPrice.setText(String.valueOf(basePrice));
 	}
 
 	@FXML
 	void addToCartFlower5(ActionEvent event) {
+		int basePrice = Integer.parseInt(cartTextPrice.getText());
+		int addedPrice = Integer.parseInt(allProducts.get(CatalogSTARTIndex+4).getPrice());
 		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+4).getName());
-		cartPrice =cartPrice + Integer.parseInt(cartPrice + allProducts.get(CatalogSTARTIndex+4).getPrice());
-		cartTextPrice.setText(String.valueOf(cartPrice));
+		basePrice = basePrice + addedPrice;
+		cartTextPrice.setText(String.valueOf(basePrice));
 
 	}
 
 	@FXML
 	void addToCartFlower6(ActionEvent event) 	{
+		int basePrice = Integer.parseInt(cartTextPrice.getText());
+		int addedPrice = Integer.parseInt(allProducts.get(CatalogSTARTIndex+5).getPrice());
 		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+5).getName());
-		cartPrice = cartPrice + Integer.parseInt(cartPrice + allProducts.get(CatalogSTARTIndex+5).getPrice());
-		cartTextPrice.setText(String.valueOf(cartPrice));
+		basePrice = basePrice + addedPrice;
+		cartTextPrice.setText(String.valueOf(basePrice));
 	}
 	@FXML
 	private TextField cartText;
@@ -392,6 +403,7 @@ public class PrimaryController {
 
 
 
+
 	@FXML
 	void nextPageUpate(ActionEvent event)
 	{
@@ -414,14 +426,37 @@ public class PrimaryController {
 
 
 	@FXML
-	void openMyComplaints(ActionEvent event) {
+	void openMyComplaints(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("mycomplaints.fxml"));
+		Parent roott = loader.load();
+		MyComplaintsController cc = loader.getController();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(roott));
+		stage.setTitle("My Complaints");
+		stage.show();
+		Stage stagee = (Stage)viewMyComplaints.getScene().getWindow();
+		stagee.close();
+
 
 	}
 
 	@FXML
-	void openMyOrders(ActionEvent event) {
+	void openMyOrders(ActionEvent event) throws IOException
+	{
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("myorders.fxml"));
+		Parent roott = loader.load();
+		MyOrdersController cc = loader.getController();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(roott));
+		stage.setTitle("My Orders");
+		stage.show();
+		Stage stagee = (Stage)viewMyOrders.getScene().getWindow();
+		stagee.close();
 
 	}
+
+
 	@FXML
 	void prevPageUpate(ActionEvent event)
 	{
@@ -1125,7 +1160,7 @@ public class PrimaryController {
 		flower_name6.setVisible(false);
 		init_container.setVisible(false);
 
-		CartItemsList.setVisible(false);
+		//CartItemsList.setVisible(false);
 
 		adminEditCatalog.getItems().add("Add Item");
 		adminEditCatalog.getItems().add("Remove Item");
@@ -1146,13 +1181,12 @@ public class PrimaryController {
 		worker_edit.getItems().add("Remove worker");
 		worker_edit.getItems().add("Edit worker");
 
-		CartItemsList.getItems().add("FLower");
-
-		cartTopText.setVisible(false);
-		cartTextPrice.setVisible(false);
-		cartTextDiscount.setVisible(false);
-		cartTextPriceDiscount.setVisible(false);
-		cartTextPriceFinal.setVisible(false);
+		viewCart.setVisible(false);
+		//cartTopText.setVisible(false);
+		//cartTextPrice.setVisible(false);
+		//cartTextDiscount.setVisible(false);
+		//cartTextPriceDiscount.setVisible(false);
+		//cartTextPriceFinal.setVisible(false);
 
 		initializeData();
 		if (returnedFromSecondaryController) {
@@ -1169,6 +1203,9 @@ public class PrimaryController {
 		);
 		System.out.println("PRINTING FLAG");
 		System.out.println(catalog_flag.getFlagg());
+
+		cartTextPrice.setText("0");
+		cartTextDiscount.setText("0");
 
 
 	}

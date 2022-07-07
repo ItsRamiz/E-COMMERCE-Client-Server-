@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.MyOrdersController">
+   <children>
+      <ListView fx:id="orderList" layoutX="9.0" layoutY="36.0" prefHeight="495.0" prefWidth="224.0" />
+      <Text layoutX="100.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Orders" wrappingWidth="66.13674926757812" />
+      <TextField fx:id="enterID" layoutX="331.0" layoutY="36.0" prefHeight="26.0" prefWidth="78.0" />
+      <Text layoutX="245.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Order ID" wrappingWidth="78.40000000000009" />
+      <Button fx:id="viewOrder" layoutX="418.0" layoutY="36.0" mnemonicParsing="false" onAction="#openOrder" prefHeight="26.0" prefWidth="78.0" text="View Order" />
+      <Text layoutX="259.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order ID:" wrappingWidth="49.336669921875" />
+      <Text layoutX="515.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From Shop:" wrappingWidth="66.13674926757812" />
+      <Text layoutX="515.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Ordered:" wrappingWidth="78.39999999999986" />
+      <Text layoutX="515.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prepare Date:" wrappingWidth="78.39999999999986" />
+      <Text layoutX="490.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="96.5367431640625" />
+      <Text layoutX="515.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delivery Service:" wrappingWidth="96.5367431640625" />
+      <Text layoutX="259.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account ID:" wrappingWidth="66.13674926757812" />
+      <Text layoutX="515.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delivered/Picked Up:" wrappingWidth="117.3367919921875" />
+      <Text layoutX="252.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Credit Card Number:" wrappingWidth="111.19998779296861" />
+      <Text layoutX="236.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Credit Card Expiry:" wrappingWidth="111.19998779296861" />
+      <Text layoutX="243.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Credit Card CVV:" wrappingWidth="96.5367431640625" />
+      <Text layoutX="515.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recipient Name:" wrappingWidth="96.5367431640625" />
+      <Text layoutX="515.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recipient Adddress:" wrappingWidth="117.3367919921875" />
+      <Text layoutX="469.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recipient Phone Number:" wrappingWidth="137.33673095703125" />
+      <Text layoutX="370.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Greeting Attached:" wrappingWidth="117.3367919921875" />
+      <Text layoutX="243.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Price:" wrappingWidth="66.13674926757812" />
+      <Text layoutX="651.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gift:" wrappingWidth="26.13677978515625" />
+      <TextField fx:id="orderID" editable="false" layoutX="315.0" layoutY="150.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField fx:id="greetingText" editable="false" layoutX="479.0" layoutY="442.0" prefHeight="94.0" prefWidth="308.0" />
+      <TextField fx:id="gift" editable="false" layoutX="677.0" layoutY="149.0" prefHeight="26.0" prefWidth="86.0" />
+      <TextField fx:id="RecepNumber" editable="false" layoutX="612.0" layoutY="414.0" prefHeight="26.0" prefWidth="171.0" />
+      <TextField fx:id="totalPrice" editable="false" layoutX="310.0" layoutY="336.0" prefHeight="26.0" prefWidth="106.0" />
+      <TextField fx:id="RecepAddress" editable="false" layoutX="512.0" layoutY="349.0" prefHeight="54.0" prefWidth="279.0" />
+      <TextField fx:id="RecepName" editable="false" layoutX="608.0" layoutY="293.0" prefHeight="26.0" prefWidth="180.0" />
+      <TextField fx:id="deliverStatus" editable="false" layoutX="629.0" layoutY="264.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField fx:id="deliverService" editable="false" layoutX="608.0" layoutY="236.0" prefHeight="26.0" prefWidth="171.0" />
+      <TextField fx:id="datePrepare" editable="false" layoutX="593.0" layoutY="207.0" prefHeight="26.0" prefWidth="188.0" />
+      <TextField fx:id="dateOrder" editable="false" layoutX="593.0" layoutY="178.0" prefHeight="26.0" prefWidth="188.0" />
+      <TextField fx:id="shopID" editable="false" layoutX="587.0" layoutY="150.0" prefHeight="26.0" prefWidth="42.0" />
+      <TextField fx:id="accountID" editable="false" layoutX="324.0" layoutY="178.0" prefHeight="26.0" prefWidth="180.0" />
+      <TextField fx:id="creditCVV" editable="false" layoutX="347.0" layoutY="306.0" prefHeight="26.0" prefWidth="105.0" />
+      <TextField fx:id="creditNumber" editable="false" layoutX="248.0" layoutY="236.0" prefHeight="26.0" prefWidth="234.0" />
+      <TextField fx:id="creditExpire" editable="false" layoutX="349.0" layoutY="272.0" prefHeight="26.0" prefWidth="137.0" />
+      <Button fx:id="openComplaint" layoutX="507.0" layoutY="36.0" mnemonicParsing="false" onAction="#openOrderComplaint" prefHeight="26.0" prefWidth="111.0" text="Open Complaint" />
+      <TextField fx:id="complaintText" layoutX="244.0" layoutY="74.0" prefHeight="74.0" prefWidth="542.0" />
+      <Button fx:id="sendComplaint" layoutX="626.0" layoutY="37.0" mnemonicParsing="false" onAction="#sendOrderComplaint" prefHeight="26.0" prefWidth="106.0" text="Send Complaint" />
+      <Button fx:id="backToCatalog" layoutX="243.0" layoutY="506.0" mnemonicParsing="false" onAction="#GoToCatalog" prefHeight="26.0" prefWidth="224.0" text="Back To Catalog" />
+   </children>
+</AnchorPane>

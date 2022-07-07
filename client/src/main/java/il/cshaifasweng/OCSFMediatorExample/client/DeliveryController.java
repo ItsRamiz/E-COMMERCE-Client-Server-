@@ -77,7 +77,7 @@ public class DeliveryController {
         assert deliver != null : "fx:id=\"deliver\" was not injected: check your FXML file 'delivery.fxml'.";
         assert deliveryList != null : "fx:id=\"deliveryList\" was not injected: check your FXML file 'delivery.fxml'.";
         assert listOrders != null : "fx:id=\"listOrders\" was not injected: check your FXML file 'delivery.fxml'.";
-        Order order1 = new Order(1,true,2,"a",3,"Tel Aviv",true,false,2,2);
+        /*Order order1 = new Order(1,true,2,"a",3,"Tel Aviv",true,false,2,2);
         Order order2 = new Order(2,true,2,"ddasd",3,"Haifa - Laskov",true,false,2,2);
         Order order3 = new Order(3,true,2,"a",3,"Tiberias - St 5",true,false,2,2);
         Order order4 = new Order(4,true,2,"a",3,"Eilaboun",true,false,2,2);
@@ -98,7 +98,7 @@ public class DeliveryController {
         listOrders.getItems().add(order2.getOrderID());
         listOrders.getItems().add(order3.getOrderID());
         listOrders.getItems().add(order4.getOrderID());
-
+*/
     }
 
 }

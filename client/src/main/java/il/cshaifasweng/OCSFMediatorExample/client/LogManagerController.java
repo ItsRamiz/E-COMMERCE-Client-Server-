@@ -349,11 +349,11 @@ public class LogManagerController {
         XYChart.Series set = new XYChart.Series();
         for (i = 0; i < orders.size(); i++)
         {
-                if (orders.get(i).getYear() <= UntilYearInt && orders.get(i).getYear() >= FromYearInt)
+                if (orders.get(i).getOrderYear() <= UntilYearInt && orders.get(i).getOrderYear() >= FromYearInt)
                 {
-                    if (orders.get(i).getMonth() <= UntilMonthInt && orders.get(i).getMonth() >= FromMonthInt)
+                    if (orders.get(i).getOrderMonth() <= UntilMonthInt && orders.get(i).getOrderMonth() >= FromMonthInt)
                     {
-                        if (orders.get(i).getDay() <= UntilDayInt && orders.get(i).getDay() >= FromDayInt)
+                        if (orders.get(i).getOrderDay() <= UntilDayInt && orders.get(i).getOrderDay() >= FromDayInt)
                         {
                             if(orders.get(i).getShopID() == shopID) {
                                 searchResultOrder.add(orders.get(i));
@@ -432,6 +432,7 @@ public class LogManagerController {
         LogType.getItems().add("Income Log");
         LogType.getItems().add("Orders Log");
         LogType.getItems().add("Complaint Log");
+        /*
         Order new1 = new Order(1,false,1,"First",500,"aa",true,true,12,12);
         new1.setDay(17);
         new1.setMonth(5);

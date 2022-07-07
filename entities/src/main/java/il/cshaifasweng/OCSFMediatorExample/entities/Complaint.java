@@ -29,18 +29,11 @@ public class Complaint implements Serializable {
     boolean returnedMoney;
     @Column(name = "returnedmoneyvalue")
     int returnedmoneyvalue;
-    @OneToOne(mappedBy = "orderComplaint")
-    private Order order;
-    @ManyToOne
-    private Account accComplaints;
     private int day;
     private int month;
     private int year;
 
-
-
-
-    public Complaint(int CustomerID, int OrderID, boolean Accepted, boolean in24Hours, String complaintText, int shopID, int answerworkerID, boolean returnedMoney, int returnedmoneyvalue,Order order,Account accComplaints) {
+    public Complaint(int CustomerID, int OrderID, boolean Accepted, boolean in24Hours, String complaintText, int shopID, int answerworkerID, boolean returnedMoney, int returnedmoneyvalue) {
 
         this.CustomerID = CustomerID;
         this.OrderID = OrderID;
@@ -134,22 +127,6 @@ public class Complaint implements Serializable {
 
     public void setReturnedmoneyvalue(int returnedmoneyvalue) {
         this.returnedmoneyvalue = returnedmoneyvalue;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Account getAccComplaints() {
-        return accComplaints;
-    }
-
-    public void setAccComplaints(Account accComplaints) {
-        this.accComplaints = accComplaints;
     }
 
     public int getDay() {

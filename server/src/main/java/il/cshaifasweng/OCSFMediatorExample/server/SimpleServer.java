@@ -354,6 +354,7 @@ public class SimpleServer extends AbstractServer {
 			}
 
 
+			/*
 			if(foundAlready == false){
 				List<Manager> managersList = getAllAccountsManager();
 				Manager tempManager = new Manager() ; // in case the user is manager
@@ -401,6 +402,8 @@ public class SimpleServer extends AbstractServer {
 
 
 
+
+			 */
 		}
 		if (msg instanceof ArrayList) { // arrived from the initializing of the program, so we initialize the database
 			// with the starting Products
@@ -660,31 +663,6 @@ public class SimpleServer extends AbstractServer {
 		System.out.println("Arrived to getAllAccounts 4");
 		List<Account> resultlest = session.createQuery(query).getResultList();
 		System.out.println("Arrived to getAllAccounts 5");
-		return resultlest;
-	}
-	public static List<Manager> getAllAccountsManager() { // added today
-		System.out.println("Arrived to getAllAccounts manager 1");
-		CriteriaBuilder builder = session.getCriteriaBuilder();
-		System.out.println("Arrived to getAllAccounts manager 2");
-		CriteriaQuery<Manager> query = builder.createQuery(Manager.class);
-		System.out.println("Arrived to getAllAccounts manager 3");
-		query.from(Manager.class);
-		System.out.println("Arrived to getAllAccounts manager 4");
-		List<Manager> resultlest = session.createQuery(query).getResultList();
-		System.out.println("Arrived to getAllAccounts manager 5");
-		return resultlest;
-	}
-
-	public static List<Worker> getAllAccountsWorker() { // added today
-		System.out.println("Arrived to getAllAccounts worker  1");
-		CriteriaBuilder builder = session.getCriteriaBuilder();
-		System.out.println("Arrived to getAllAccounts worker 2");
-		CriteriaQuery<Worker> query = builder.createQuery(Worker.class);
-		System.out.println("Arrived to getAllAccounts worker 3");
-		query.from(Manager.class);
-		System.out.println("Arrived to getAllAccounts worker 4");
-		List<Worker> resultlest = session.createQuery(query).getResultList();
-		System.out.println("Arrived to getAllAccounts worker 5");
 		return resultlest;
 	}
 

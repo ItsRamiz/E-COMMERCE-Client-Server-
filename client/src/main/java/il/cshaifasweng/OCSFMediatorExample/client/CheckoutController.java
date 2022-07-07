@@ -19,6 +19,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Calendar;
 
 public class CheckoutController {
 
@@ -113,9 +114,85 @@ public class CheckoutController {
 
     }
     @FXML
-    void PlaceOrder(ActionEvent event)
-    {
+    void PlaceOrder(ActionEvent event) {
+        int shopID = 0;
+        Calendar calle = Calendar.getInstance();
+        int currentYear = calle.get(Calendar.YEAR);
+        int currentMonth = calle.get(Calendar.MONTH);
+        int currentHour = calle.get(Calendar.HOUR_OF_DAY);
+        int currentMintue = calle.get(Calendar.MINUTE);
+        int currentDay = calle.get(Calendar.DAY_OF_MONTH);
         String chainShop = chooseShopID.getSelectionModel().toString();
+        switch (chooseShopID.getSelectionModel().toString()) {
+            case "ID 0: - Chain":
+                shopID = 0;
+                break;
+            case "ID 1: Tiberias, Big Danilof":
+                shopID = 1;
+                break;
+            case "ID 2: Haifa, Merkaz Zeiv":
+                shopID = 2;
+                break;
+            case "ID 3: Tel Aviv, Ramat Aviv":
+                shopID = 3;
+                break;
+            case "ID 4: Eilat, Ice mall":
+                shopID = 4;
+                break;
+            case "ID 5: Be'er Sheva, Big Beer Sheva":
+                shopID = 5;
+                break;
+        }
+        boolean pickUp = true;
+        boolean gift = false;
+        String deliveredAddress = "";
+        String recepName = "";
+        long recepPhone = 0;
+        if (deliverToHome.isSelected()) {
+            pickUp = false;
+            recepName = currentUser.getFullName();
+            if (deliveryBox.isSelected()) {
+                recepPhone = Integer.parseInt(recepPhoneField.getText());
+                recepName = recepNameField.getText();
+                deliveredAddress = recepAddressField.getText();
+                gift = true;
+            } else {
+                recepPhone = currentUser.getPhoneNumber();
+                recepName = currentUser.getFullName();
+                deliveredAddress = currentUser.getAddress();
+                gift = false;
+            }
+        } else {
+            pickUp = false;
+            deliveredAddress = "none";
+        }
+        String greeting = "";
+        if (greetingBoxCheckout.isSelected()) {
+            greeting = greetingTextCheckout.getText();
+        } else {
+            greeting = "none";
+        }
+        long creditCardNumber;
+        int creditCardMonth;
+        int creditCardYear;
+        int creditCardCVV;
+        if (anotherMethodBox.isSelected() == true) {
+            creditCardNumber = Integer.parseInt(creditNumberField.getText());
+            creditCardMonth = expiryMonth.getSelectionModel().getSelectedItem();
+            creditCardYear = expiryYear.getSelectionModel().getSelectedItem();
+            creditCardCVV = Integer.parseInt(cvvField.getText());
+        } else {
+            creditCardNumber = currentUser.getCreditCardNumber();
+            creditCardMonth = currentUser.getCreditMonthExpire();
+            creditCardYear = currentUser.getCreditYearExpire();
+            creditCardCVV = currentUser.getCcv();
+        }
+        int dayCheckoutInt = dayCheckout.getSelectionModel().getSelectedItem();
+        int monthCheckoutInt = monthCheckout.getSelectionModel().getSelectedItem();
+        int yearCheckoutInt = yearCheckout.getSelectionModel().getSelectedItem();
+        Order newOrder = new Order(0,pickUp,shopID,greeting,0,deliveredAddress,currentUser.getAccountID(),gift,false,dayCheckoutInt,monthCheckoutInt,yearCheckoutInt,currentDay,currentMonth,currentYear,creditCardNumber,creditCardMonth,creditCardYear,creditCardCVV,recepName,recepPhone,deliveredAddress);
+        // TODO: Add order to database.
+        System.out.println(newOrder.toString());
     }
 
     @FXML
@@ -181,12 +258,15 @@ public class CheckoutController {
         System.out.println(recvAccount.getAddress());
         System.out.println(recvAccount.getCreditCardNumber());
         System.out.println(recvAccount.getCreditMonthExpire());
+        currentUser = recvAccount;
     }
     @FXML
+    Account currentUser;
     void initialize() throws MalformedURLException
     {
         EventBus.getDefault().register(this);
         int i;
+        System.out.println("Here");
         for(i = 1 ; i < 31 ; i++)
         {
             dayCheckout.getItems().add(i);

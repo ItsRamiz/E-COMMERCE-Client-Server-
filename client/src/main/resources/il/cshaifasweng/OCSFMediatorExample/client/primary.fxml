@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="es" maxHeight="800.0" maxWidth="1000.0" minHeight="800.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1000.0" stylesheets="@mycsss.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.PrimaryController">
+<AnchorPane fx:id="es" maxHeight="800.0" maxWidth="1000.0" minHeight="780.0" minWidth="1520.0" prefHeight="800.0" prefWidth="1000.0" stylesheets="@mycsss.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.PrimaryController">
     <children>
         <Accordion layoutX="227.0" layoutY="575.0" />
         <AnchorPane id="menuu-content" layoutX="800.0" layoutY="50.0" maxWidth="200.0" minWidth="181.0" prefHeight="749.0" prefWidth="181.0" stylesheets="@mycsss.css" AnchorPane.bottomAnchor="1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
@@ -136,17 +136,37 @@
         <Button id="btttn" fx:id="nextPage" layoutX="724.0" layoutY="742.0" mnemonicParsing="false" onAction="#nextPageUpate" text="next page" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="450.0" />
         <AnchorPane id="cath" layoutY="-3.0" maxHeight="50.0" minHeight="50.0" prefHeight="52.0" prefWidth="1014.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-100.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Button id="btttn" fx:id="accbtn" layoutX="126.0" layoutY="10.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#accbtnlogin" prefHeight="30.0" prefWidth="100.0" text="account" AnchorPane.rightAnchor="874.0" AnchorPane.topAnchor="10.0" />
-                <Button id="btttn" fx:id="infoo" layoutX="235.0" layoutY="10.0" maxHeight="30.0" maxWidth="125.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#openComplaintManager" prefHeight="30.0" prefWidth="125.0" text="Log Manager" AnchorPane.rightAnchor="739.4" AnchorPane.topAnchor="10.0" />
-                <Button id="btttn" fx:id="cartt" layoutX="371.0" layoutY="10.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="cart" AnchorPane.rightAnchor="629.0" AnchorPane.topAnchor="10.0" />
+                <Button id="btttn" fx:id="accbtn" layoutX="229.0" layoutY="12.0" maxHeight="30.0" maxWidth="100.0" minHeight="27.0" minWidth="100.0" mnemonicParsing="false" onAction="#accbtnlogin" prefHeight="27.0" prefWidth="100.0" text="My Account" AnchorPane.rightAnchor="1291.0" AnchorPane.topAnchor="12.0" />
+                <Button id="btttn" fx:id="infoo" layoutX="951.0" layoutY="7.0" maxHeight="30.0" maxWidth="125.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#openComplaintManager" prefHeight="30.0" prefWidth="125.0" text="Log Manager" AnchorPane.rightAnchor="543.4000000000001" AnchorPane.topAnchor="7.0" />
+                <Button id="btttn" fx:id="cartt" layoutX="405.0" layoutY="10.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="cart" AnchorPane.rightAnchor="1115.0" AnchorPane.topAnchor="10.0" />
                 <Button id="btttn" fx:id="compln" layoutX="14.0" layoutY="10.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#complinstart" prefHeight="30.0" prefWidth="100.0" text="complaint" AnchorPane.rightAnchor="986.0" AnchorPane.topAnchor="10.0" />
-            <Button fx:id="viewMyOrders" layoutX="478.0" layoutY="12.0" mnemonicParsing="false" onAction="#openMyOrders" text="My Orders" />
-            <Button fx:id="viewMyComplaints" layoutX="557.0" layoutY="13.0" mnemonicParsing="false" onAction="#openMyComplaints" prefHeight="26.0" prefWidth="125.0" text="My Complaints" />
+            <Button fx:id="viewMyOrders" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onAction="#openMyOrders" text="My Orders" />
+            <Button fx:id="viewMyComplaints" layoutX="97.0" layoutY="12.0" mnemonicParsing="false" onAction="#openMyComplaints" prefHeight="26.0" prefWidth="125.0" text="My Complaints" />
             <Button fx:id="deliveryButton" layoutX="701.0" layoutY="12.0" mnemonicParsing="false" onAction="#openDelivery" text="Delivery Man" />
+              <Button fx:id="printProd" layoutX="1077.0" layoutY="10.0" mnemonicParsing="false" onAction="#printProducts" text="Print Products" />
             </children>
         </AnchorPane>
-        <Button fx:id="printProd" layoutX="77.0" layoutY="388.0" mnemonicParsing="false" onAction="#printProducts" text="Print Products" />
-        <AnchorPane id="ee" fx:id="init_container" layoutX="168.0" layoutY="343.0" prefHeight="200.0" prefWidth="503.0">
+        <Button fx:id="viewCart" layoutX="370.0" layoutY="82.0" mnemonicParsing="false" onAction="#viewUserCart" text="View Cart" />
+        <Text fx:id="cartTopText" layoutX="64.0" layoutY="115.0" stroke="#0c7eff" strokeType="OUTSIDE" strokeWidth="2.0" text="Your Cart Items" wrappingWidth="124.80002441406236">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <Text fx:id="cartTextPriceDiscount" layoutX="14.0" layoutY="507.0" stroke="#0c7eff" strokeType="OUTSIDE" strokeWidth="2.0" text="Price Before Discount" wrappingWidth="176.2646484375">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <Text fx:id="cartTextPriceFinal" layoutX="14.0" layoutY="551.0" stroke="#0080ff" strokeType="OUTSIDE" strokeWidth="2.0" text="Price After Discount">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <TextField fx:id="cartTextDiscount" editable="false" layoutX="192.0" layoutY="486.0" prefHeight="26.0" prefWidth="115.0" />
+        <TextField fx:id="cartTextPrice" editable="false" layoutX="179.0" layoutY="530.0" prefHeight="26.0" prefWidth="115.0" />
+        <Button fx:id="checkout" layoutX="59.0" layoutY="568.0" mnemonicParsing="false" onAction="#openCheckout" prefHeight="50.0" prefWidth="190.0" text="Continue To Checkout" />
+        <ListView fx:id="CartItemsList" layoutX="29.0" layoutY="122.0" prefHeight="355.0" prefWidth="196.0" />
+        <AnchorPane id="ee" fx:id="init_container" layoutX="453.0" layoutY="288.0" prefHeight="200.0" prefWidth="503.0">
             <children>
                 <Text fx:id="justText" layoutX="163.0" layoutY="43.0" stroke="#796c6c" strokeLineCap="ROUND" styleClass="back" text="initializing database.." textAlignment="CENTER">
                     <font>
@@ -156,26 +176,6 @@
                 <Button fx:id="justButton" layoutX="165.0" layoutY="83.0" mnemonicParsing="false" onAction="#justView" prefHeight="34.0" prefWidth="171.0" text="Click To Continue" />
             </children>
         </AnchorPane>
-        <Button fx:id="viewCart" layoutX="370.0" layoutY="82.0" mnemonicParsing="false" onAction="#viewUserCart" text="View Cart" />
-        <Text fx:id="cartTopText" layoutX="163.0" layoutY="167.0" stroke="#0c7eff" strokeType="OUTSIDE" strokeWidth="2.0" text="Your Cart Items" wrappingWidth="124.80002441406236">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Text>
-        <Text fx:id="cartTextPriceDiscount" layoutX="10.0" layoutY="570.0" stroke="#0c7eff" strokeType="OUTSIDE" strokeWidth="2.0" text="Price Before Discount" wrappingWidth="176.2646484375">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Text>
-        <Text fx:id="cartTextPriceFinal" layoutX="10.0" layoutY="600.0" stroke="#0080ff" strokeType="OUTSIDE" strokeWidth="2.0" text="Price After Discount">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Text>
-        <TextField fx:id="cartTextDiscount" editable="false" layoutX="192.0" layoutY="549.0" prefHeight="26.0" prefWidth="115.0" />
-        <TextField fx:id="cartTextPrice" editable="false" layoutX="192.0" layoutY="579.0" prefHeight="26.0" prefWidth="115.0" />
-        <Button fx:id="checkout" layoutX="405.0" layoutY="337.0" mnemonicParsing="false" onAction="#openCheckout" prefHeight="26.0" prefWidth="135.0" text="Continue To Checkout" />
-        <ListView fx:id="CartItemsList" layoutX="150.0" layoutY="170.0" prefHeight="355.0" prefWidth="196.0" />
 
     </children>
 </AnchorPane>
