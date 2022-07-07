@@ -125,6 +125,7 @@ public class MyOrdersController {
     @FXML
     void sendOrderComplaint(ActionEvent event)
     {
+        /*
         Complaint newComplaint = new Complaint();
         newComplaint.setCustomerID(currentUser.getAccountID());
         newComplaint.setOrderID(Integer.parseInt(enterID.getText()));
@@ -136,6 +137,7 @@ public class MyOrdersController {
         newComplaint.setReturnedmoneyvalue(0);
         sendComplaint.setVisible(false);
         complaintText.setVisible(false);
+         */
     }
 
 
@@ -205,9 +207,9 @@ public class MyOrdersController {
         assert shopID != null : "fx:id=\"shopID\" was not injected: check your FXML file 'Untitled'.";
         assert totalPrice != null : "fx:id=\"totalPrice\" was not injected: check your FXML file 'Untitled'.";
         assert viewOrder != null : "fx:id=\"viewOrder\" was not injected: check your FXML file 'Untitled'.";
-        openComplaint.setVisible(false);
-        sendComplaint.setVisible(false);
-        complaintText.setVisible(false);
+        openComplaint.setVisible(true);
+        sendComplaint.setVisible(true);
+        complaintText.setVisible(true);
         String orderDetails = "";
         /*
         for(int i = 0 ; i < allOrders.size(); i ++)
