@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;
 import il.cshaifasweng.OCSFMediatorExample.entities.Order;
+import il.cshaifasweng.OCSFMediatorExample.entities.UpdateMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,12 +19,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import javax.persistence.Column;
 
 public class MyOrdersController {
 
 
+
+    Account currentUser;
     @FXML // fx:id="sendComplaint"
     private Button sendComplaint; // Value injected by FXMLLoader
 
@@ -100,6 +105,7 @@ public class MyOrdersController {
     @FXML // fx:id="backToCatalog"
     private Button backToCatalog; // Value injected by FXMLLoader
 
+    int complaint_num = 0;
     @FXML
     void GoToCatalog(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
@@ -111,6 +117,20 @@ public class MyOrdersController {
         stage.show();
         Stage stagee = (Stage)backToCatalog.getScene().getWindow();
         stagee.close();
+
+        Account recAcc = currentUser;
+        System.out.println("the server sent me the account , NICE 2 !!");
+        PassAccountEvent recievedAcc = new PassAccountEvent(recAcc);
+        System.out.println("the server sent me the account , NICE 3 !!");
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        EventBus.getDefault().post(recievedAcc);
+                        System.out.println("the server sent me the account , NICE 4 !!");
+                    }
+                },4000
+        );
 
     }
 
@@ -125,69 +145,91 @@ public class MyOrdersController {
     @FXML
     void sendOrderComplaint(ActionEvent event)
     {
-        /*
         Complaint newComplaint = new Complaint();
-        newComplaint.setCustomerID(currentUser.getAccountID());
-        newComplaint.setOrderID(Integer.parseInt(enterID.getText()));
+        newComplaint.setComplaintID(1);
+        newComplaint.setCustomerID(999);
+        newComplaint.setOrderID(1);
         newComplaint.setAccepted(false);
         newComplaint.setIn24Hours(false);
-        newComplaint.setShopID(currentOrderShopID);
+        newComplaint.setShopID(55);
         newComplaint.setAnswerworkerID(0);
         newComplaint.setReturnedMoney(false);
         newComplaint.setReturnedmoneyvalue(0);
         sendComplaint.setVisible(false);
         complaintText.setVisible(false);
-         */
-    }
+        UpdateMessage new_msg=new UpdateMessage("complaint","add");
+        new_msg.setComplaint(newComplaint);
+        try {
+            System.out.println("before sending updateMessage to server ");
+            SimpleClient.getClient().sendToServer(new_msg); // sends the updated product to the server class
+            System.out.println("afater sending updateMessage to server ");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
+
+    }
 
     @FXML
-    void openOrder(ActionEvent event)
-    {
-        int theID = Integer.parseInt(enterID.getText());
+    void openOrder(ActionEvent event) {
+        int selected = orderList.getSelectionModel().getSelectedItem().charAt(0) - 48;
+        System.out.println("Selected is " + selected);
         Order retrievedOrder = new Order();  // This is the order with theID
-        openComplaint.setVisible(true);
-        complaintText.setVisible(true);
-        sendComplaint.setVisible(true);
-        orderID.setText(String.valueOf(retrievedOrder.getOrderID()));
-        accountID.setText(String.valueOf(currentUser.getAccountID()));
-        creditNumber.setText(String.valueOf(retrievedOrder.getCreditCardNumber()));
-        String creditXpire = "" + retrievedOrder.getCreditCardExpMonth() + "/" + retrievedOrder.getCreditCardExpYear();
-        creditExpire.setText(creditXpire);
-        creditCVV.setText(String.valueOf(retrievedOrder.getCreditCardCVV()));
-        totalPrice.setText(String.valueOf(retrievedOrder.getTotalPrice()));
-        shopID.setText(String.valueOf(retrievedOrder.getShopID()));
-        if(retrievedOrder.isGift() == true)
-            gift.setText("true");
-        else
-            gift.setText("false");
-        String orderDate = "" + retrievedOrder.getOrderDay() + "/" + retrievedOrder.getOrderMonth() + "/" + retrievedOrder.getOrderYear();
-        dateOrder.setText(orderDate);
-        String prepareDate = "" + retrievedOrder.getPrepareDay() + "/" + retrievedOrder.getPrepareMonth() + "/" + retrievedOrder.getPrepareYear();
-        datePrepare.setText(prepareDate);
-        if(retrievedOrder.isPickUp() == true)
-            deliverService.setText("Pick Up");
-        else
-            deliverService.setText("Delivery");
-        if(retrievedOrder.isDelivered() == true)
-            deliverService.setText("Delivered/Picked Up");
-        else
-            deliverService.setText("Not Delivered/Picked Up");
-        RecepName.setText(retrievedOrder.getRecepName());
-        RecepAddress.setText(retrievedOrder.getRecepAddress());
-        RecepNumber.setText(String.valueOf(retrievedOrder.getRecepPhone()));
-        if(retrievedOrder.getGreeting() != "")
-            greetingText.setText(retrievedOrder.getGreeting());
-        else
-            greetingText.setText("No Greeting");
-        currentOrderShopID = retrievedOrder.getShopID();
+        //int theID = Integer.parseInt(enterID.getText());
+        for (int i = 0; i < allOrders.size(); i++) {
+            if (allOrders.get(i).getOrderID() == selected) {
+                retrievedOrder = allOrders.get(i);
+                break;
+            }
+        }
+        int i = 0;
+        while (i<2)
+        {
+            openComplaint.setVisible(true);
+            complaintText.setVisible(true);
+            sendComplaint.setVisible(true);
+            orderID.setText(String.valueOf(retrievedOrder.getOrderID()));
+            accountID.setText(String.valueOf(currentUser.getAccountID()));
+            creditNumber.setText(String.valueOf(retrievedOrder.getCreditCardNumber()));
+            String creditXpire = "" + retrievedOrder.getCreditCardExpMonth() + "/" + retrievedOrder.getCreditCardExpYear();
+            creditExpire.setText(creditXpire);
+            creditCVV.setText(String.valueOf(retrievedOrder.getCreditCardCVV()));
+            totalPrice.setText(String.valueOf(retrievedOrder.getTotalPrice()));
+            shopID.setText(String.valueOf(retrievedOrder.getShopID()));
+            if (retrievedOrder.isGift() == true)
+                gift.setText("true");
+            else
+                gift.setText("false");
+            String orderDate = "" + retrievedOrder.getOrderDay() + "/" + retrievedOrder.getOrderMonth() + "/" + retrievedOrder.getOrderYear();
+            dateOrder.setText(orderDate);
+            String prepareDate = "" + retrievedOrder.getPrepareDay() + "/" + retrievedOrder.getPrepareMonth() + "/" + retrievedOrder.getPrepareYear();
+            datePrepare.setText(prepareDate);
+            if (retrievedOrder.isPickUp() == true)
+                deliverService.setText("Pick Up");
+            else
+                deliverService.setText("Delivery");
+            if (retrievedOrder.isDelivered() == true)
+                deliverService.setText("Delivered/Picked Up");
+            else
+                deliverService.setText("Not Delivered/Picked Up");
+            RecepName.setText(retrievedOrder.getRecepName());
+            RecepAddress.setText(retrievedOrder.getRecepAddress());
+            RecepNumber.setText(String.valueOf(retrievedOrder.getRecepPhone()));
+            if (retrievedOrder.getGreeting() != "")
+                greetingText.setText(retrievedOrder.getGreeting());
+            else
+                greetingText.setText("No Greeting");
+            currentOrderShopID = retrievedOrder.getShopID();
+            i++;
+        }
     }
-    Account currentUser;
     int currentOrderShopID;
     List<Order> allOrders = new ArrayList<Order>();
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        EventBus.getDefault().register(this);
         assert RecepAddress != null : "fx:id=\"RecepAddress\" was not injected: check your FXML file 'Untitled'.";
         assert RecepName != null : "fx:id=\"RecepName\" was not injected: check your FXML file 'Untitled'.";
         assert RecepNumber != null : "fx:id=\"RecepNumber\" was not injected: check your FXML file 'Untitled'.";
@@ -221,7 +263,31 @@ public class MyOrdersController {
                 orderList.getItems().add(orderString);
             }
         }
-         */
+        */
+        Order a = new Order(1,true,1,"greet",1000,"Haifa",32,true,false,12,2,2000,11,7,2000,239482,32,421,4882,"Ramiz",050261,"Eilaboun");
+        Order b = new Order(2,false,3,"no greet",2500,"TelAviv",15,false,false,19,7,2032,10,11,1998,4580,3,2003,017,"Malki",050261,"university");
+        allOrders.add(a);
+        allOrders.add(b);
+        String orderString = "";
+        orderString = a.getOrderID() + " - " + a.getDate();
+        orderList.getItems().add(orderString);
+        orderString = "";
+        orderString = b.getOrderID() + " - " + b.getDate();
+        orderList.getItems().add(orderString);
+
+    }
+    @Subscribe
+    public void PassAccountEvent(PassAccountEventOrders passAcc){ // added today
+        System.out.println("Arrived To Pass Account - order!");
+        Account recvAccount = passAcc.getRecievedAccount();
+        System.out.println(recvAccount.getPassword());
+        System.out.println(recvAccount.getAccountID());
+        System.out.println(recvAccount.getEmail());
+        System.out.println(recvAccount.getFullName());
+        System.out.println(recvAccount.getAddress());
+        System.out.println(recvAccount.getCreditCardNumber());
+        System.out.println(recvAccount.getCreditMonthExpire());
+        currentUser = recvAccount;
     }
 
 

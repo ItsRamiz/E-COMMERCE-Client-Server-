@@ -27,23 +27,31 @@ public class Order implements Serializable {
     private boolean gift;
     @Column(name = "Delivered")
     private boolean delivered;
-    @Column(name = "Arrival_Time")
-    private long creditCardNumber;
-    @Column(name = "Prepare Day")
-    private int prepareDay;
-    @Column(name = "Prepare Month")
-    private int prepareMonth;
-    @Column(name = "Prepare Year")
-    private int prepareYear;
     @Column(name = "CreditNumber")
+    private long creditCardNumber;
+    @Column(name = "Prepare_Day")
+    private int prepareDay;
+    @Column(name = "Prepare_Month")
+    private int prepareMonth;
+    @Column(name = "Prepare_Year")
+    private int prepareYear;
+    @Column(name = "Order_Day")
     private int orderDay;
+    @Column(name = "Order_Month")
     private int orderMonth;
+    @Column(name = "Order_Year")
     private int orderYear;
+    @Column(name = "creditExpMonth")
     private int creditCardExpMonth;
+    @Column(name = "creditExpYear")
     private int creditCardExpYear;
+    @Column(name = "creditCVV")
     private int creditCardCVV;
+    @Column(name = "recepName")
     private String RecepName;
+    @Column(name = "recepPhone")
     private long RecepPhone;
+    @Column(name = "recepAddress")
     private String RecepAddress;
 
     /*private List<Product> products;*/

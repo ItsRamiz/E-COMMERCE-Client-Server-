@@ -13,6 +13,7 @@ public class UpdateMessage implements Serializable {
     private Worker worker = null;
     private Manager manager = null;
     private Order order = null;
+    private Complaint complaint = null;
 
 
     public UpdateMessage(String update_class, String update_function){
@@ -20,6 +21,12 @@ public class UpdateMessage implements Serializable {
         this.updateFunction = update_function;
 
     }
+    public Complaint getComplaint()
+    {   return complaint; }
+
+    public void setComplaint(Complaint complaint)
+    { this.complaint = complaint; }
+
 
     public String getUpdateClass(){
         return this.updateClass;

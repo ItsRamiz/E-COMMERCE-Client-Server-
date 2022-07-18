@@ -29,12 +29,18 @@ public class Complaint implements Serializable {
     boolean returnedMoney;
     @Column(name = "returnedmoneyvalue")
     int returnedmoneyvalue;
+    @Column(name = "RecDay")
     private int day;
+    @Column(name = "RecMonth")
     private int month;
+    @Column(name = "RecYear")
     private int year;
+    @Column(name = "Text")
+    private String ComplaintText;
 
-    public Complaint(int CustomerID, int OrderID, boolean Accepted, boolean in24Hours, String complaintText, int shopID, int answerworkerID, boolean returnedMoney, int returnedmoneyvalue) {
+    public Complaint(int complaintID,int CustomerID, int OrderID, boolean Accepted, boolean in24Hours, String complaintText, int shopID, int answerworkerID, boolean returnedMoney, int returnedmoneyvalue) {
 
+        this.complaintID = complaintID;
         this.CustomerID = CustomerID;
         this.OrderID = OrderID;
         this.Accepted = Accepted;
@@ -164,5 +170,25 @@ public class Complaint implements Serializable {
             return true;
         else
             return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Complaint{" +
+                "complaintID=" + complaintID +
+                ", CustomerID=" + CustomerID +
+                ", OrderID=" + OrderID +
+                ", Accepted=" + Accepted +
+                ", in24Hours=" + in24Hours +
+                ", complaintText='" + complaintText + '\'' +
+                ", shopID=" + shopID +
+                ", answerworkerID=" + answerworkerID +
+                ", returnedMoney=" + returnedMoney +
+                ", returnedmoneyvalue=" + returnedmoneyvalue +
+                ", day=" + day +
+                ", month=" + month +
+                ", year=" + year +
+                ", ComplaintText='" + ComplaintText + '\'' +
+                '}';
     }
 }

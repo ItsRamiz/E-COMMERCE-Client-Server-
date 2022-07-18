@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import com.sun.javafx.image.IntPixelGetter;
 import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 import il.cshaifasweng.OCSFMediatorExample.entities.Order;
+import il.cshaifasweng.OCSFMediatorExample.entities.UpdateMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -112,6 +113,20 @@ public class CheckoutController {
         // do what you have to do
         stagee.close();
 
+        Account recAcc = currentUser;
+        System.out.println("the server sent me the account , NICE 2 !!");
+        PassAccountEvent recievedAcc = new PassAccountEvent(recAcc);
+        System.out.println("the server sent me the account , NICE 3 !!");
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        EventBus.getDefault().post(recievedAcc);
+                        System.out.println("the server sent me the account , NICE 4 !!");
+                    }
+                },4000
+        );
+
     }
     @FXML
     void PlaceOrder(ActionEvent event) {
@@ -191,8 +206,18 @@ public class CheckoutController {
         int monthCheckoutInt = monthCheckout.getSelectionModel().getSelectedItem();
         int yearCheckoutInt = yearCheckout.getSelectionModel().getSelectedItem();
         Order newOrder = new Order(0,pickUp,shopID,greeting,0,deliveredAddress,currentUser.getAccountID(),gift,false,dayCheckoutInt,monthCheckoutInt,yearCheckoutInt,currentDay,currentMonth,currentYear,creditCardNumber,creditCardMonth,creditCardYear,creditCardCVV,recepName,recepPhone,deliveredAddress);
-        // TODO: Add order to database.
-        System.out.println(newOrder.toString());
+
+        System.out.println(newOrder);
+        UpdateMessage new_msg2=new UpdateMessage("order","add");
+        new_msg2.setOrder(newOrder);
+        try {
+            System.out.println("before sending updateMessage to server ");
+            SimpleClient.getClient().sendToServer(new_msg2); // sends the updated product to the server class
+            System.out.println("afater sending updateMessage to server ");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -247,6 +272,7 @@ public class CheckoutController {
     @FXML
     private ComboBox<String> chooseShopID;
 
+    Account currentUser;
     @Subscribe
     public void PassAccountEvent(PassAccountEventCheckout passAcc){ // added today
         System.out.println("Arrived To Pass Account - CheckoutController");
@@ -261,7 +287,7 @@ public class CheckoutController {
         currentUser = recvAccount;
     }
     @FXML
-    Account currentUser;
+
     void initialize() throws MalformedURLException
     {
         EventBus.getDefault().register(this);

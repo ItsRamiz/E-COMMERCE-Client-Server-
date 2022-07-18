@@ -388,17 +388,31 @@ public class PrimaryController {
 	@FXML
 	void openCheckout(ActionEvent event) throws IOException
 	{
+		System.out.println("arrived to checkout 1");
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("checkout.fxml"));
 		Parent roott = loader.load();
 		CheckoutController cc = loader.getController();
+		System.out.println("arrived to checkout 2");
 		Stage stage = new Stage();
 		stage.setScene(new Scene(roott));
 		stage.setTitle("Checkout");
 		stage.show();
 		Stage stagee = (Stage)checkout.getScene().getWindow();
+		System.out.println("arrived to checkout 3");
 		stagee.close();
 		PassAccountEventCheckout recievedAcc = new PassAccountEventCheckout(currentLoggedAccount);
-		EventBus.getDefault().post(recievedAcc);
+
+		new java.util.Timer().schedule(
+				new java.util.TimerTask() {
+					@Override
+					public void run() {
+						EventBus.getDefault().post(recievedAcc);
+						System.out.println("the server sent me the account , NICE 4 !!");
+					}
+				},4000
+		);
+
+		System.out.println("arrived to checkout 4 (posted the event)");
 	}
 
 
@@ -437,6 +451,18 @@ public class PrimaryController {
 		Stage stagee = (Stage)viewMyComplaints.getScene().getWindow();
 		stagee.close();
 
+		PassAccountEventComplaints recievedAcc = new PassAccountEventComplaints(currentLoggedAccount);
+
+		new java.util.Timer().schedule(
+				new java.util.TimerTask() {
+					@Override
+					public void run() {
+						EventBus.getDefault().post(recievedAcc);
+						System.out.println("the server sent me the account , NICE 4 !!");
+					}
+				},4000
+		);
+
 
 	}
 
@@ -453,6 +479,17 @@ public class PrimaryController {
 		stage.show();
 		Stage stagee = (Stage)viewMyOrders.getScene().getWindow();
 		stagee.close();
+		PassAccountEventOrders recievedAcc = new PassAccountEventOrders(currentLoggedAccount);
+
+		new java.util.Timer().schedule(
+				new java.util.TimerTask() {
+					@Override
+					public void run() {
+						EventBus.getDefault().post(recievedAcc);
+						System.out.println("the server sent me the account , NICE 4 !!");
+					}
+				},4000
+		);
 
 	}
 
@@ -675,7 +712,7 @@ public class PrimaryController {
 		justText.setVisible(true);
 		justText.setText("Catalog Updated Successfully - 0 Errors");
 		justButton.setVisible(true);
-	//	AddItem.setVisible(false);
+		//	AddItem.setVisible(false);
 	}
 
 	@FXML
@@ -713,7 +750,7 @@ public class PrimaryController {
 		EditItemDesc.setVisible(false);
 		EditItemPrice.setVisible(false);
 		EditItemExtra.setVisible(false);
-	//	RemoveItem.setVisible(false);
+		//	RemoveItem.setVisible(false);
 		//.setVisible(false);
 
 	}
@@ -1050,6 +1087,7 @@ public class PrimaryController {
 	}
 	int cartPrice = 0;
 	Account currentLoggedAccount;
+	boolean availableProducts = false;
 	@FXML
 	void initialize() throws MalformedURLException {
 		catalog_flag.setFlagg(3);
@@ -1225,6 +1263,7 @@ public class PrimaryController {
 	public void updateGui(UpdateGuiEvent upEvent){
 		System.out.println("arrived to the update GUI  event");
 		allProducts = upEvent.getRecievedList();
+		availableProducts = true;
 	}
 	@Subscribe
 	public void PassAccountEvent(PassAccountEvent passAcc){ // added today

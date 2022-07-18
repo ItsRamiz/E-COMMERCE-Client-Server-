@@ -1,12 +1,14 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.*;
+import il.cshaifasweng.OCSFMediatorExample.server.ocsf.*;
+import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.WorkerUpdateManager;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ManagerUpdateManager;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.OrderUpdateManager;
-
+import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ComplaintUpdateManager;
 
 //import il.cshaifasweng.OCSFMediatorExample.server.Product;
 import java.io.IOException;
@@ -62,6 +64,7 @@ public class SimpleServer extends AbstractServer {
 		configuration.addAnnotatedClass(Worker.class);
 		configuration.addAnnotatedClass(Manager.class);
 		configuration.addAnnotatedClass(Order.class);
+		configuration.addAnnotatedClass(Complaint.class);
 
 
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
@@ -252,6 +255,20 @@ public class SimpleServer extends AbstractServer {
 					session.close();
 
 					break;
+
+				case "complaint":
+					System.out.println("Tried Adding Complaint");
+					if (updateClassFunction.equals("add")) {
+						System.out.println("arrived to here inside complaint add");
+
+						Complaint recievedComp = recievedMessage.getComplaint();
+
+						ComplaintUpdateManager.addComplaint(recievedComp);
+
+						session.close();
+
+						break;
+					}
 
 				case "cart":
 

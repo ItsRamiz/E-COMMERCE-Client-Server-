@@ -132,8 +132,8 @@
                 </Label>
             </children>
         </AnchorPane>
-        <Button id="btttn" fx:id="prevPage" layoutX="724.0" layoutY="780.0" mnemonicParsing="false" onAction="#prevPageUpate" text="prev page" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="250.0" />
-        <Button id="btttn" fx:id="nextPage" layoutX="724.0" layoutY="742.0" mnemonicParsing="false" onAction="#nextPageUpate" text="next page" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="450.0" />
+        <Button id="btttn" fx:id="prevPage" layoutX="768.0" layoutY="715.0" mnemonicParsing="false" onAction="#prevPageUpate" prefHeight="34.0" prefWidth="115.0" text="Previous Page" AnchorPane.bottomAnchor="50.60000000000002" AnchorPane.leftAnchor="768.0" />
+        <Button id="btttn" fx:id="nextPage" layoutX="898.0" layoutY="715.0" mnemonicParsing="false" onAction="#nextPageUpate" prefHeight="34.0" prefWidth="115.0" text="Next Page" AnchorPane.bottomAnchor="50.60000000000002" AnchorPane.rightAnchor="506.79999999999995" />
         <AnchorPane id="cath" layoutY="-3.0" maxHeight="50.0" minHeight="50.0" prefHeight="52.0" prefWidth="1014.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-100.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Button id="btttn" fx:id="accbtn" layoutX="229.0" layoutY="12.0" maxHeight="30.0" maxWidth="100.0" minHeight="27.0" minWidth="100.0" mnemonicParsing="false" onAction="#accbtnlogin" prefHeight="27.0" prefWidth="100.0" text="My Account" AnchorPane.rightAnchor="1291.0" AnchorPane.topAnchor="12.0" />
