@@ -260,6 +260,23 @@ public class PrimaryController {
 	@FXML
 	private ListView<String> CartItemsList;
 
+
+	@FXML // fx:id="adminControlButtton"
+	private Button adminControlButtton; // Value injected by FXMLLoader
+
+	@FXML
+	void openControlPanel(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("admincontrol.fxml"));
+		Parent roott = loader.load();
+		AdminControlController cc = loader.getController();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(roott));
+		stage.setTitle("Admin Control Panel");
+		stage.show();
+		Stage stagee = (Stage)infoo.getScene().getWindow();
+		stagee.close();
+	}
+
 	@FXML
 	void addToCartFlower1(ActionEvent event)
 	{

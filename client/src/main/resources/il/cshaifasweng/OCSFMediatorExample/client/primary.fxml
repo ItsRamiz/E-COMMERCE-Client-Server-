@@ -144,6 +144,7 @@
             <Button fx:id="viewMyComplaints" layoutX="97.0" layoutY="12.0" mnemonicParsing="false" onAction="#openMyComplaints" prefHeight="26.0" prefWidth="125.0" text="My Complaints" />
             <Button fx:id="deliveryButton" layoutX="701.0" layoutY="12.0" mnemonicParsing="false" onAction="#openDelivery" text="Delivery Man" />
               <Button fx:id="printProd" layoutX="1077.0" layoutY="10.0" mnemonicParsing="false" onAction="#printProducts" text="Print Products" />
+            <Button fx:id="adminControlButtton" layoutX="1183.0" layoutY="13.0" mnemonicParsing="false" onAction="#openControlPanel" prefHeight="26.0" prefWidth="150.0" text="Admin Control Panel" />
             </children>
         </AnchorPane>
         <Button fx:id="viewCart" layoutX="370.0" layoutY="82.0" mnemonicParsing="false" onAction="#viewUserCart" text="View Cart" />
