@@ -129,12 +129,25 @@ public class SimpleServer extends AbstractServer {
 				} else {
 
 					client.sendToClient("not found");
+
 					session.close();
 				}
 			}
+			if(recievedStr.equals("get Managers")){
+				ManagerUpdateManager obj = new ManagerUpdateManager();
+				FoundTable foundTbl = new FoundTable("managers table found");
+				foundTbl.setRecievedManagers(obj.managerGeneralList);
+				client.sendToClient(foundTbl);
+			}
 
-
+			if(recievedStr.equals("get Workers")){
+				WorkerUpdateManager obj = new WorkerUpdateManager();
+				FoundTable foundTbl = new FoundTable("workers table found");
+				foundTbl.setRecievedWorkers(obj.workerGeneralList);
+				client.sendToClient(foundTbl);
+			}
 		}
+
 
 		if (msg instanceof UpdateMessage) {
 			System.out.println("Arrived At UpdateMessage 1");

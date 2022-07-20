@@ -66,9 +66,14 @@ public class SimpleClient extends AbstractClient {
 		}
 		else if(msg instanceof FoundTable){
 			FoundTable ft = (FoundTable) msg ;
-			List<Product> ftList = ft.getRecievedProducts();
-			RetrieveDataBaseEvent retEvent = new RetrieveDataBaseEvent(ftList);
-			EventBus.getDefault().post(retEvent);
+			if(ft.getMessage().equals("managers table found") || ft.getMessage().equals("workers table found")){
+				EventBus.getDefault().post(ft);
+			}
+			else {
+				List<Product> ftList = ft.getRecievedProducts();
+				RetrieveDataBaseEvent retEvent = new RetrieveDataBaseEvent(ftList);
+				EventBus.getDefault().post(retEvent);
+			}
 		}
 		else if(msg instanceof Account){ // added today
 			System.out.println("the server sent me the account , NICE !!");

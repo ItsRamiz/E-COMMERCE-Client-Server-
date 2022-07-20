@@ -16,9 +16,9 @@ public class Complaint implements Serializable {
     @Column(name = "Order_Id")
     int OrderID;
     @Column(name = "Accepted")
-    boolean Accepted;
+    boolean Accepted; // Update
     @Column(name = "in24Hours")
-    boolean in24Hours;
+    boolean in24Hours;   // Update
     @Column(name = "complaintText")
     String complaintText;
     @Column(name = "shop_Id")
@@ -36,9 +36,9 @@ public class Complaint implements Serializable {
     @Column(name = "RecYear")
     private int year;
     @Column(name = "Text")
-    private String ComplaintText;
+    private String ComplaintText;   // This is the reply text - Update
 
-    public Complaint(int complaintID,int CustomerID, int OrderID, boolean Accepted, boolean in24Hours, String complaintText, int shopID, int answerworkerID, boolean returnedMoney, int returnedmoneyvalue) {
+    public Complaint(int complaintID,int CustomerID, int OrderID, boolean Accepted, boolean in24Hours, String complaintText, int shopID, int answerworkerID, boolean returnedMoney, int returnedmoneyvalue,int day,int month,int year) {
 
         this.complaintID = complaintID;
         this.CustomerID = CustomerID;

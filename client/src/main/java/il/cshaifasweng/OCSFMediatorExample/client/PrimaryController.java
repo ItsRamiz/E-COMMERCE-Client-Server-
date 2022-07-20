@@ -264,6 +264,26 @@ public class PrimaryController {
 	@FXML // fx:id="adminControlButtton"
 	private Button adminControlButtton; // Value injected by FXMLLoader
 
+	@FXML // fx:id="openComplaints"
+	private Button openComplaints; // Value injected by FXMLLoader
+
+
+	@FXML
+	void ReplyToComplaints(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("replycomplaint.fxml"));
+		Parent roott = loader.load();
+		ReplyComplaintController cc = loader.getController();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(roott));
+		stage.setTitle("Reply Complaint");
+		stage.show();
+		Stage stagee = (Stage)openComplaints.getScene().getWindow();
+		stagee.close();
+
+
+	}
+
+
 	@FXML
 	void openControlPanel(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("admincontrol.fxml"));
@@ -271,9 +291,9 @@ public class PrimaryController {
 		AdminControlController cc = loader.getController();
 		Stage stage = new Stage();
 		stage.setScene(new Scene(roott));
-		stage.setTitle("Admin Control Panel");
+		stage.setTitle("Delivery Panel");
 		stage.show();
-		Stage stagee = (Stage)infoo.getScene().getWindow();
+		Stage stagee = (Stage)adminControlButtton.getScene().getWindow();
 		stagee.close();
 	}
 
@@ -285,6 +305,7 @@ public class PrimaryController {
 		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex).getName());
 		basePrice = basePrice + addedPrice;
 		cartTextPrice.setText(String.valueOf(basePrice));
+		userCart.add(allProducts.get(CatalogSTARTIndex));
 	}
 
 	@FXML
@@ -294,6 +315,7 @@ public class PrimaryController {
 		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+1).getName());
 		basePrice = basePrice + addedPrice;
 		cartTextPrice.setText(String.valueOf(basePrice));
+		userCart.add(allProducts.get(CatalogSTARTIndex+1));
 	}
 
 	@FXML
@@ -303,7 +325,7 @@ public class PrimaryController {
 		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+2).getName());
 		basePrice = basePrice + addedPrice;
 		cartTextPrice.setText(String.valueOf(basePrice));
-
+		userCart.add(allProducts.get(CatalogSTARTIndex+2));
 	}
 
 	@FXML
@@ -313,6 +335,7 @@ public class PrimaryController {
 		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+3).getName());
 		basePrice = basePrice + addedPrice;
 		cartTextPrice.setText(String.valueOf(basePrice));
+		userCart.add(allProducts.get(CatalogSTARTIndex+3));
 	}
 
 	@FXML
@@ -322,7 +345,7 @@ public class PrimaryController {
 		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+4).getName());
 		basePrice = basePrice + addedPrice;
 		cartTextPrice.setText(String.valueOf(basePrice));
-
+		userCart.add(allProducts.get(CatalogSTARTIndex+4));
 	}
 
 	@FXML
@@ -332,6 +355,7 @@ public class PrimaryController {
 		CartItemsList.getItems().add(allProducts.get(CatalogSTARTIndex+5).getName());
 		basePrice = basePrice + addedPrice;
 		cartTextPrice.setText(String.valueOf(basePrice));
+		userCart.add(allProducts.get(CatalogSTARTIndex+5));
 	}
 	@FXML
 	private TextField cartText;
@@ -1105,6 +1129,7 @@ public class PrimaryController {
 	int cartPrice = 0;
 	Account currentLoggedAccount;
 	boolean availableProducts = false;
+	List<Product> userCart = new ArrayList<>();
 	@FXML
 	void initialize() throws MalformedURLException {
 		catalog_flag.setFlagg(3);
@@ -1305,6 +1330,7 @@ public class PrimaryController {
 		allProducts = rtEvent.getRecievedList();
 
 
+		/*
 		// TESTING THE ACCOUNTS ADD MANUALLY
 		UpdateMessage new_msg=new UpdateMessage("account","add");
 		Date date=new Date();
@@ -1347,6 +1373,7 @@ public class PrimaryController {
 
 	@Subscribe
 	public void initDatabase(InitDatabaseEvent event) {
+		/*
 		UpdateMessage new_msg=new UpdateMessage("account","add");
 		Date date=new Date();
 		Account new_acc=new Account("khaled","sakhnin","@eee","332",457,889,1,2,445,2);
@@ -1359,6 +1386,8 @@ public class PrimaryController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		 */
 		System.out.println("arrived to databaseInit");
 		Product flower1 = new Product(1, flower_button1.getId(), flower_name1.getText(), "", flower_price1.getContentText());
 		allProducts.add(flower1);

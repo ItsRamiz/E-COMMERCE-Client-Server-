@@ -42,6 +42,9 @@ public class WorkerUpdateManager {
         System.out.println("Arrived to getAllWorkers 5");
         return result;
     }
+    public WorkerUpdateManager(){
+        workerGeneralList = getAllWorkers();
+    }
 
     static Long countRowsWorker() {
         System.out.println("Arrived to coutnrwos 1");

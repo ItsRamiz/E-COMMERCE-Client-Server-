@@ -2,13 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.server.ocsf;
 import il.cshaifasweng.OCSFMediatorExample.server.SimpleServer;
 import il.cshaifasweng.OCSFMediatorExample.entities.*;
 
-import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
-import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 //import il.cshaifasweng.OCSFMediatorExample.server.Product;
-import java.io.IOException;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -29,6 +23,10 @@ import javax.persistence.criteria.Root;
 public class ManagerUpdateManager {
     public static int managersnum = 0;
     public static List<Manager> managerGeneralList = new ArrayList<Manager>();
+
+    public ManagerUpdateManager(){
+        managerGeneralList = getAllManagers();
+    }
 
     private static List<Manager> getAllManagers() {
         System.out.println("Arrived to getAllManagers 1");

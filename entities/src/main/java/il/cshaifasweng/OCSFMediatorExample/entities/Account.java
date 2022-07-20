@@ -25,8 +25,6 @@ public class Account implements Serializable {
     private long phoneNumber;
     @Column(name = "Credit_Card_Number")
     private long creditCardNumber;
-    //@Column(name = "Expire_Date")
-    //private Date creditCardExpire;
     private int creditMonthExpire;
     private int creditYearExpire;
     @Column(name = "CVV")
