@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import com.sun.javafx.image.IntPixelGetter;
 import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 import il.cshaifasweng.OCSFMediatorExample.entities.Order;
+import il.cshaifasweng.OCSFMediatorExample.entities.Product;
 import il.cshaifasweng.OCSFMediatorExample.entities.UpdateMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +21,9 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class CheckoutController {
 
@@ -285,9 +288,11 @@ public class CheckoutController {
         System.out.println(recvAccount.getCreditCardNumber());
         System.out.println(recvAccount.getCreditMonthExpire());
         currentUser = recvAccount;
-    }
-    @FXML
+        cart = passAcc.getProductsToCheckout();
 
+    }
+    List<Product> cart = new ArrayList<>();
+    @FXML
     void initialize() throws MalformedURLException
     {
         EventBus.getDefault().register(this);

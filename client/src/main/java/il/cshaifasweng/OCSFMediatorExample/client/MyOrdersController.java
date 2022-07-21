@@ -6,10 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.Account;
-import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;
-import il.cshaifasweng.OCSFMediatorExample.entities.Order;
-import il.cshaifasweng.OCSFMediatorExample.entities.UpdateMessage;
+import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -227,9 +224,16 @@ public class MyOrdersController {
     int currentOrderShopID;
     List<Order> allOrders = new ArrayList<Order>();
 
+
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    void initialize() throws IOException {
         EventBus.getDefault().register(this);
+        System.out.println("before sending getAllOrders message !");
+        getAllOrdersMessage getOrdersMsg = new getAllOrdersMessage();
+        SimpleClient.getClient().sendToServer(getOrdersMsg);
+        System.out.println("after sending getAllOrders message !");
+
         assert RecepAddress != null : "fx:id=\"RecepAddress\" was not injected: check your FXML file 'Untitled'.";
         assert RecepName != null : "fx:id=\"RecepName\" was not injected: check your FXML file 'Untitled'.";
         assert RecepNumber != null : "fx:id=\"RecepNumber\" was not injected: check your FXML file 'Untitled'.";
@@ -289,6 +293,15 @@ public class MyOrdersController {
         System.out.println(recvAccount.getCreditMonthExpire());
         currentUser = recvAccount;
     }
+    @Subscribe
+    public void passOrders(PassOrdersFromServer passOrders){ // added 18/7
+        System.out.println("arrived to subscriebr of passOrders !");
+        List<Order> recievedOrders = passOrders.getRecievedOrders();
+        for(int i=0;i<recievedOrders.size();i++){
+            System.out.println(recievedOrders.get(i).getOrderYear());
+        }
+    }
+
 
 
 }

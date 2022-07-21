@@ -125,6 +125,24 @@ public class SimpleClient extends AbstractClient {
 					},4000
 			);
 		}
+		else if(msg instanceof getAllOrdersMessage){ // added 18/7
+			getAllOrdersMessage recievedOrders = (getAllOrdersMessage) msg;
+			System.out.println("the server sent me orders");
+			PassOrdersFromServer passOrders = new PassOrdersFromServer();
+			passOrders.setRecievedOrders(recievedOrders.getOrderList());
+
+			new java.util.Timer().schedule(
+					new java.util.TimerTask() {
+						@Override
+						public void run() {
+							EventBus.getDefault().post(passOrders);
+							System.out.println("the server sent me the account , NICE 4 !!");
+						}
+					},4000
+			);
+
+		}
+
 	}
 
 	public static SimpleClient getClient() {

@@ -279,8 +279,6 @@ public class PrimaryController {
 		stage.show();
 		Stage stagee = (Stage)openComplaints.getScene().getWindow();
 		stagee.close();
-
-
 	}
 
 
@@ -442,6 +440,7 @@ public class PrimaryController {
 		System.out.println("arrived to checkout 3");
 		stagee.close();
 		PassAccountEventCheckout recievedAcc = new PassAccountEventCheckout(currentLoggedAccount);
+		recievedAcc.productsToCheckout = userCart;
 
 		new java.util.Timer().schedule(
 				new java.util.TimerTask() {

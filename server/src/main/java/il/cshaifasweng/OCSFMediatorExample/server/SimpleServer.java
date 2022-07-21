@@ -435,6 +435,21 @@ public class SimpleServer extends AbstractServer {
 
 			 */
 		}
+		if(msg instanceof getAllOrdersMessage ){ // added 18/7
+
+			SessionFactory sessionFactory = getSessionFactory();
+			session = sessionFactory.openSession();
+			Transaction tx1 = session.beginTransaction();
+			getAllOrdersMessage ordersToBeSent = new getAllOrdersMessage();
+			System.out.println("arrived to get all orders in simple server ! \n");
+			List<Order> orderList = getAllOrders();
+			ordersToBeSent.setOrderList(orderList);
+
+			client.sendToClient(ordersToBeSent);
+
+
+		}
+
 		if (msg instanceof ArrayList) { // arrived from the initializing of the program, so we initialize the database
 			// with the starting Products
 			System.out.println("Arrived here: msg instance of arrayList ");
@@ -476,7 +491,21 @@ public class SimpleServer extends AbstractServer {
 
 
 
-	private static List<Product> getAllProducts() {
+	private static List<Order> getAllOrders() { // added 18/7
+		System.out.println("Arrived to getAllOrders 1");
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		System.out.println("Arrived to getAllOrders 2");
+		CriteriaQuery<Order> query = builder.createQuery(Order.class);
+		System.out.println("Arrived to getAllOrders 3");
+		query.from(Order.class);
+		System.out.println("Arrived to getAllOrders 4");
+		List<Order> result = session.createQuery(query).getResultList();
+		System.out.println("Arrived to getAllOrders 5");
+		return result;
+	}
+
+
+		private static List<Product> getAllProducts() {
 		System.out.println("Arrived to getAllProducts 1");
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		System.out.println("Arrived to getAllProducts 2");
