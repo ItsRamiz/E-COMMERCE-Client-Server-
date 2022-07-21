@@ -53,12 +53,13 @@ public class Order implements Serializable {
     private long RecepPhone;
     @Column(name = "recepAddress")
     private String RecepAddress;
-
+    @Column(name = "Products")
+    private String Products;
     /*private List<Product> products;*/
 
     public Order(){}
 
-    public Order(int orderID, boolean pickUp, int shopID, String greeting, int totalPrice, String deliveredAddress, int accountID, boolean gift, boolean delivered, int prepareDay, int prepareMonth, int prepareYear, int orderDay, int orderMonth, int orderYear, long creditCardNumber, int creditCardExpMonth, int creditCardExpYear, int creditCardCVV, String recepName, long recepPhone, String recepAddress) {
+    public Order(int orderID, boolean pickUp, int shopID, String greeting, int totalPrice, String deliveredAddress, int accountID, boolean gift, boolean delivered, int prepareDay, int prepareMonth, int prepareYear, int orderDay, int orderMonth, int orderYear, long creditCardNumber, int creditCardExpMonth, int creditCardExpYear, int creditCardCVV, String recepName, long recepPhone, String recepAddress,String Products) {
         this.orderID = orderID;
         this.pickUp = pickUp;
         this.shopID = shopID;
@@ -82,6 +83,7 @@ public class Order implements Serializable {
         this.RecepName = recepName;
         this.RecepPhone = recepPhone;
         this.RecepAddress = recepAddress;
+        this.Products = Products;
     }
 
     @Override
@@ -300,5 +302,13 @@ public class Order implements Serializable {
 
     public String getRecepAddress() {
         return RecepAddress;
+    }
+
+    public String getProducts() {
+        return Products;
+    }
+
+    public void setProducts(String products) {
+        Products = products;
     }
 }

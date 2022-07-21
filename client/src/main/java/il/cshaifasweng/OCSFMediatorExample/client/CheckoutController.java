@@ -208,7 +208,12 @@ public class CheckoutController {
         int dayCheckoutInt = dayCheckout.getSelectionModel().getSelectedItem();
         int monthCheckoutInt = monthCheckout.getSelectionModel().getSelectedItem();
         int yearCheckoutInt = yearCheckout.getSelectionModel().getSelectedItem();
-        Order newOrder = new Order(0,pickUp,shopID,greeting,0,deliveredAddress,currentUser.getAccountID(),gift,false,dayCheckoutInt,monthCheckoutInt,yearCheckoutInt,currentDay,currentMonth,currentYear,creditCardNumber,creditCardMonth,creditCardYear,creditCardCVV,recepName,recepPhone,deliveredAddress);
+        String OrderedProducts = "";
+        for(int i = 0 ; i < cart.size() ; i++)
+        {
+            OrderedProducts = OrderedProducts + "%" + cart.get(i).getName() + " - " + cart.get(i).getPrice() + "%";
+        }
+        Order newOrder = new Order(0,pickUp,shopID,greeting,0,deliveredAddress,currentUser.getAccountID(),gift,false,dayCheckoutInt,monthCheckoutInt,yearCheckoutInt,currentDay,currentMonth,currentYear,creditCardNumber,creditCardMonth,creditCardYear,creditCardCVV,recepName,recepPhone,deliveredAddress,OrderedProducts);
 
         System.out.println(newOrder);
         UpdateMessage new_msg2=new UpdateMessage("order","add");

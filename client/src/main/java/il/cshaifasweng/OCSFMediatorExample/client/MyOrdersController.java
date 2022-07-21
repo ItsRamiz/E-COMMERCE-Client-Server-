@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -102,6 +103,9 @@ public class MyOrdersController {
     @FXML // fx:id="backToCatalog"
     private Button backToCatalog; // Value injected by FXMLLoader
 
+    @FXML
+    private ListView<String> orderProducts;
+
     int complaint_num = 0;
     @FXML
     void GoToCatalog(ActionEvent event) throws IOException {
@@ -168,57 +172,89 @@ public class MyOrdersController {
 
     }
 
+    int viewOrderMode = 0;
     @FXML
     void openOrder(ActionEvent event) {
-        int selected = orderList.getSelectionModel().getSelectedItem().charAt(0) - 48;
-        System.out.println("Selected is " + selected);
-        Order retrievedOrder = new Order();  // This is the order with theID
-        //int theID = Integer.parseInt(enterID.getText());
-        for (int i = 0; i < allOrders.size(); i++) {
-            if (allOrders.get(i).getOrderID() == selected) {
-                retrievedOrder = allOrders.get(i);
-                break;
-            }
-        }
-        int i = 0;
-        while (i<2)
+        if (viewOrderMode == 0)
         {
-            openComplaint.setVisible(true);
-            complaintText.setVisible(true);
-            sendComplaint.setVisible(true);
-            orderID.setText(String.valueOf(retrievedOrder.getOrderID()));
-            accountID.setText(String.valueOf(currentUser.getAccountID()));
-            creditNumber.setText(String.valueOf(retrievedOrder.getCreditCardNumber()));
-            String creditXpire = "" + retrievedOrder.getCreditCardExpMonth() + "/" + retrievedOrder.getCreditCardExpYear();
-            creditExpire.setText(creditXpire);
-            creditCVV.setText(String.valueOf(retrievedOrder.getCreditCardCVV()));
-            totalPrice.setText(String.valueOf(retrievedOrder.getTotalPrice()));
-            shopID.setText(String.valueOf(retrievedOrder.getShopID()));
-            if (retrievedOrder.isGift() == true)
-                gift.setText("true");
-            else
-                gift.setText("false");
-            String orderDate = "" + retrievedOrder.getOrderDay() + "/" + retrievedOrder.getOrderMonth() + "/" + retrievedOrder.getOrderYear();
-            dateOrder.setText(orderDate);
-            String prepareDate = "" + retrievedOrder.getPrepareDay() + "/" + retrievedOrder.getPrepareMonth() + "/" + retrievedOrder.getPrepareYear();
-            datePrepare.setText(prepareDate);
-            if (retrievedOrder.isPickUp() == true)
-                deliverService.setText("Pick Up");
-            else
-                deliverService.setText("Delivery");
-            if (retrievedOrder.isDelivered() == true)
-                deliverService.setText("Delivered/Picked Up");
-            else
-                deliverService.setText("Not Delivered/Picked Up");
-            RecepName.setText(retrievedOrder.getRecepName());
-            RecepAddress.setText(retrievedOrder.getRecepAddress());
-            RecepNumber.setText(String.valueOf(retrievedOrder.getRecepPhone()));
-            if (retrievedOrder.getGreeting() != "")
-                greetingText.setText(retrievedOrder.getGreeting());
-            else
-                greetingText.setText("No Greeting");
-            currentOrderShopID = retrievedOrder.getShopID();
-            i++;
+            for(int i = 0 ; i < allOrders.size(); i ++)
+            {
+                if (allOrders.get(i).getAccountID() == currentUser.getAccountID())
+                {
+                    System.out.println("We are In !!!");
+                    String orderString = "";
+                    orderString = allOrders.get(i).getOrderID() + " - " + allOrders.get(i).getDate();
+                    System.out.println("Adding String - " + orderString);
+                    orderList.getItems().add(orderString);
+                }
+            }
+            viewOrder.setText("Load Selected Order");
+            viewOrderMode = 1;
+        }
+        else
+        {
+            int selected = orderList.getSelectionModel().getSelectedItem().charAt(0) - 48;
+            System.out.println("Selected is " + selected);
+            Order retrievedOrder = new Order();  // This is the order with theID
+            //int theID = Integer.parseInt(enterID.getText());
+            for (int i = 0; i < allOrders.size(); i++) {
+                if (allOrders.get(i).getOrderID() == selected) {
+                    retrievedOrder = allOrders.get(i);
+                    break;
+                }
+            }
+            String currentProduct = "";
+            String MyProducts = retrievedOrder.getProducts();
+            orderProducts.getItems().clear();
+            for(int i = 0 ; i < MyProducts.length() ; i++)
+            {
+                if(MyProducts.charAt(i) != 37)
+                {
+                    currentProduct = currentProduct + Character.toString(MyProducts.charAt(i));
+                }
+                else if(currentProduct != "")
+                {
+                    orderProducts.getItems().add(currentProduct);
+                    currentProduct = "";
+                }
+                else
+                    currentProduct = "";
+            }
+                openComplaint.setVisible(true);
+                complaintText.setVisible(true);
+                sendComplaint.setVisible(true);
+                orderID.setText(String.valueOf(retrievedOrder.getOrderID()));
+                accountID.setText(String.valueOf(currentUser.getAccountID()));
+                creditNumber.setText(String.valueOf(retrievedOrder.getCreditCardNumber()));
+                String creditXpire = "" + retrievedOrder.getCreditCardExpMonth() + "/" + retrievedOrder.getCreditCardExpYear();
+                creditExpire.setText(creditXpire);
+                creditCVV.setText(String.valueOf(retrievedOrder.getCreditCardCVV()));
+                totalPrice.setText(String.valueOf(retrievedOrder.getTotalPrice()));
+                shopID.setText(String.valueOf(retrievedOrder.getShopID()));
+                if (retrievedOrder.isGift() == true)
+                    gift.setText("true");
+                else
+                    gift.setText("false");
+                String orderDate = "" + retrievedOrder.getOrderDay() + "/" + retrievedOrder.getOrderMonth() + "/" + retrievedOrder.getOrderYear();
+                dateOrder.setText(orderDate);
+                String prepareDate = "" + retrievedOrder.getPrepareDay() + "/" + retrievedOrder.getPrepareMonth() + "/" + retrievedOrder.getPrepareYear();
+                datePrepare.setText(prepareDate);
+                if (retrievedOrder.isPickUp() == true)
+                    deliverService.setText("Pick Up");
+                else
+                    deliverService.setText("Delivery");
+                if (retrievedOrder.isDelivered() == true)
+                    deliverService.setText("Delivered/Picked Up");
+                else
+                    deliverService.setText("Not Delivered/Picked Up");
+                RecepName.setText(retrievedOrder.getRecepName());
+                RecepAddress.setText(retrievedOrder.getRecepAddress());
+                RecepNumber.setText(String.valueOf(retrievedOrder.getRecepPhone()));
+                if (retrievedOrder.getGreeting() != "")
+                    greetingText.setText(retrievedOrder.getGreeting());
+                else
+                    greetingText.setText("No Greeting");
+                currentOrderShopID = retrievedOrder.getShopID();
         }
     }
     int currentOrderShopID;
@@ -253,31 +289,17 @@ public class MyOrdersController {
         assert shopID != null : "fx:id=\"shopID\" was not injected: check your FXML file 'Untitled'.";
         assert totalPrice != null : "fx:id=\"totalPrice\" was not injected: check your FXML file 'Untitled'.";
         assert viewOrder != null : "fx:id=\"viewOrder\" was not injected: check your FXML file 'Untitled'.";
-        openComplaint.setVisible(true);
-        sendComplaint.setVisible(true);
-        complaintText.setVisible(true);
+        viewOrder.setVisible(false);
+        viewOrder.setText("Load Orders");
         String orderDetails = "";
-        /*
-        for(int i = 0 ; i < allOrders.size(); i ++)
-        {
-            if(allOrders.get(i).getAccountID() == currentUser.getAccountID())
-            {
-                String orderString = "";
-                orderString = allOrders.get(i).getOrderID() + " - " + allOrders.get(i).getDate();
-                orderList.getItems().add(orderString);
-            }
-        }
-        */
-        Order a = new Order(1,true,1,"greet",1000,"Haifa",32,true,false,12,2,2000,11,7,2000,239482,32,421,4882,"Ramiz",050261,"Eilaboun");
-        Order b = new Order(2,false,3,"no greet",2500,"TelAviv",15,false,false,19,7,2032,10,11,1998,4580,3,2003,017,"Malki",050261,"university");
-        allOrders.add(a);
-        allOrders.add(b);
-        String orderString = "";
-        orderString = a.getOrderID() + " - " + a.getDate();
-        orderList.getItems().add(orderString);
-        orderString = "";
-        orderString = b.getOrderID() + " - " + b.getDate();
-        orderList.getItems().add(orderString);
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        viewOrder.setVisible(true);
+                    }
+                },4000
+        );
 
     }
     @Subscribe
@@ -297,9 +319,7 @@ public class MyOrdersController {
     public void passOrders(PassOrdersFromServer passOrders){ // added 18/7
         System.out.println("arrived to subscriebr of passOrders !");
         List<Order> recievedOrders = passOrders.getRecievedOrders();
-        for(int i=0;i<recievedOrders.size();i++){
-            System.out.println(recievedOrders.get(i).getOrderYear());
-        }
+        allOrders = recievedOrders;
     }
 
 
