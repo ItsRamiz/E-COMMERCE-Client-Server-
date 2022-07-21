@@ -16,20 +16,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class RegisterController {
-    int account_num = 0;
 
     @FXML
     private ResourceBundle resources;
 
     @FXML
-    private ComboBox<String> acc_type;
+    private ComboBox<String> selectChain;
     @FXML
     private URL location;
 
@@ -65,7 +61,7 @@ public class RegisterController {
     private TextField Validity;
 
     @FXML
-    private TextField ZipCode;
+    private TextField userID;
 
     @FXML
     private Label ErrorMsg;
@@ -91,6 +87,17 @@ public class RegisterController {
 
     @FXML
     private ComboBox<String> chooseYear;
+
+
+    @FXML // fx:id="registerChain"
+    private CheckBox registerChain; // Value injected by FXMLLoader
+
+    @FXML // fx:id="registerShop"
+    private CheckBox registerShop; // Value injected by FXMLLoader
+
+    @FXML // fx:id="subscription"
+    private CheckBox subscription; // Value injected by FXMLLoader
+
 
     private LinkedList<String> RegisteredAccounts = new LinkedList<>(); // list of all registered emails
 
@@ -122,18 +129,44 @@ public class RegisterController {
         if(!matcher.matches()){
             phone_regex_error.setVisible(true);
         }
-        else if(!RegisteredAccounts.contains(Email.getText())){
-            String Address = Street_Address.getText() + ", " + City_Address.getText() + ", Zip Code " + ZipCode.getText();
-            java.util.Date date=new java.util.Date();
-            Account new_acc = new Account(Name.getText(),Address,Email.getText(),Password.getText(),Long.parseLong(PhoneNumber.getText()),Long.parseLong(CardNumber.getText()),Integer.parseInt(chooseYear.getSelectionModel().getSelectedItem()),Integer.parseInt(chooseMonth.getSelectionModel().getSelectedItem()) ,Integer.parseInt(CVV.getText()), 0);
+        else if(!RegisteredAccounts.contains(Email.getText()))
+        {
+            String Address = Street_Address.getText() + ", " + City_Address.getText();
+            int shopID = 0;
+            if(registerChain.isSelected())
+                shopID = 0;
+            else
+            {
+                switch (selectChain.getSelectionModel().toString()) {
+                    case "Tiberias, Big Danilof":
+                        shopID = 1;
+                        break;
+                    case "Haifa, Merkaz Zeiv":
+                        shopID = 2;
+                        break;
+                    case "Tel Aviv, Ramat Aviv":
+                        shopID = 3;
+                        break;
+                    case "Eilat, Ice mall":
+                        shopID = 4;
+                        break;
+                    case "Be'er Sheva, Big Beer Sheva":
+                        shopID = 5;
+                        break;
+                }
+
+            }
+            int id = Integer.parseInt(userID.getText());
+            System.out.println("ID = " + id);
+            //Account new_acc = new Account(Name.getText(),Address,Email.getText(),Password.getText(),Long.parseLong(PhoneNumber.getText()),Long.parseLong(CardNumber.getText()),Integer.parseInt(chooseYear.getSelectionModel().getSelectedItem()),Integer.parseInt(chooseMonth.getSelectionModel().getSelectedItem()) ,Integer.parseInt(CVV.getText()), shopID);
+            Account new_acc = new Account(0,Name.getText(),id,Address,Email.getText(),Password.getText(),Long.parseLong(PhoneNumber.getText()),Long.parseLong(CardNumber.getText()),Integer.parseInt(chooseMonth.getSelectionModel().getSelectedItem()),Integer.parseInt(chooseYear.getSelectionModel().getSelectedItem()),Integer.parseInt(CVV.getText()),false,shopID,subscription.isSelected());
             RegisteredAccounts.add(Email.getText());
-            // TODO : ADD ACCOUNT TO DB
+
 
             UpdateMessage new_msg2=new UpdateMessage("account","add");
-            //Account new_acc = new Account("khaled","sakhnin","@eee","332",0504444444,889555,date,222,false, null, 0,false);
-            account_num++;
-            new_acc.setAccountID(account_num);
-            new_msg2.setId(account_num);
+            //account_num++;
+            //new_acc.setAccountID(account_num);
+            //new_msg2.setId(account_num);
             new_msg2.setAccount(new_acc);
             try {
                 System.out.println("before sending updateMessage to server ");
@@ -166,6 +199,45 @@ public class RegisterController {
         }
 
     }
+    @FXML
+    void checkedChain(ActionEvent event)
+    {
+        if(registerChain.isSelected()) {
+            registerShop.setSelected(false);
+            selectChain.setVisible(false);
+        }
+        else
+        {
+            registerShop.setSelected(true);
+            selectChain.setVisible(true);
+        }
+
+    }
+
+    @FXML
+    void checkedShop(ActionEvent event)
+    {
+        if(registerShop.isSelected())
+        {
+            registerChain.setSelected(false);
+            selectChain.setVisible(true);
+        }
+        else
+        {
+            registerChain.setSelected(true);
+            selectChain.setVisible(false);
+        }
+    }
+    @FXML
+    void checkSubscription(ActionEvent event)
+    {
+        if(subscription.isSelected())
+        {
+            registerChain.setSelected(true);
+            registerShop.setSelected(false);
+            selectChain.setVisible(false);
+        }
+    }
 
     @FXML
     void initialize() {
@@ -175,10 +247,16 @@ public class RegisterController {
         assert PhoneNumber != null : "fx:id=\"PhoneNumber\" was not injected: check your FXML file 'register.fxml'.";
         assert RegisterButton != null : "fx:id=\"RegisterButton\" was not injected: check your FXML file 'register.fxml'.";
         assert Street_Address != null : "fx:id=\"Street_Address\" was not injected: check your FXML file 'register.fxml'.";
-        assert ZipCode != null : "fx:id=\"ZipCode\" was not injected: check your FXML file 'register.fxml'.";
-        acc_type.getItems().add("client");
-        acc_type.getItems().add("worker");
-        acc_type.getItems().add("manager");
+        assert userID != null : "fx:id=\"ZipCode\" was not injected: check your FXML file 'register.fxml'.";
+        selectChain.getItems().add("Tiberias, Big Danilof");
+        selectChain.getItems().add("Haifa, Merkaz Zeiv");
+        selectChain.getItems().add("Tel Aviv, Ramat Aviv");
+        selectChain.getItems().add("Eilat, Ice mall");
+        selectChain.getItems().add("Be'er Sheva, Big Beer Sheva");
+        selectChain.setVisible(true);
+        registerShop.setSelected(true);
+
+
         ErrorMsg.setVisible(false);
         CVV_regex_error.setVisible(false);
         phone_regex_error.setVisible(false);

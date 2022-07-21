@@ -13,6 +13,8 @@ public class Account implements Serializable {
 
     @Id
     private int accountID;
+    @Column(name = "UserID")
+    private int ID;
     @Column(name = "Full_Name")
     private String fullName;
     @Column(name = "Address")
@@ -31,17 +33,14 @@ public class Account implements Serializable {
     private int ccv;
     @Column(name = "Logged_In")
     private Boolean loggedIn;
-    //private List<Complaint> accountComplaints = new List<Complaint>;
-    //private List<Order> accountOrders = new List<Order>;
-    //@OneToOne
-    //private Cart accCart;
-    /*@OneToMany
-    private List<Order> AccountOrders;*/
+    @Column(name = "Shop")
     private int belongShop;
-    static List<Product> allProducts = new ArrayList<>();
+    @Column(name = "Subscription")
+    private boolean Subscription;
 
 
 
+    /*
     public Account(String fullName, String address,String email, String password,long phoneNumber, long creditCardNumber,int creditYearExpire,int creditMonthExpire,int ccv,int belongShop)
     {
         this.fullName = fullName;
@@ -57,6 +56,25 @@ public class Account implements Serializable {
         this.belongShop = belongShop;
        // this.AccountOrders = null;
     }
+     */
+
+    public Account(int accountID, String fullName,int ID, String address, String email, String password, long phoneNumber, long creditCardNumber, int creditMonthExpire, int creditYearExpire, int ccv, Boolean loggedIn, int belongShop,boolean subscription) {
+        this.accountID = accountID;
+        this.ID = ID;
+        this.fullName = fullName;
+        this.address = address;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.creditCardNumber = creditCardNumber;
+        this.creditMonthExpire = creditMonthExpire;
+        this.creditYearExpire = creditYearExpire;
+        this.ccv = ccv;
+        this.loggedIn = loggedIn;
+        this.belongShop = belongShop;
+        this.Subscription = subscription;
+    }
+
     public Account()
     {
 
@@ -110,9 +128,6 @@ public class Account implements Serializable {
         this.belongShop = belongShop;
     }
 
-    public static void setAllProducts(List<Product> allProducts) {
-        Account.allProducts = allProducts;
-    }
 
     public int getAccountID() {
         return accountID;
@@ -162,9 +177,6 @@ public class Account implements Serializable {
         return belongShop;
     }
 
-    public static List<Product> getAllProducts() {
-        return allProducts;
-    }
     /* public void setWallet(int wallet) {
         this.wallet = wallet;
     }

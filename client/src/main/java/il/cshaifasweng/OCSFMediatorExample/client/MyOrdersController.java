@@ -147,12 +147,12 @@ public class MyOrdersController {
     void sendOrderComplaint(ActionEvent event)
     {
         Complaint newComplaint = new Complaint();
-        newComplaint.setComplaintID(1);
-        newComplaint.setCustomerID(999);
-        newComplaint.setOrderID(1);
+        newComplaint.setComplaintID(0); // 0 - Will be changed later
+        newComplaint.setCustomerID(currentUser.getAccountID());
+        newComplaint.setOrderID(SelectedOrder.getOrderID());
         newComplaint.setAccepted(false);
         newComplaint.setIn24Hours(false);
-        newComplaint.setShopID(55);
+        newComplaint.setShopID(SelectedOrder.getShopID());
         newComplaint.setAnswerworkerID(0);
         newComplaint.setReturnedMoney(false);
         newComplaint.setReturnedmoneyvalue(0);
@@ -172,6 +172,7 @@ public class MyOrdersController {
 
     }
 
+    Order SelectedOrder;
     int viewOrderMode = 0;
     @FXML
     void openOrder(ActionEvent event) {
@@ -203,6 +204,7 @@ public class MyOrdersController {
                     break;
                 }
             }
+            SelectedOrder = retrievedOrder;
             String currentProduct = "";
             String MyProducts = retrievedOrder.getProducts();
             orderProducts.getItems().clear();

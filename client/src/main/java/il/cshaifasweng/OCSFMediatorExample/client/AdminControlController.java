@@ -34,7 +34,7 @@ public class AdminControlController {
     private URL location;
 
     @FXML // fx:id="accountsList"
-    private ListView<?> accountsList; // Value injected by FXMLLoader
+    private ListView<String> accountsList; // Value injected by FXMLLoader
 
     @FXML // fx:id="accountsText"
     private Text accountsText; // Value injected by FXMLLoader
@@ -46,10 +46,7 @@ public class AdminControlController {
     private Button loadProfile; // Value injected by FXMLLoader
 
     @FXML // fx:id="profileType"
-    private ComboBox<?> profileType; // Value injected by FXMLLoader
-
-    public List<Manager> all_managers = new ArrayList<>();
-    public List<Worker> all_workers = new ArrayList<>();
+    private ComboBox<String> profileType; // Value injected by FXMLLoader
 
     @FXML
     void loadSelectProfile(ActionEvent event) {
@@ -69,7 +66,8 @@ public class AdminControlController {
         stagee.close();
 
     }
-
+    public List<Manager> all_managers = new ArrayList<>();
+    public List<Worker> all_workers = new ArrayList<>();
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert accountsList != null : "fx:id=\"accountsList\" was not injected: check your FXML file 'admincontrol.fxml'.";
@@ -95,11 +93,9 @@ public class AdminControlController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int i = 0;
-        if(all_workers.get(i) instanceof Worker)
-        {
-
-        }
+        profileType.getItems().add("Customers");
+        profileType.getItems().add("Workers");
+        profileType.getItems().add("Managers");
     }
 
     @Subscribe
