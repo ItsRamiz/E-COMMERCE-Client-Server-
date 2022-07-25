@@ -449,6 +449,18 @@ public class SimpleServer extends AbstractServer {
 
 
 		}
+		if(msg instanceof  GetAllComplaints){ // added new 21/7
+			SessionFactory sessionFactory = getSessionFactory();
+			session = sessionFactory.openSession();
+			Transaction tx1 = session.beginTransaction();
+
+			System.out.println("arrived to getAllComplaints in server !");
+			GetAllComplaints complaintsToClient = new GetAllComplaints();
+			List<Complaint> recievedComplaints = getAllComplaints();
+			complaintsToClient.setComplaintsList(recievedComplaints);
+			client.sendToClient(complaintsToClient);
+
+		}
 
 		if (msg instanceof ArrayList) { // arrived from the initializing of the program, so we initialize the database
 			// with the starting Products
@@ -489,7 +501,18 @@ public class SimpleServer extends AbstractServer {
 
 	}
 
-
+	private static List<Complaint> getAllComplaints() { // added 21/7
+		System.out.println("Arrived to getAllComplaints 1");
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		System.out.println("Arrived to getAllCompliants 2");
+		CriteriaQuery<Complaint> query = builder.createQuery(Complaint.class);
+		System.out.println("Arrived to getAllComplaints 3");
+		query.from(Complaint.class);
+		System.out.println("Arrived to getAllComplaints 4");
+		List<Complaint> result = session.createQuery(query).getResultList();
+		System.out.println("Arrived to getAllComplaints 5");
+		return result;
+	}
 
 	private static List<Order> getAllOrders() { // added 18/7
 		System.out.println("Arrived to getAllOrders 1");

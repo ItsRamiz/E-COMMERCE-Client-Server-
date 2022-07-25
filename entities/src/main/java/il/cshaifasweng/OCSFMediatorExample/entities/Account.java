@@ -38,8 +38,6 @@ public class Account implements Serializable {
     @Column(name = "Subscription")
     private boolean Subscription;
 
-
-
     /*
     public Account(String fullName, String address,String email, String password,long phoneNumber, long creditCardNumber,int creditYearExpire,int creditMonthExpire,int ccv,int belongShop)
     {
@@ -78,6 +76,14 @@ public class Account implements Serializable {
     public Account()
     {
 
+    }
+
+    public boolean isSubscription() {
+        return Subscription;
+    }
+
+    public void setSubscription(boolean subscription) {
+        Subscription = subscription;
     }
 
     public void setAccountID(int accountID) {

@@ -30,6 +30,9 @@ public class WorkerUpdateManager {
     public static int workersnum = 0;
     public static List<Worker> workerGeneralList = new ArrayList<Worker>();
 
+    public WorkerUpdateManager(){
+        workerGeneralList = getAllWorkers();
+    }
     private static List<Worker> getAllWorkers() {
         System.out.println("Arrived to getAllWorkers 1");
         CriteriaBuilder builder = SimpleServer.session.getCriteriaBuilder();
@@ -41,9 +44,6 @@ public class WorkerUpdateManager {
         List<Worker> result = SimpleServer.session.createQuery(query).getResultList();
         System.out.println("Arrived to getAllWorkers 5");
         return result;
-    }
-    public WorkerUpdateManager(){
-        workerGeneralList = getAllWorkers();
     }
 
     static Long countRowsWorker() {

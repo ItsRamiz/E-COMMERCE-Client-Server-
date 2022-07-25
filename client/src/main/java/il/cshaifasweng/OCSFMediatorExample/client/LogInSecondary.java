@@ -1,15 +1,13 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 import com.mysql.cj.log.Log;
 import com.mysql.cj.x.protobuf.MysqlxCursor;
-import il.cshaifasweng.OCSFMediatorExample.entities.CheckMail;
+import il.cshaifasweng.OCSFMediatorExample.entities.*;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.Account;
-import il.cshaifasweng.OCSFMediatorExample.entities.MailClass;
-import il.cshaifasweng.OCSFMediatorExample.entities.UpdateMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -102,6 +100,17 @@ public class LogInSecondary {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        GetAllComplaints allComplaints = new GetAllComplaints();
+        System.out.println("send request for complaints !!");
+        try {
+            System.out.println("before sending the getAllComplaints " );
+            SimpleClient.getClient().sendToServer(allComplaints);
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
         Parent roott = loader.load();
         PrimaryController cc = loader.getController();

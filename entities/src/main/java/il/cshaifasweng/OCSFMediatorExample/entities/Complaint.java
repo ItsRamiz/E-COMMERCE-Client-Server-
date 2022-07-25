@@ -35,133 +35,146 @@ public class Complaint implements Serializable {
     private int month;
     @Column(name = "RecYear")
     private int year;
-    @Column(name = "Text")
-    private String ComplaintText;   // This is the reply text - Update
+    @Column(name = "Reply")
+    private String ReplyText;   // This is the reply text - Update
 
-    public Complaint(int complaintID,int CustomerID, int OrderID, boolean Accepted, boolean in24Hours, String complaintText, int shopID, int answerworkerID, boolean returnedMoney, int returnedmoneyvalue,int day,int month,int year) {
 
+    public Complaint(int complaintID, int customerID, int orderID, boolean accepted, boolean in24Hours, String complaintText, int shopID, int answerworkerID, boolean returnedMoney, int returnedmoneyvalue, int day, int month, int year, String replyText) {
         this.complaintID = complaintID;
-        this.CustomerID = CustomerID;
-        this.OrderID = OrderID;
-        this.Accepted = Accepted;
+        this.CustomerID = customerID;
+        this.OrderID = orderID;
+        this.Accepted = accepted;
         this.in24Hours = in24Hours;
-        this.complaintID = complaintID;
+        this.complaintText = complaintText;
         this.shopID = shopID;
         this.answerworkerID = answerworkerID;
         this.returnedMoney = returnedMoney;
         this.returnedmoneyvalue = returnedmoneyvalue;
+        this.day = day;
+        this.month = month;
+        this.year = year;
+        this.ReplyText = replyText;
     }
 
     public  Complaint() {
-    }
-
-    public int getComplaintID() {
-        return complaintID;
     }
 
     public void setComplaintID(int complaintID) {
         this.complaintID = complaintID;
     }
 
-    public int getCustomerID() {
-        return CustomerID;
-    }
-
     public void setCustomerID(int customerID) {
         CustomerID = customerID;
-    }
-
-    public int getOrderID() {
-        return OrderID;
     }
 
     public void setOrderID(int orderID) {
         OrderID = orderID;
     }
 
-    public boolean isAccepted() {
-        return Accepted;
-    }
-
     public void setAccepted(boolean accepted) {
         Accepted = accepted;
-    }
-
-    public boolean isIn24Hours() {
-        return in24Hours;
     }
 
     public void setIn24Hours(boolean in24Hours) {
         this.in24Hours = in24Hours;
     }
 
-    public String getComplaintText() {
-        return complaintText;
-    }
-
     public void setComplaintText(String complaintText) {
         this.complaintText = complaintText;
-    }
-
-    public int getShopID() {
-        return shopID;
     }
 
     public void setShopID(int shopID) {
         this.shopID = shopID;
     }
 
-    public int getAnswerworkerID() {
-        return answerworkerID;
-    }
-
     public void setAnswerworkerID(int answerworkerID) {
         this.answerworkerID = answerworkerID;
-    }
-
-    public boolean isReturnedMoney() {
-        return returnedMoney;
     }
 
     public void setReturnedMoney(boolean returnedMoney) {
         this.returnedMoney = returnedMoney;
     }
 
-    public int getReturnedmoneyvalue() {
-        return returnedmoneyvalue;
-    }
-
     public void setReturnedmoneyvalue(int returnedmoneyvalue) {
         this.returnedmoneyvalue = returnedmoneyvalue;
-    }
-
-    public int getDay() {
-        return day;
     }
 
     public void setDay(int day) {
         this.day = day;
     }
 
-    public int getMonth() {
-        return month;
-    }
-
     public void setMonth(int month) {
         this.month = month;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setReplyText(String replyText) {
+        ReplyText = replyText;
+    }
+
+    public int getComplaintID() {
+        return complaintID;
+    }
+
+    public int getCustomerID() {
+        return CustomerID;
+    }
+
+    public int getOrderID() {
+        return OrderID;
+    }
+
+    public boolean isAccepted() {
+        return Accepted;
+    }
+
+    public boolean isIn24Hours() {
+        return in24Hours;
+    }
+
+    public String getComplaintText() {
+        return complaintText;
+    }
+
+    public int getShopID() {
+        return shopID;
+    }
+
+    public int getAnswerworkerID() {
+        return answerworkerID;
+    }
+
+    public boolean isReturnedMoney() {
+        return returnedMoney;
+    }
+
+    public int getReturnedmoneyvalue() {
+        return returnedmoneyvalue;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public int getMonth() {
+        return month;
     }
 
     public int getYear() {
         return year;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public String getReplyText() {
+        return ReplyText;
     }
+
     public String getDate()
     {
         String result = "";
-        result = this.day + "/" + this.month;
+        result = this.day + "/" + this.month + "/" + this.year;
         return result;
     }
     public boolean sameDate(Complaint other)
@@ -170,25 +183,5 @@ public class Complaint implements Serializable {
             return true;
         else
             return false;
-    }
-
-    @Override
-    public String toString() {
-        return "Complaint{" +
-                "complaintID=" + complaintID +
-                ", CustomerID=" + CustomerID +
-                ", OrderID=" + OrderID +
-                ", Accepted=" + Accepted +
-                ", in24Hours=" + in24Hours +
-                ", complaintText='" + complaintText + '\'' +
-                ", shopID=" + shopID +
-                ", answerworkerID=" + answerworkerID +
-                ", returnedMoney=" + returnedMoney +
-                ", returnedmoneyvalue=" + returnedmoneyvalue +
-                ", day=" + day +
-                ", month=" + month +
-                ", year=" + year +
-                ", ComplaintText='" + ComplaintText + '\'' +
-                '}';
     }
 }

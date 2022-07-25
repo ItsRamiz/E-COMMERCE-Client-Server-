@@ -68,5 +68,6 @@
             <Font size="31.0" />
          </font>
       </Text>
+      <Button fx:id="cancelButton" layoutX="396.0" layoutY="38.0" mnemonicParsing="false" onAction="#cancelOrder" prefHeight="26.0" prefWidth="138.0" text="Cancel Order" />
    </children>
 </AnchorPane>

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.mysql.cj.log.Log;
+import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;
 import il.cshaifasweng.OCSFMediatorExample.entities.Order;
 import javafx.event.ActionEvent;
@@ -384,6 +385,7 @@ public class LogManagerController {
 
 
     }
+    Account currentUser;
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -422,50 +424,44 @@ public class LogManagerController {
             FromYear.getItems().add(i);
             UntilYear.getItems().add(i);
         }
-        chooseShop.getItems().add("ID 0: - Chain");
-        chooseShop.getItems().add("ID 1: Tiberias, Big Danilof");
-        chooseShop.getItems().add("ID 2: Haifa, Merkaz Zeiv");
-        chooseShop.getItems().add("ID 3: Tel Aviv, Ramat Aviv");
-        chooseShop.getItems().add("ID 4: Eilat, Ice mall");
-        chooseShop.getItems().add("ID 5: Be'er Sheva, Big Beer Sheva");
+        switch (currentUser.getBelongShop()) {
+            case 0:
+                chooseShop.getItems().add("ID 0: - Chain");
+                chooseShop.getItems().add("ID 1: Tiberias, Big Danilof");
+                chooseShop.getItems().add("ID 2: Haifa, Merkaz Zeiv");
+                chooseShop.getItems().add("ID 3: Tel Aviv, Ramat Aviv");
+                chooseShop.getItems().add("ID 4: Eilat, Ice mall");
+                chooseShop.getItems().add("ID 5: Be'er Sheva, Big Beer Sheva");
+                break;
+            case 1:
+                chooseShop.getItems().add("ID 1: Tiberias, Big Danilof");
+                break;
+            case 2:
+                chooseShop.getItems().add("ID 2: Haifa, Merkaz Zeiv");
+                break;
+            case 3:
+                chooseShop.getItems().add("ID 3: Tel Aviv, Ramat Aviv");
+                break;
+            case 4:
+                chooseShop.getItems().add("ID 4: Eilat, Ice mall");
+                break;
+            case 5:
+                chooseShop.getItems().add("ID 5: Be'er Sheva, Big Beer Sheva");
+                break;
+        }
+        /*
+            chooseShop.getItems().add("ID 0: - Chain");
+            chooseShop.getItems().add("ID 1: Tiberias, Big Danilof");
+            chooseShop.getItems().add("ID 2: Haifa, Merkaz Zeiv");
+            chooseShop.getItems().add("ID 3: Tel Aviv, Ramat Aviv");
+            chooseShop.getItems().add("ID 4: Eilat, Ice mall");
+            chooseShop.getItems().add("ID 5: Be'er Sheva, Big Beer Sheva");
+
+         */
 
         LogType.getItems().add("Income Log");
         LogType.getItems().add("Orders Log");
         LogType.getItems().add("Complaint Log");
-        /*
-        Order new1 = new Order(1,false,1,"First",500,"aa",true,true,12,12);
-        new1.setDay(17);
-        new1.setMonth(5);
-        new1.setYear(2022);
-        Order new2 = new Order(1,false,2,"Second",392,"aa",true,true,12,12);
-        new2.setDay(17);
-        new2.setMonth(5);
-        new2.setYear(2022);
-        Order new3 = new Order(1,false,2,"Third",55,"aa",true,true,12,12);
-        new3.setDay(23);
-        new3.setMonth(5);
-        new3.setYear(2022);
-        Order new4 = new Order(1,false,1,"Fourth",500,"aa",true,true,12,12);
-        new4.setDay(28);
-        new4.setMonth(5);
-        new4.setYear(2022);
-        orders.add(new1);
-        orders.add(new2);
-        orders.add(new3);
-        orders.add(new4);
-        LogChart.maxWidth(20);
-        Day.setAnimated(false);
-
-        /*
-        XYChart.Series set = new XYChart.Series();
-        set.getData().add(new XYChart.Data("Test1",2));
-        set.getData().add(new XYChart.Data("Test2",5));
-        set.getData().add(new XYChart.Data("Test3",10));
-        LogChart.getData().addAll(set);
-        */
-
-
-
     }
 
 }

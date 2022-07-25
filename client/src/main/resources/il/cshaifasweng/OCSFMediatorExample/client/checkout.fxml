@@ -15,7 +15,7 @@
       <ComboBox fx:id="yearCheckout" layoutX="323.0" layoutY="58.0" prefHeight="26.0" prefWidth="86.0" promptText="Year" />
       <CheckBox fx:id="greetingBoxCheckout" layoutX="506.0" layoutY="267.0" mnemonicParsing="false" onAction="#addGreeting" prefHeight="18.0" prefWidth="119.0" text="Add Greeting" />
       <TextField fx:id="greetingTextCheckout" layoutX="478.0" layoutY="293.0" prefHeight="128.0" prefWidth="176.0" />
-      <CheckBox fx:id="deliveryBox" layoutX="25.0" layoutY="121.0" mnemonicParsing="false" onAction="#deliverySomeone" prefHeight="18.0" prefWidth="193.0" text="Deliver to someone else - 10$" />
+      <CheckBox fx:id="deliveryBox" layoutX="25.0" layoutY="121.0" mnemonicParsing="false" onAction="#deliverySomeone" prefHeight="18.0" prefWidth="193.0" text="Delivery - 20₪" />
       <TextField fx:id="recepAddressField" layoutX="137.0" layoutY="212.0" prefHeight="26.0" prefWidth="254.0" />
       <Text fx:id="recepAddressText" layoutX="25.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recipient's Address" wrappingWidth="112.8000366210938" />
       <Text fx:id="recepNameText" layoutX="25.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recipient's name" wrappingWidth="95.20000000000005" />
@@ -32,7 +32,7 @@
       <TextField fx:id="cvvField" layoutX="60.0" layoutY="353.0" prefHeight="26.0" prefWidth="61.0" />
       <Button fx:id="placeOrderButton" layoutX="244.0" layoutY="399.0" mnemonicParsing="false" onAction="#PlaceOrder" prefHeight="26.0" prefWidth="200.0" text="Place Order" />
       <ComboBox fx:id="hourCheckout" layoutX="419.0" layoutY="58.0" prefHeight="26.0" prefWidth="69.0" promptText="Hour" />
-      <CheckBox fx:id="deliverToHome" layoutX="24.0" layoutY="96.0" mnemonicParsing="false" onAction="#DeliverToMyHome" prefHeight="18.0" prefWidth="130.0" text="Deliver To Home" />
+      <CheckBox fx:id="deliverToHome" layoutX="24.0" layoutY="96.0" mnemonicParsing="false" onAction="#DeliverToMyHome" prefHeight="18.0" prefWidth="130.0" text="Store pickup" />
       <ComboBox fx:id="chooseShopID" layoutX="512.0" layoutY="60.0" prefHeight="26.0" prefWidth="154.0" promptText="Choose Shop" />
       <Button fx:id="back" layoutX="241.0" layoutY="442.0" mnemonicParsing="false" onAction="#openCatalog" prefHeight="25.0" prefWidth="206.0" text="Back To Catalog" />
    </children>

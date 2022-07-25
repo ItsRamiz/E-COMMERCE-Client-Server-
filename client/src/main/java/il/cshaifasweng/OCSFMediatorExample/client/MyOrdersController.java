@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -16,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,15 +29,6 @@ public class MyOrdersController {
 
 
     Account currentUser;
-    @FXML // fx:id="sendComplaint"
-    private Button sendComplaint; // Value injected by FXMLLoader
-
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
-
     @FXML // fx:id="RecepAddress"
     private TextField RecepAddress; // Value injected by FXMLLoader
 
@@ -47,6 +40,12 @@ public class MyOrdersController {
 
     @FXML // fx:id="accountID"
     private TextField accountID; // Value injected by FXMLLoader
+
+    @FXML // fx:id="backToCatalog"
+    private Button backToCatalog; // Value injected by FXMLLoader
+
+    @FXML // fx:id="complaintText"
+    private TextField complaintText; // Value injected by FXMLLoader
 
     @FXML // fx:id="creditCVV"
     private TextField creditCVV; // Value injected by FXMLLoader
@@ -69,14 +68,14 @@ public class MyOrdersController {
     @FXML // fx:id="deliverStatus"
     private TextField deliverStatus; // Value injected by FXMLLoader
 
-    @FXML // fx:id="enterID"
-    private TextField enterID; // Value injected by FXMLLoader
-
     @FXML // fx:id="gift"
     private TextField gift; // Value injected by FXMLLoader
 
     @FXML // fx:id="greetingText"
     private TextField greetingText; // Value injected by FXMLLoader
+
+    @FXML // fx:id="openComplaint"
+    private Button openComplaint; // Value injected by FXMLLoader
 
     @FXML // fx:id="orderID"
     private TextField orderID; // Value injected by FXMLLoader
@@ -84,8 +83,65 @@ public class MyOrdersController {
     @FXML // fx:id="orderList"
     private ListView<String> orderList; // Value injected by FXMLLoader
 
+    @FXML // fx:id="refresh"
+    private Button refresh; // Value injected by FXMLLoader
+
+    @FXML // fx:id="sendComplaint"
+    private Button sendComplaint; // Value injected by FXMLLoader
+
     @FXML // fx:id="shopID"
     private TextField shopID; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text1"
+    private Text text1; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text10"
+    private Text text10; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text11"
+    private Text text11; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text12"
+    private Text text12; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text13"
+    private Text text13; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text14"
+    private Text text14; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text15"
+    private Text text15; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text16"
+    private Text text16; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text2"
+    private Text text2; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text3"
+    private Text text3; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text4"
+    private Text text4; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text5"
+    private Text text5; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text6"
+    private Text text6; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text7"
+    private Text text7; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text8"
+    private Text text8; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text9"
+    private Text text9; // Value injected by FXMLLoader
+
+    @FXML // fx:id="text99"
+    private Text text99; // Value injected by FXMLLoader
 
     @FXML // fx:id="totalPrice"
     private TextField totalPrice; // Value injected by FXMLLoader
@@ -93,18 +149,98 @@ public class MyOrdersController {
     @FXML // fx:id="viewOrder"
     private Button viewOrder; // Value injected by FXMLLoader
 
-    @FXML // fx:id="complaintText"
-    private TextField complaintText; // Value injected by FXMLLoader
 
-    @FXML // fx:id="openComplaint"
-    private Button openComplaint; // Value injected by FXMLLoader
+    @FXML // fx:id="orderProducts"
+    private ListView<String> orderProducts; // Value injected by FXMLLoader
 
-
-    @FXML // fx:id="backToCatalog"
-    private Button backToCatalog; // Value injected by FXMLLoader
 
     @FXML
-    private ListView<String> orderProducts;
+    void refreshFunction(ActionEvent event) {
+        String Temp = "";
+        for(int i = 0 ; i < allOrders.size() ; i++)
+        {
+            if(allOrders.get(i).getAccountID() == currentUser.getAccountID())
+            {
+                Temp = Temp + "#" + allOrders.get(i).getOrderID() + " - " + allOrders.get(i).getDate();
+            }
+        }
+    }
+
+
+    @FXML
+    void cancelOrder(ActionEvent event)
+    {
+        int refund;
+        Calendar calle = Calendar.getInstance();
+        int currentYear = calle.get(Calendar.YEAR);
+        int currentMonth = calle.get(Calendar.MONTH);
+        currentMonth++;
+        int currentHour = calle.get(Calendar.HOUR_OF_DAY);
+        int currentMintue = calle.get(Calendar.MINUTE);
+        int currentDay = calle.get(Calendar.DAY_OF_MONTH);
+
+        int orderYear = SelectedOrder.getPrepareYear();
+        int orderMonth = SelectedOrder.getPrepareMonth();
+        int orderDay = SelectedOrder.getPrepareDay();
+
+        int orderHour = SelectedOrder.getOrderHour();
+        int orderMinute = SelectedOrder.getOrderMintue();
+
+        int diffYear = currentYear - orderYear;
+        int diffMonth = currentMonth - orderMonth;
+        int diffDay = currentDay - orderDay;
+        int diffHour = currentHour - orderHour;
+        int diffMinute = currentMintue - orderMinute;
+
+        if(diffMonth < 0) {
+            diffYear--;
+            diffMonth = 12 + diffMonth;
+        }
+        if(diffDay < 0) {
+            diffMonth--;
+            diffDay = 30 + diffDay;
+        }
+        if(diffHour < 0) {
+            diffDay--;
+            diffHour = 24 + diffHour;
+        }
+        if(diffMinute < 0) {
+            diffHour--;
+            diffMinute = 60 + diffMinute;
+        }
+        if(diffYear == 0)
+        {
+            if(diffMonth == 0)
+            {
+                if(diffDay == 0)
+                {
+                    if(diffHour <= 3 && diffHour >= 1 ) {
+                        refund = 50;
+                    }
+                    if(diffHour == 0)
+                        refund = 0;
+
+                }
+                else
+                {
+                    refund = 100;
+                }
+
+            }
+            else
+            {
+                refund = 100;
+            }
+
+        }
+        else
+        {
+            refund = 100;
+        }
+
+
+
+    }
 
     int complaint_num = 0;
     @FXML
@@ -146,16 +282,29 @@ public class MyOrdersController {
     @FXML
     void sendOrderComplaint(ActionEvent event)
     {
+        Calendar calle = Calendar.getInstance();
+        int currentYear = calle.get(Calendar.YEAR);
+        int currentMonth = calle.get(Calendar.MONTH);
+        currentMonth++;
+        int currentHour = calle.get(Calendar.HOUR_OF_DAY);
+        int currentMintue = calle.get(Calendar.MINUTE);
+        int currentDay = calle.get(Calendar.DAY_OF_MONTH);
+
         Complaint newComplaint = new Complaint();
         newComplaint.setComplaintID(0); // 0 - Will be changed later
         newComplaint.setCustomerID(currentUser.getAccountID());
         newComplaint.setOrderID(SelectedOrder.getOrderID());
         newComplaint.setAccepted(false);
         newComplaint.setIn24Hours(false);
+        newComplaint.setComplaintText(complaintText.getText());
         newComplaint.setShopID(SelectedOrder.getShopID());
         newComplaint.setAnswerworkerID(0);
         newComplaint.setReturnedMoney(false);
         newComplaint.setReturnedmoneyvalue(0);
+        newComplaint.setDay(currentDay);
+        newComplaint.setMonth(currentMonth);
+        newComplaint.setYear(currentYear);
+        newComplaint.setReplyText("");
         sendComplaint.setVisible(false);
         complaintText.setVisible(false);
         UpdateMessage new_msg=new UpdateMessage("complaint","add");
@@ -175,7 +324,8 @@ public class MyOrdersController {
     Order SelectedOrder;
     int viewOrderMode = 0;
     @FXML
-    void openOrder(ActionEvent event) {
+    void openOrder(ActionEvent event)
+    {
         if (viewOrderMode == 0)
         {
             for(int i = 0 ; i < allOrders.size(); i ++)
@@ -191,6 +341,41 @@ public class MyOrdersController {
             }
             viewOrder.setText("Load Selected Order");
             viewOrderMode = 1;
+
+
+            RecepAddress.setVisible(true);
+            RecepName.setVisible(true);  // Value injected by FXMLLoader
+            RecepNumber.setVisible(true); // Value injected by FXMLLoader
+            accountID.setVisible(true);  // Value injected by FXMLLoader
+            creditCVV.setVisible(true);// Value injected by FXMLLoade
+            creditExpire.setVisible(true);  // Value injected by FXMLLoader
+            creditNumber.setVisible(true);  // Value injected by FXMLLoader
+            dateOrder.setVisible(true);  // Value injected by FXMLLoader
+            datePrepare.setVisible(true);  // Value injected by FXMLLoader
+            deliverService.setVisible(true); // Value injected by FXMLLoader
+
+            deliverStatus.setVisible(true);  // Value injected by FXMLLoader
+
+            gift.setVisible(true);  // Value injected by FXMLLoader
+
+            greetingText.setVisible(true);  // Value injected by FXMLLoader
+
+            orderID.setVisible(true);  // Value injected by FXMLLoader
+
+            orderList.setVisible(true); // Value injected by FXMLLoader
+
+            shopID.setVisible(true);  // Value injected by FXMLLoader
+
+            totalPrice.setVisible(true);  // Value injected by FXMLLoader
+
+            viewOrder.setVisible(true);  // Value injected by FXMLLoader
+
+            complaintText.setVisible(true);  // Value injected by FXMLLoader
+
+            openComplaint.setVisible(true);  // Value injected by FXMLLoader
+
+            orderProducts.setVisible(true);
+
         }
         else
         {
@@ -272,28 +457,76 @@ public class MyOrdersController {
         SimpleClient.getClient().sendToServer(getOrdersMsg);
         System.out.println("after sending getAllOrders message !");
 
-        assert RecepAddress != null : "fx:id=\"RecepAddress\" was not injected: check your FXML file 'Untitled'.";
-        assert RecepName != null : "fx:id=\"RecepName\" was not injected: check your FXML file 'Untitled'.";
-        assert RecepNumber != null : "fx:id=\"RecepNumber\" was not injected: check your FXML file 'Untitled'.";
-        assert accountID != null : "fx:id=\"accountID\" was not injected: check your FXML file 'Untitled'.";
-        assert creditCVV != null : "fx:id=\"creditCVV\" was not injected: check your FXML file 'Untitled'.";
-        assert creditExpire != null : "fx:id=\"creditExpire\" was not injected: check your FXML file 'Untitled'.";
-        assert creditNumber != null : "fx:id=\"creditNumber\" was not injected: check your FXML file 'Untitled'.";
-        assert dateOrder != null : "fx:id=\"dateOrder\" was not injected: check your FXML file 'Untitled'.";
-        assert datePrepare != null : "fx:id=\"datePrepare\" was not injected: check your FXML file 'Untitled'.";
-        assert deliverService != null : "fx:id=\"deliverService\" was not injected: check your FXML file 'Untitled'.";
-        assert deliverStatus != null : "fx:id=\"deliverStatus\" was not injected: check your FXML file 'Untitled'.";
-        assert enterID != null : "fx:id=\"enterID\" was not injected: check your FXML file 'Untitled'.";
-        assert gift != null : "fx:id=\"gift\" was not injected: check your FXML file 'Untitled'.";
-        assert greetingText != null : "fx:id=\"greetingText\" was not injected: check your FXML file 'Untitled'.";
-        assert orderID != null : "fx:id=\"orderID\" was not injected: check your FXML file 'Untitled'.";
-        assert orderList != null : "fx:id=\"orderList\" was not injected: check your FXML file 'Untitled'.";
-        assert shopID != null : "fx:id=\"shopID\" was not injected: check your FXML file 'Untitled'.";
-        assert totalPrice != null : "fx:id=\"totalPrice\" was not injected: check your FXML file 'Untitled'.";
-        assert viewOrder != null : "fx:id=\"viewOrder\" was not injected: check your FXML file 'Untitled'.";
+        assert RecepAddress != null : "fx:id=\"RecepAddress\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert RecepName != null : "fx:id=\"RecepName\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert RecepNumber != null : "fx:id=\"RecepNumber\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert accountID != null : "fx:id=\"accountID\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert backToCatalog != null : "fx:id=\"backToCatalog\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert complaintText != null : "fx:id=\"complaintText\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert creditCVV != null : "fx:id=\"creditCVV\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert creditExpire != null : "fx:id=\"creditExpire\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert creditNumber != null : "fx:id=\"creditNumber\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert dateOrder != null : "fx:id=\"dateOrder\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert datePrepare != null : "fx:id=\"datePrepare\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert deliverService != null : "fx:id=\"deliverService\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert deliverStatus != null : "fx:id=\"deliverStatus\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert gift != null : "fx:id=\"gift\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert greetingText != null : "fx:id=\"greetingText\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert openComplaint != null : "fx:id=\"openComplaint\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert orderID != null : "fx:id=\"orderID\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert orderList != null : "fx:id=\"orderList\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert refresh != null : "fx:id=\"refresh\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert sendComplaint != null : "fx:id=\"sendComplaint\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert shopID != null : "fx:id=\"shopID\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text1 != null : "fx:id=\"text1\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text10 != null : "fx:id=\"text10\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text11 != null : "fx:id=\"text11\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text12 != null : "fx:id=\"text12\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text13 != null : "fx:id=\"text13\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text14 != null : "fx:id=\"text14\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text15 != null : "fx:id=\"text15\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text16 != null : "fx:id=\"text16\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text2 != null : "fx:id=\"text2\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text3 != null : "fx:id=\"text3\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text4 != null : "fx:id=\"text4\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text5 != null : "fx:id=\"text5\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text6 != null : "fx:id=\"text6\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text7 != null : "fx:id=\"text7\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text8 != null : "fx:id=\"text8\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text9 != null : "fx:id=\"text9\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert text99 != null : "fx:id=\"text99\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert totalPrice != null : "fx:id=\"totalPrice\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert viewOrder != null : "fx:id=\"viewOrder\" was not injected: check your FXML file 'myorders.fxml'.";
+
+
+        complaintText.setVisible(false);
+        sendComplaint.setVisible(false);
+
         viewOrder.setVisible(false);
         viewOrder.setText("Load Orders");
         String orderDetails = "";
+
+        RecepAddress.setVisible(false);
+        RecepName.setVisible(false);  // Value injected by FXMLLoader
+        RecepNumber.setVisible(false); // Value injected by FXMLLoader
+        accountID.setVisible(false);  // Value injected by FXMLLoader
+        creditCVV.setVisible(false);// Value injected by FXMLLoader
+        creditExpire.setVisible(false);  // Value injected by FXMLLoader
+        creditNumber.setVisible(false);  // Value injected by FXMLLoader
+        dateOrder.setVisible(false);  // Value injected by FXMLLoader
+        datePrepare.setVisible(false);  // Value injected by FXMLLoader
+        deliverService.setVisible(false); // Value injected by FXMLLoader
+        deliverStatus.setVisible(false);  // Value injected by FXMLLoader
+        gift.setVisible(false);  // Value injected by FXMLLoader
+        greetingText.setVisible(false);  // Value injected by FXMLLoader
+        orderID.setVisible(false);  // Value injected by FXMLLoader
+        shopID.setVisible(false);  // Value injected by FXMLLoader
+        totalPrice.setVisible(false);  // Value injected by FXMLLoader
+        complaintText.setVisible(false);  // Value injected by FXMLLoader
+        openComplaint.setVisible(false);  // Value injected by FXMLLoader
+        orderProducts.setVisible(false);
+
+
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override

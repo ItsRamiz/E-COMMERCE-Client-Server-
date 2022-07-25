@@ -142,8 +142,22 @@ public class SimpleClient extends AbstractClient {
 			);
 
 		}
-
+		else if(msg instanceof GetAllComplaints){ // added new 21/7
+			GetAllComplaints recievedComps = (GetAllComplaints) msg;
+			PassAllComplaintsEvent complaintsEvent = new PassAllComplaintsEvent();
+			complaintsEvent.setComplaintsToPass(recievedComps.getComplaintsList());
+			new java.util.Timer().schedule(
+					new java.util.TimerTask() {
+						@Override
+						public void run() {
+							EventBus.getDefault().post(complaintsEvent);
+							System.out.println("the server sent me the account , NICE 4 !!");
+						}
+					},1000
+			);
+		}
 	}
+
 
 	public static SimpleClient getClient() {
 		if (client == null) {

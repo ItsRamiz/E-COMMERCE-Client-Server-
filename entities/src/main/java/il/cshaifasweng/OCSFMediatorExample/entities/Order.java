@@ -33,8 +33,16 @@ public class Order implements Serializable {
     private int prepareDay;
     @Column(name = "Prepare_Month")
     private int prepareMonth;
+    @Column(name = "Prepare_Hour")
+    private int prepareHour;
+    @Column(name = "Prepare_Minute")
+    private int prepareMin;
     @Column(name = "Prepare_Year")
     private int prepareYear;
+    @Column(name = "Order_Hour")
+    private int OrderHour;
+    @Column(name = "Order_Mintue")
+    private int OrderMintue;
     @Column(name = "Order_Day")
     private int orderDay;
     @Column(name = "Order_Month")
@@ -59,7 +67,7 @@ public class Order implements Serializable {
 
     public Order(){}
 
-    public Order(int orderID, boolean pickUp, int shopID, String greeting, int totalPrice, String deliveredAddress, int accountID, boolean gift, boolean delivered, int prepareDay, int prepareMonth, int prepareYear, int orderDay, int orderMonth, int orderYear, long creditCardNumber, int creditCardExpMonth, int creditCardExpYear, int creditCardCVV, String recepName, long recepPhone, String recepAddress,String Products) {
+    public Order(int orderID, boolean pickUp, int shopID, String greeting, int totalPrice, String deliveredAddress, int accountID, boolean gift, boolean delivered, int prepareDay, int prepareMonth, int prepareYear, int orderDay, int orderMonth, int orderYear, long creditCardNumber, int creditCardExpMonth, int creditCardExpYear, int creditCardCVV, String recepName, long recepPhone, String recepAddress,String Products,int orderHour,int orderMintue,int prepareHour,int prepareMin) {
         this.orderID = orderID;
         this.pickUp = pickUp;
         this.shopID = shopID;
@@ -84,6 +92,10 @@ public class Order implements Serializable {
         this.RecepPhone = recepPhone;
         this.RecepAddress = recepAddress;
         this.Products = Products;
+        this.OrderHour = orderHour;
+        this.OrderMintue = orderMintue;
+        this.prepareMin = prepareMin;
+        this.prepareHour = prepareHour;
     }
 
     @Override
@@ -310,5 +322,25 @@ public class Order implements Serializable {
 
     public void setProducts(String products) {
         Products = products;
+    }
+
+    public void setOrderHour(int orderHour) {
+        OrderHour = orderHour;
+    }
+
+    public void setOrderMintue(int orderMintue) {
+        OrderMintue = orderMintue;
+    }
+
+    public void setRecepPhone(long recepPhone) {
+        RecepPhone = recepPhone;
+    }
+
+    public int getOrderHour() {
+        return OrderHour;
+    }
+
+    public int getOrderMintue() {
+        return OrderMintue;
     }
 }

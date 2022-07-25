@@ -31,6 +31,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.greenrobot.eventbus.Subscribe;
@@ -304,6 +305,10 @@ public class PrimaryController {
 		basePrice = basePrice + addedPrice;
 		cartTextPrice.setText(String.valueOf(basePrice));
 		userCart.add(allProducts.get(CatalogSTARTIndex));
+		if(currentLoggedAccount.isSubscription() == true && basePrice > 50)
+			cartTextDiscount.setText("" + basePrice*0.9);
+		else
+			cartTextDiscount.setText("" + basePrice);
 	}
 
 	@FXML
@@ -314,6 +319,10 @@ public class PrimaryController {
 		basePrice = basePrice + addedPrice;
 		cartTextPrice.setText(String.valueOf(basePrice));
 		userCart.add(allProducts.get(CatalogSTARTIndex+1));
+		if(currentLoggedAccount.isSubscription() == true && basePrice > 50)
+			cartTextDiscount.setText("" + basePrice*0.9);
+		else
+			cartTextDiscount.setText("" + basePrice);
 	}
 
 	@FXML
@@ -324,6 +333,10 @@ public class PrimaryController {
 		basePrice = basePrice + addedPrice;
 		cartTextPrice.setText(String.valueOf(basePrice));
 		userCart.add(allProducts.get(CatalogSTARTIndex+2));
+		if(currentLoggedAccount.isSubscription() == true && basePrice > 50)
+			cartTextDiscount.setText("" + basePrice*0.9);
+		else
+			cartTextDiscount.setText("" + basePrice);
 	}
 
 	@FXML
@@ -334,6 +347,10 @@ public class PrimaryController {
 		basePrice = basePrice + addedPrice;
 		cartTextPrice.setText(String.valueOf(basePrice));
 		userCart.add(allProducts.get(CatalogSTARTIndex+3));
+		if(currentLoggedAccount.isSubscription() == true && basePrice > 50)
+			cartTextDiscount.setText("" + basePrice*0.9);
+		else
+			cartTextDiscount.setText("" + basePrice);
 	}
 
 	@FXML
@@ -344,6 +361,10 @@ public class PrimaryController {
 		basePrice = basePrice + addedPrice;
 		cartTextPrice.setText(String.valueOf(basePrice));
 		userCart.add(allProducts.get(CatalogSTARTIndex+4));
+		if(currentLoggedAccount.isSubscription() == true && basePrice > 50)
+			cartTextDiscount.setText("" + basePrice*0.9);
+		else
+			cartTextDiscount.setText("" + basePrice);
 	}
 
 	@FXML
@@ -354,6 +375,10 @@ public class PrimaryController {
 		basePrice = basePrice + addedPrice;
 		cartTextPrice.setText(String.valueOf(basePrice));
 		userCart.add(allProducts.get(CatalogSTARTIndex+5));
+		if(currentLoggedAccount.isSubscription() == true && basePrice > 50)
+			cartTextDiscount.setText("" + basePrice*0.9);
+		else
+			cartTextDiscount.setText("" + basePrice);
 	}
 	@FXML
 	private TextField cartText;
@@ -509,7 +534,6 @@ public class PrimaryController {
 	@FXML
 	void openMyOrders(ActionEvent event) throws IOException
 	{
-
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("myorders.fxml"));
 		Parent roott = loader.load();
 		MyOrdersController cc = loader.getController();
@@ -1305,6 +1329,15 @@ public class PrimaryController {
 		System.out.println("arrived to the update GUI  event");
 		allProducts = upEvent.getRecievedList();
 		availableProducts = true;
+	}
+	@Subscribe
+	public void complaintEvent(PassAllComplaintsEvent allComps){ // added new 21/7
+		System.out.println("arrived to complaintEvent Subscriber in primary!!!!!");
+		List<Complaint> recievedComplaints = allComps.getComplaintsToPass();
+
+		for(int i=0;i<recievedComplaints.size();i++){
+			System.out.println(recievedComplaints.get(i).getDate());
+		}
 	}
 	@Subscribe
 	public void PassAccountEvent(PassAccountEvent passAcc){ // added today

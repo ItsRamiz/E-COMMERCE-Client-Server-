@@ -16,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import net.bytebuddy.implementation.ToStringMethod;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -102,6 +103,15 @@ public class CheckoutController {
     @FXML
     private CheckBox deliverToHome;
 
+    @FXML // fx:id="desc1"
+    private Text desc1; // Value injected by FXMLLoader
+
+    @FXML // fx:id="desc2"
+    private Text desc2; // Value injected by FXMLLoader
+
+    @FXML // fx:id="totalPrice"
+    private Text totalPrice; // Value injected by FXMLLoader
+
 
     @FXML
     void openCatalog(ActionEvent event) throws IOException {
@@ -137,6 +147,7 @@ public class CheckoutController {
         Calendar calle = Calendar.getInstance();
         int currentYear = calle.get(Calendar.YEAR);
         int currentMonth = calle.get(Calendar.MONTH);
+        currentMonth++;
         int currentHour = calle.get(Calendar.HOUR_OF_DAY);
         int currentMintue = calle.get(Calendar.MINUTE);
         int currentDay = calle.get(Calendar.DAY_OF_MONTH);
@@ -167,22 +178,18 @@ public class CheckoutController {
         String recepName = "";
         long recepPhone = 0;
         if (deliverToHome.isSelected()) {
-            pickUp = false;
+            pickUp = true;
+            gift = false;
             recepName = currentUser.getFullName();
-            if (deliveryBox.isSelected()) {
-                recepPhone = Integer.parseInt(recepPhoneField.getText());
-                recepName = recepNameField.getText();
-                deliveredAddress = recepAddressField.getText();
-                gift = true;
-            } else {
-                recepPhone = currentUser.getPhoneNumber();
-                recepName = currentUser.getFullName();
-                deliveredAddress = currentUser.getAddress();
-                gift = false;
-            }
-        } else {
+            recepPhone = currentUser.getPhoneNumber();
+            deliveredAddress = currentUser.getAddress();
+        }
+        if (deliveryBox.isSelected()) {
+            recepPhone = Integer.parseInt(recepPhoneField.getText());
+            recepName = recepNameField.getText();
+            deliveredAddress = recepAddressField.getText();
+            gift = true;
             pickUp = false;
-            deliveredAddress = "none";
         }
         String greeting = "";
         if (greetingBoxCheckout.isSelected()) {
@@ -213,7 +220,43 @@ public class CheckoutController {
         {
             OrderedProducts = OrderedProducts + "%" + cart.get(i).getName() + " - " + cart.get(i).getPrice() + "%";
         }
-        Order newOrder = new Order(0,pickUp,shopID,greeting,0,deliveredAddress,currentUser.getAccountID(),gift,false,dayCheckoutInt,monthCheckoutInt,yearCheckoutInt,currentDay,currentMonth,currentYear,creditCardNumber,creditCardMonth,creditCardYear,creditCardCVV,recepName,recepPhone,deliveredAddress,OrderedProducts);
+        int prepareHour = 0;
+        int prepareMinute = 0;
+        String TempString = "";
+        String prepareSelect = hourCheckout.getSelectionModel().getSelectedItem();
+        for(int x = 0 ; x < prepareSelect.length() ; x++)
+        {
+            if(prepareSelect.charAt(x) == ':')
+            {
+                prepareHour = Integer.parseInt(TempString);
+                TempString = "";
+            }
+            else {
+                TempString = TempString + Character.toString(prepareSelect.charAt(x));
+            }
+        }
+        prepareMinute = Integer.parseInt(TempString);
+
+        int totalPrice = 0;
+        String currentPrice = "";
+        for(int z = 0 ; z < cart.size() ; z++)
+        {
+            for(int x = 0 ; x < cart.get(z).getPrice().length(); x++)
+            {
+                currentPrice = currentPrice + Character.toString(cart.get(z).getPrice().charAt(x));
+            }
+            totalPrice = totalPrice + Integer.valueOf(currentPrice);
+            currentPrice = "";
+        }
+        if(deliveryBox.isSelected())
+            totalPrice = totalPrice + 15;
+        if(currentUser.isSubscription() == true)
+        {
+            if(totalPrice > 50)
+                totalPrice = (int)(totalPrice * 0.9);
+        }
+
+        Order newOrder = new Order(0,pickUp,shopID,greeting,totalPrice,deliveredAddress,currentUser.getAccountID(),gift,false,dayCheckoutInt,monthCheckoutInt,yearCheckoutInt,currentDay,currentMonth,currentYear,creditCardNumber,creditCardMonth,creditCardYear,creditCardCVV,recepName,recepPhone,deliveredAddress,OrderedProducts,currentHour,currentMintue,prepareHour,prepareMinute);
 
         System.out.println(newOrder);
         UpdateMessage new_msg2=new UpdateMessage("order","add");
@@ -231,7 +274,16 @@ public class CheckoutController {
     @FXML
     void DeliverToMyHome(ActionEvent event)
     {
-        deliveryBox.setVisible(true);
+        if(deliverToHome.isSelected())
+        {
+            deliveryBox.setSelected(false);
+            recepNameText.setVisible(false);
+            recepNameField.setVisible(false);
+            recepPhoneText.setVisible(false);
+            recepPhoneField.setVisible(false);
+            recepAddressText.setVisible(false);
+            recepAddressField.setVisible(false);
+        }
     }
 
     @FXML
@@ -244,19 +296,29 @@ public class CheckoutController {
     }
 
     @FXML
-    void deliverySomeone(ActionEvent event) {
-
-        boolean mode;
+    void deliverySomeone(ActionEvent event)
+    {
         if(deliveryBox.isSelected())
-            mode = true;
+        {
+            recepNameText.setVisible(true);
+            recepNameField.setVisible(true);
+            recepPhoneText.setVisible(true);
+            recepPhoneField.setVisible(true);
+            recepAddressText.setVisible(true);
+            recepAddressField.setVisible(true);
+            deliverToHome.setSelected(false);
+        }
         else
-            mode = false;
-        recepNameText.setVisible(mode);
-        recepNameField.setVisible(mode);
-        recepPhoneText.setVisible(mode);
-        recepPhoneField.setVisible(mode);
-        recepAddressText.setVisible(mode);
-        recepAddressField.setVisible(mode);
+        {
+            recepNameText.setVisible(false);
+            recepNameField.setVisible(false);
+            recepPhoneText.setVisible(false);
+            recepPhoneField.setVisible(false);
+            recepAddressText.setVisible(false);
+            recepAddressField.setVisible(false);
+            deliverToHome.setSelected(true);
+
+        }
     }
 
     @FXML
@@ -322,8 +384,11 @@ public class CheckoutController {
         for(i = 0 ; i < 15 ; i++)
         {
             FullHour = startHour + ":" + "00";
+            hourCheckout.getItems().add(FullHour);
             FullHour = startHour + ":" + "15";
+            hourCheckout.getItems().add(FullHour);
             FullHour = startHour + ":" + "30";
+            hourCheckout.getItems().add(FullHour);
             FullHour = startHour + ":" + "45";
             hourCheckout.getItems().add(FullHour);
             startHour++;
@@ -333,6 +398,11 @@ public class CheckoutController {
         chooseShopID.getItems().add("ID 3: Tel Aviv, Ramat Aviv");
         chooseShopID.getItems().add("ID 4: Eilat, Ice mall");
         chooseShopID.getItems().add("ID 5: Be'er Sheva, Big Beer Sheva");
+
+        deliverToHome.setSelected(true);
+        deliveryBox.setSelected(false);
+
+
         recepNameText.setVisible(false);
         recepNameField.setVisible(false);
         recepPhoneText.setVisible(false);
@@ -349,7 +419,8 @@ public class CheckoutController {
         cvvField.setVisible(false);
         cvvText.setVisible(false);
 
+
         greetingTextCheckout.setVisible(false);
-        deliveryBox.setVisible(false);
+        deliveryBox.setVisible(true);
     }
 }
