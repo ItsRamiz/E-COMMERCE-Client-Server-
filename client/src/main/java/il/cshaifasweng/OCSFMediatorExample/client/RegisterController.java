@@ -176,21 +176,14 @@ public class RegisterController {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInSecond.fxml"));
-            // TODO : CHECK IF EMAIL EXISTS IN DB
-            // String Address = Street_Address.getText() + ", " + City_Address.getText() + ", Zip Code " + ZipCode.getText();
-            //Customer new_customer = new Customer(1,Email.getText(), Name.getText(),Address,PhoneNumber.getText());
-            // TODO : ADD CUSTOMER TO DB
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInPrim.fxml"));
             Parent roott = loader.load();
-            LogInSecondary cc = loader.getController();
-
+            LogInPrimary cc = loader.getController();
             Stage stage = new Stage();
             stage.setScene(new Scene(roott));
-            stage.setTitle("Log In");
+            stage.setTitle("Delivery Panel");
             stage.show();
-            Stage stagee = (Stage) RegisterButton.getScene().getWindow();
-            // do what you have to do
+            Stage stagee = (Stage)RegisterButton.getScene().getWindow();
             stagee.close();
 
         }
