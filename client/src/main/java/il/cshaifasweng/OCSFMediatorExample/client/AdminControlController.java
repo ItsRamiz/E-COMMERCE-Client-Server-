@@ -141,10 +141,26 @@ public class AdminControlController {
 
     @FXML
     void SaveChanges(ActionEvent event) {
+        if(profileType.getSelectionModel().getSelectedItem() == "Customers")
+        {
+            Account acc = new Account(Integer.parseInt(accID.getText()),name.getText(),Integer.parseInt(customerID.getText()),address.getText(),email.getText(),password.getText(),Long.parseLong(phone.getText()),Long.parseLong(creditnum.getText()),Integer.parseInt(creditexpmonth.getText()),Integer.parseInt(creditexpyear.getText()),Integer.parseInt(cvv.getText()),false,thisShop,thisSub);
+            // Send this to the database
+        }
 
-
+        else if(profileType.getSelectionModel().getSelectedItem() == "Workers")
+        {
+            Worker work = new Worker(name.getText(),email.getText(),password.getText(),Integer.parseInt(customerID.getText()));
+            // Send this to the database
+        }
+        else if(profileType.getSelectionModel().getSelectedItem() == "Managers")
+        {
+            Manager manager = new Manager(name.getText(),email.getText(),password.getText(),Integer.parseInt(customerID.getText()));
+            // Send this to the database
+        }
     }
 
+    boolean thisSub = false;
+    int thisShop = 0;
     @FXML
     void loadSelectProfile(ActionEvent event)
     {
@@ -185,27 +201,37 @@ public class AdminControlController {
             switch (selectedAcc.getBelongShop()) {
                 case 0:
                     shop.setText("ID 0: - Chain");
+                    thisShop = 0;
                     break;
                 case 1:
                     shop.setText("Tiberias, Big Danilof");
+                    thisShop = 1;
                     break;
                 case 2:
                     shop.setText("Haifa, Merkaz Zeiv");
+                    thisShop = 2;
                     break;
                 case 3:
                     shop.setText("Tel Aviv, Ramat Aviv");
+                    thisShop = 3;
                     break;
                 case 4:
                     shop.setText("Eilat, Ice mall");
+                    thisShop = 4;
                     break;
                 case 5:
                     shop.setText("Be'er Sheva, Big Beer Sheva");
+                    thisShop = 5;
                     break;
             }
-            if(selectedAcc.isSubscription() == true)
+            if(selectedAcc.isSubscription() == true) {
+                thisSub = true;
                 sub.setText("Yes");
-            else
+            }
+            else {
+                thisSub = false;
                 sub.setText("No");
+            }
         }
         if(selectType == 2)
         {
