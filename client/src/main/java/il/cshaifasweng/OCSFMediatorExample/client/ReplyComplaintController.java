@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +23,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class ReplyComplaintController {
 
@@ -65,13 +68,28 @@ public class ReplyComplaintController {
     private Button sendButton; // Value injected by FXMLLoader
 
     @FXML
+    private TextField replyText;
+
+    @FXML
     void SendReply(ActionEvent event)
     {
-        // Edit the complaint, with the ID of selectedComplaint
-        // Accepted - Accodingly
-        // in24Hour - If it was answered in 24
-        //
+        int PercentInt = 0;
+        String TempPercent = "";
+        boolean willReturnMoney=  false;
+        int returnedMoney = 0;
+        selectedComplaint.setAccepted(true);
+        selectedComplaint.setAnswerworkerID(currentUser.getAccountID());
+        selectedComplaint.setReplyText(replyText.getText());
+        if(refundCheck.isSelected())
+        {
+            willReturnMoney = true;
+            TempPercent = Character.toString(refundPercent.getSelectionModel().getSelectedItem().charAt(0)) + Character.toString(refundPercent.getSelectionModel().getSelectedItem().charAt(1));
+            PercentInt = Integer.parseInt(TempPercent);
+        }
+        selectedComplaint.setReturnedMoney(willReturnMoney);
+        selectedComplaint.setReturnedmoneyvalue(PercentInt);
 
+        //TO:DO Update
 
     }
 
@@ -91,28 +109,44 @@ public class ReplyComplaintController {
 
     }
 
+    Complaint selectedComplaint = new Complaint();
     @FXML
     void loadComplaints(ActionEvent event)
     {
-        String SelectedIDString = "";
-        int SelectedID;
-        String SelectedComplaint = complaintList.getSelectionModel().getSelectedItem();
-        Complaint selectedComplaint = new Complaint();
-        for(int i = 11 ; SelectedComplaint.charAt(i) != ' ' ; i++)
+        String aString = "";
+        if(loadButton.getText().equals("Load Complaints"))
         {
-            SelectedIDString = SelectedIDString + Character.toString(SelectedComplaint.charAt(i));
-        }
-        SelectedID = Integer.parseInt(SelectedIDString);
-        for(int i = 0 ; i < complaintList.getItems().size() ; i++) {
-            if (retrievedComplaints.get(i).getComplaintID() == SelectedID) {
-                selectedComplaint = retrievedComplaints.get(i);
+            for(int z = 0 ; z < retrievedComplaints.size() ; z++)
+            {
+                if(retrievedComplaints.get(z).isAccepted() == false)
+                {
+                    aString = "#" + retrievedComplaints.get(z).getComplaintID() + " - " + retrievedComplaints.get(z).getDay() + "/" + retrievedComplaints.get(z).getMonth() + "/" + retrievedComplaints.get(z).getYear();
+                    complaintList.getItems().add(aString);
+                    aString = "";
+                }
             }
+            loadButton.setText("Load Selected Complaint");
         }
-        complaintID.setText(String.valueOf(selectedComplaint.getComplaintID()));
-        accountID.setText(String.valueOf(selectedComplaint.getCustomerID()));
-        orderID.setText(String.valueOf(selectedComplaint.getOrderID()));
-        complaintDate.setText(selectedComplaint.getDate());
-        complaintText.setText(selectedComplaint.getComplaintText());
+        else
+        {
+            String SelectedIDString = "";
+            int SelectedID;
+            String SelectedComplaint = complaintList.getSelectionModel().getSelectedItem();
+            for (int i = 1; SelectedComplaint.charAt(i) != ' '; i++) {
+                SelectedIDString = SelectedIDString + Character.toString(SelectedComplaint.charAt(i));
+            }
+            SelectedID = Integer.parseInt(SelectedIDString);
+            for (int i = 0; i < complaintList.getItems().size(); i++) {
+                if (retrievedComplaints.get(i).getComplaintID() == SelectedID) {
+                    selectedComplaint = retrievedComplaints.get(i);
+                }
+            }
+            complaintID.setText(String.valueOf(selectedComplaint.getComplaintID()));
+            accountID.setText(String.valueOf(selectedComplaint.getCustomerID()));
+            orderID.setText(String.valueOf(selectedComplaint.getOrderID()));
+            complaintDate.setText(selectedComplaint.getDate());
+            complaintText.setText(selectedComplaint.getComplaintText());
+        }
 
     }
     @FXML
@@ -129,9 +163,11 @@ public class ReplyComplaintController {
 
     }
 
+    Account currentUser;
     List<Complaint> retrievedComplaints = new ArrayList<>();
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    void initialize() throws IOException {
+        EventBus.getDefault().register(this);
         assert accountID != null : "fx:id=\"accountID\" was not injected: check your FXML file 'replycomplaint.fxml'.";
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'replycomplaint.fxml'.";
         assert complaintDate != null : "fx:id=\"complaintDate\" was not injected: check your FXML file 'replycomplaint.fxml'.";
@@ -144,11 +180,41 @@ public class ReplyComplaintController {
         assert refundPercent != null : "fx:id=\"refundPercent\" was not injected: check your FXML file 'replycomplaint.fxml'.";
         assert sendButton != null : "fx:id=\"sendButton\" was not injected: check your FXML file 'replycomplaint.fxml'.";
 
-        Complaint a = new Complaint(0,23,22,false,false,"Fuck you",2,0,false,0,23,2,2004,"");
+        refundPercent.getItems().add("25%");
+        refundPercent.getItems().add("50%");
+        refundPercent.getItems().add("75%");
+        refundPercent.getItems().add("100%");
+
+        //Complaint a = new Complaint(0,23,22,false,false,"Fuck you",2,0,false,0,23,2,2004,"");
         refundPercent.setVisible(false);
-        String aString = "Complaint #" + a.getComplaintID() + " " + "Received: " + a.getDay() + "/" + a.getMonth() + "/" + a.getYear();
-        complaintList.getItems().add(aString);
-        retrievedComplaints.add(a);
+        loadButton.setVisible(false);
+        //String aString = "Complaint #" + a.getComplaintID() + " " + "Received: " + a.getDay() + "/" + a.getMonth() + "/" + a.getYear();
+        //complaintList.getItems().add(aString);
+        //retrievedComplaints.add(a);
+
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+
+                        loadButton.setVisible(true);
+                    }
+                },2000
+        );
+        try {
+            SimpleClient.getClient().sendToServer("get complaints");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void retrieveAllComplaints(PassAllComplaintsEvent complaints){
+        System.out.println("we're in retrieveAllComplaints");
+        List<Complaint> allComplaints = complaints.getComplaintsToPass();
+        System.out.println("SIZE = " + allComplaints.size());
+        retrievedComplaints = allComplaints;
     }
 
 }

@@ -13,6 +13,7 @@ import com.mysql.cj.log.Log;
 import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;
 import il.cshaifasweng.OCSFMediatorExample.entities.Order;
+import il.cshaifasweng.OCSFMediatorExample.entities.getAllOrdersMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +28,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class LogManagerController {
 
@@ -89,6 +92,20 @@ public class LogManagerController {
 
     @FXML
     void backToCatalog(ActionEvent event) throws IOException {
+        Account recAcc = currentUser;
+        System.out.println("the server sent me the account , NICE 2 !!");
+        PassAccountEvent recievedAcc = new PassAccountEvent(recAcc);
+        System.out.println("the server sent me the account , NICE 3 !!");
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        EventBus.getDefault().post(recievedAcc);
+                        System.out.println("the server sent me the account , NICE 4 !!");
+                    }
+                },4000
+        );
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
         Parent roott = loader.load();
         PrimaryController cc = loader.getController();
@@ -386,9 +403,18 @@ public class LogManagerController {
 
     }
     Account currentUser;
-
+    List<Complaint> allComplaints ;
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    void initialize() throws IOException {
+        // added 30/7
+        EventBus.getDefault().register(this);
+        // added 30/7
+        System.out.println("before sending getAllOrders message !");
+        getAllOrdersMessage getOrdersMsg = new getAllOrdersMessage();
+        // added 30/7
+        SimpleClient.getClient().sendToServer(getOrdersMsg);
+        // added 30/7
+        System.out.println("after sending getAllOrders message !");
         assert CompareShops != null : "fx:id=\"CompareShops\" was not injected: check your FXML file 'log_manager.fxml'.";
         assert Day != null : "fx:id=\"Day\" was not injected: check your FXML file 'log_manager.fxml'.";
         assert FromDateText != null : "fx:id=\"FromDateText\" was not injected: check your FXML file 'log_manager.fxml'.";
@@ -424,6 +450,7 @@ public class LogManagerController {
             FromYear.getItems().add(i);
             UntilYear.getItems().add(i);
         }
+        /*
         switch (currentUser.getBelongShop()) {
             case 0:
                 chooseShop.getItems().add("ID 0: - Chain");
@@ -449,6 +476,8 @@ public class LogManagerController {
                 chooseShop.getItems().add("ID 5: Be'er Sheva, Big Beer Sheva");
                 break;
         }
+
+         */
         /*
             chooseShop.getItems().add("ID 0: - Chain");
             chooseShop.getItems().add("ID 1: Tiberias, Big Danilof");
@@ -462,6 +491,38 @@ public class LogManagerController {
         LogType.getItems().add("Income Log");
         LogType.getItems().add("Orders Log");
         LogType.getItems().add("Complaint Log");
+    }
+    @Subscribe
+    public void complaintEvent(PassAllComplaintsEvent allComps){ // added new 30/7
+        System.out.println("arrived to complaintEvent Subscriber in log manager controller!!!!!");
+        List<Complaint> recievedComplaints = allComps.getComplaintsToPass();
+        allComplaints = allComps.getComplaintsToPass();
+        for(int i=0;i<recievedComplaints.size();i++){
+            System.out.println(recievedComplaints.get(i).getDay());
+        }
+    }
+
+    @Subscribe
+    public void passOrders(PassOrdersFromServer passOrders){ // added 30/7
+        System.out.println("arrived to subscriebr of passOrders in logManager controller !");
+        List<Order> recievedOrders = passOrders.getRecievedOrders();
+        for(int i=0;i<recievedOrders.size();i++){
+            System.out.println(recievedOrders.get(i).getOrderYear());
+        }
+    }
+
+    @Subscribe
+    public void PassAccountEvent(PassAccountEventLogManager passAcc){ // added 30/7
+        System.out.println("Arrived To Pass Account - log manager");
+        Account recvAccount = passAcc.getRecievedAccount();
+        System.out.println(recvAccount.getPassword());
+        System.out.println(recvAccount.getAccountID());
+        System.out.println(recvAccount.getEmail());
+        System.out.println(recvAccount.getFullName());
+        System.out.println(recvAccount.getAddress());
+        System.out.println(recvAccount.getCreditCardNumber());
+        System.out.println(recvAccount.getCreditMonthExpire());
+        currentUser = recvAccount;
     }
 
 }

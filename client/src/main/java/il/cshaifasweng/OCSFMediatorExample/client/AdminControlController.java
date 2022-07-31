@@ -10,9 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.FoundTable;
-import il.cshaifasweng.OCSFMediatorExample.entities.Manager;
-import il.cshaifasweng.OCSFMediatorExample.entities.Worker;
+import com.sun.javafx.image.IntPixelGetter;
+import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,8 +20,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 public class AdminControlController {
@@ -33,23 +34,221 @@ public class AdminControlController {
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
+    @FXML // fx:id="accID"
+    private TextField accID; // Value injected by FXMLLoader
+
+    @FXML // fx:id="accIDTxt"
+    private Text accIDTxt; // Value injected by FXMLLoader
+
     @FXML // fx:id="accountsList"
     private ListView<String> accountsList; // Value injected by FXMLLoader
 
     @FXML // fx:id="accountsText"
     private Text accountsText; // Value injected by FXMLLoader
 
+    @FXML // fx:id="address"
+    private TextField address; // Value injected by FXMLLoader
+
+    @FXML // fx:id="addressTxt"
+    private Text addressTxt; // Value injected by FXMLLoader
+
     @FXML // fx:id="backButton"
     private Button backButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="creditMonthTxt"
+    private Text creditMonthTxt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="creditNumTxt"
+    private Text creditNumTxt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="creditexpYearTxt"
+    private Text creditexpYearTxt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="creditexpmonth"
+    private TextField creditexpmonth; // Value injected by FXMLLoader
+
+    @FXML // fx:id="creditexpyear"
+    private TextField creditexpyear; // Value injected by FXMLLoader
+
+    @FXML // fx:id="creditnum"
+    private TextField creditnum; // Value injected by FXMLLoader
+
+    @FXML // fx:id="cusIDTxt"
+    private Text cusIDTxt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="customerID"
+    private TextField customerID; // Value injected by FXMLLoader
+
+    @FXML // fx:id="cvv"
+    private TextField cvv; // Value injected by FXMLLoader
+
+    @FXML // fx:id="cvvTxt"
+    private Text cvvTxt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="email"
+    private TextField email; // Value injected by FXMLLoader
+
+    @FXML // fx:id="emailTxt"
+    private Text emailTxt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="freeze"
+    private Button freeze; // Value injected by FXMLLoader
+
+    @FXML // fx:id="idk"
+    private Button idk; // Value injected by FXMLLoader
 
     @FXML // fx:id="loadProfile"
     private Button loadProfile; // Value injected by FXMLLoader
 
+    @FXML // fx:id="logged"
+    private TextField logged; // Value injected by FXMLLoader
+
+    @FXML // fx:id="loggedTxt"
+    private Text loggedTxt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="name"
+    private TextField name; // Value injected by FXMLLoader
+
+    @FXML // fx:id="nameTxt"
+    private Text nameTxt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="passTxt"
+    private Text passTxt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="password"
+    private TextField password; // Value injected by FXMLLoader
+
+    @FXML // fx:id="phone"
+    private TextField phone; // Value injected by FXMLLoader
+
+    @FXML // fx:id="phoneTxt"
+    private Text phoneTxt; // Value injected by FXMLLoader
+
     @FXML // fx:id="profileType"
     private ComboBox<String> profileType; // Value injected by FXMLLoader
 
+    @FXML // fx:id="shop"
+    private TextField shop; // Value injected by FXMLLoader
+
+    @FXML // fx:id="shopTxt"
+    private Text shopTxt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="sub"
+    private TextField sub; // Value injected by FXMLLoader
+
+    @FXML // fx:id="subTxt"
+    private Text subTxt; // Value injected by FXMLLoader
+
     @FXML
-    void loadSelectProfile(ActionEvent event) {
+    void SaveChanges(ActionEvent event) {
+
+
+    }
+
+    @FXML
+    void loadSelectProfile(ActionEvent event)
+    {
+        int selectType = 0;
+        if(profileType.getSelectionModel().getSelectedItem() == "Customers")
+            selectType = 1;
+        else if(profileType.getSelectionModel().getSelectedItem() == "Workers")
+            selectType = 2;
+        else if(profileType.getSelectionModel().getSelectedItem() == "Managers")
+            selectType = 3;
+        String SelectedIDString = "";
+        int SelectedID;
+        String SelectedComplaint = accountsList.getSelectionModel().getSelectedItem();
+        Account selectedAcc = new Account();
+        Worker selectedWork = new Worker();
+        Manager selectedMan = new Manager();
+        for (int i = 1; SelectedComplaint.charAt(i) != ' '; i++) {
+            SelectedIDString = SelectedIDString + Character.toString(SelectedComplaint.charAt(i));
+        }
+        SelectedID = Integer.parseInt(SelectedIDString);
+        if(selectType == 1)
+        {
+            for(int i = 0 ; i < all_accounts.size() ; i++) {
+                if (SelectedID == all_accounts.get(i).getAccountID())
+                    selectedAcc = all_accounts.get(i);
+            }
+            accID.setText(Integer.toString(selectedAcc.getAccountID()));
+            customerID.setText(Integer.toString(selectedAcc.getID()));
+            name.setText(selectedAcc.getFullName());
+            address.setText(selectedAcc.getAddress());
+            email.setText(selectedAcc.getEmail());
+            password.setText(selectedAcc.getPassword());
+            phone.setText(Long.toString(selectedAcc.getPhoneNumber()));
+            creditnum.setText(Long.toString(selectedAcc.getCreditCardNumber()));
+            creditexpmonth.setText(Integer.toString(selectedAcc.getCreditMonthExpire()));
+            creditexpyear.setText(Integer.toString(selectedAcc.getCreditYearExpire()));
+            cvv.setText(Integer.toString(selectedAcc.getCcv()));
+            switch (selectedAcc.getBelongShop()) {
+                case 0:
+                    shop.setText("ID 0: - Chain");
+                    break;
+                case 1:
+                    shop.setText("Tiberias, Big Danilof");
+                    break;
+                case 2:
+                    shop.setText("Haifa, Merkaz Zeiv");
+                    break;
+                case 3:
+                    shop.setText("Tel Aviv, Ramat Aviv");
+                    break;
+                case 4:
+                    shop.setText("Eilat, Ice mall");
+                    break;
+                case 5:
+                    shop.setText("Be'er Sheva, Big Beer Sheva");
+                    break;
+            }
+            if(selectedAcc.isSubscription() == true)
+                sub.setText("Yes");
+            else
+                sub.setText("No");
+        }
+        if(selectType == 2)
+        {
+            for(int i = 0 ; i < all_workers.size() ; i++) {
+                if (SelectedID == all_workers.get(i).getPersonID())
+                    selectedWork = all_workers.get(i);
+            }
+            accID.setText(Integer.toString(selectedWork.getPersonID()));
+            email.setText(selectedWork.getEmail());
+            name.setText(selectedWork.getFullName());
+            password.setText(selectedWork.getPassword());
+        }
+        if(selectType == 3)
+        {
+            for(int i = 0 ; i < all_managers.size() ; i++) {
+                if (SelectedID == all_managers.get(i).getPersonID())
+                    selectedMan = all_managers.get(i);
+            }
+            accID.setText(Integer.toString(selectedMan.getPersonID()));
+            email.setText(selectedMan.getEmail());
+            name.setText(selectedMan.getFullName());
+            password.setText(selectedMan.getPassword());
+            switch (selectedMan.getShopID()) {
+                case 0:
+                    shop.setText("ID 0: - Chain");
+                    break;
+                case 1:
+                    shop.setText("Tiberias, Big Danilof");
+                    break;
+                case 2:
+                    shop.setText("Haifa, Merkaz Zeiv");
+                    break;
+                case 3:
+                    shop.setText("Tel Aviv, Ramat Aviv");
+                    break;
+                case 4:
+                    shop.setText("Eilat, Ice mall");
+                    break;
+                case 5:
+                    shop.setText("Be'er Sheva, Big Beer Sheva");
+                    break;
+            }
+        }
 
     }
 
@@ -66,15 +265,80 @@ public class AdminControlController {
         stagee.close();
 
     }
+
+    @FXML
+    void selectType(ActionEvent event) {
+        String aString = "";
+        if(profileType.getSelectionModel().getSelectedItem() == "Customers")
+        {
+            for(int i = 0 ; i < all_accounts.size() ; i++)
+            {
+                aString = "#" + all_accounts.get(i).getAccountID() + " - " + all_accounts.get(i).getFullName();
+                aString = "";
+            }
+        }
+        else if(profileType.getSelectionModel().getSelectedItem() == "Workers")
+        {
+            for(int i = 0 ; i < all_workers.size() ; i++)
+            {
+                aString = "#" + all_workers.get(i).getPersonID() + " - " + all_workers.get(i).getFullName();
+                aString = "";
+            }
+
+        }
+        else if(profileType.getSelectionModel().getSelectedItem() == "Managers")
+        {
+            for(int i = 0 ; i < all_managers.size() ; i++)
+            {
+                aString = "#" + all_managers.get(i).getPersonID() + " - " + all_managers.get(i).getFullName();
+                aString = "";
+            }
+        }
+    }
+
+    public List<Account> all_accounts = new ArrayList<>();
     public List<Manager> all_managers = new ArrayList<>();
     public List<Worker> all_workers = new ArrayList<>();
+    Account currentUser;
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        EventBus.getDefault().register(this);
+        assert accID != null : "fx:id=\"accID\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert accIDTxt != null : "fx:id=\"accIDTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
         assert accountsList != null : "fx:id=\"accountsList\" was not injected: check your FXML file 'admincontrol.fxml'.";
         assert accountsText != null : "fx:id=\"accountsText\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert address != null : "fx:id=\"address\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert addressTxt != null : "fx:id=\"addressTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert creditMonthTxt != null : "fx:id=\"creditMonthTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert creditNumTxt != null : "fx:id=\"creditNumTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert creditexpYearTxt != null : "fx:id=\"creditexpYearTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert creditexpmonth != null : "fx:id=\"creditexpmonth\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert creditexpyear != null : "fx:id=\"creditexpyear\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert creditnum != null : "fx:id=\"creditnum\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert cusIDTxt != null : "fx:id=\"cusIDTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert customerID != null : "fx:id=\"customerID\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert cvv != null : "fx:id=\"cvv\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert cvvTxt != null : "fx:id=\"cvvTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert email != null : "fx:id=\"email\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert emailTxt != null : "fx:id=\"emailTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert freeze != null : "fx:id=\"freeze\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert idk != null : "fx:id=\"idk\" was not injected: check your FXML file 'admincontrol.fxml'.";
         assert loadProfile != null : "fx:id=\"loadProfile\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert logged != null : "fx:id=\"logged\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert loggedTxt != null : "fx:id=\"loggedTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert name != null : "fx:id=\"name\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert nameTxt != null : "fx:id=\"nameTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert passTxt != null : "fx:id=\"passTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert password != null : "fx:id=\"password\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert phone != null : "fx:id=\"phone\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert phoneTxt != null : "fx:id=\"phoneTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
         assert profileType != null : "fx:id=\"profileType\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert shop != null : "fx:id=\"shop\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert shopTxt != null : "fx:id=\"shopTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert sub != null : "fx:id=\"sub\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert subTxt != null : "fx:id=\"subTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
+
         try {
             SimpleClient.getClient().sendToServer("get Managers");
 
@@ -101,7 +365,7 @@ public class AdminControlController {
     @Subscribe
     public void getManagersOrWorkersFromDB(FoundTable foundTable){
         if(foundTable.getMessage().equals("managers table found")){
-             all_managers = foundTable.getRecievedManagers();
+            all_managers = foundTable.getRecievedManagers();
         }
         else{
             all_workers = foundTable.getRecievedWokers();

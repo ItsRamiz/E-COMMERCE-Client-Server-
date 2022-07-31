@@ -18,7 +18,7 @@
       <Text layoutX="264.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="By Account with ID :" wrappingWidth="110.40000000000009" />
       <TextField fx:id="accountID" editable="false" layoutX="372.0" layoutY="127.0" prefHeight="26.0" prefWidth="82.0" />
       <Text layoutX="264.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order ID :" wrappingWidth="64.00003662109384" />
-      <Button fx:id="loadButton" layoutX="268.0" layoutY="52.0" mnemonicParsing="false" onAction="#loadComplaints" prefHeight="26.0" prefWidth="154.0" text="Load Selected Complaint" />
+      <Button fx:id="loadButton" layoutX="268.0" layoutY="52.0" mnemonicParsing="false" onAction="#loadComplaints" prefHeight="26.0" prefWidth="154.0" text="Load Complaints" />
       <TextField fx:id="orderID" editable="false" layoutX="325.0" layoutY="158.0" prefHeight="26.0" prefWidth="81.0" />
       <Text layoutX="260.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Complaint Received :" wrappingWidth="117.33673095703125" />
       <TextField fx:id="complaintDate" editable="false" layoutX="373.0" layoutY="191.0" prefHeight="26.0" prefWidth="175.0" />
@@ -27,7 +27,7 @@
             <Font size="38.0" />
          </font>
       </Text>
-      <TextField layoutX="293.0" layoutY="333.0" prefHeight="110.0" prefWidth="482.0" />
+      <TextField fx:id="replyText" layoutX="293.0" layoutY="333.0" prefHeight="110.0" prefWidth="482.0" />
       <Text layoutX="461.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reply Text" wrappingWidth="64.00003662109384" />
       <CheckBox fx:id="refundCheck" layoutX="295.0" layoutY="454.0" mnemonicParsing="false" onAction="#addRefund" prefHeight="18.0" prefWidth="100.0" text="Include refund" />
       <ComboBox fx:id="refundPercent" layoutX="295.0" layoutY="476.0" onAction="#addRefundPercent" prefHeight="26.0" prefWidth="100.0" promptText="Refund %" />

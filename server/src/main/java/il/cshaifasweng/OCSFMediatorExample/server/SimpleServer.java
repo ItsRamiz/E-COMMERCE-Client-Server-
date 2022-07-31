@@ -146,6 +146,16 @@ public class SimpleServer extends AbstractServer {
 				foundTbl.setRecievedWorkers(obj.workerGeneralList);
 				client.sendToClient(foundTbl);
 			}
+			if(recievedStr.equals("get complaints")){
+				//System.out.println("Get Complaints Test 1");
+				GetAllComplaints obj = new GetAllComplaints();
+				//System.out.println("Get Complaints Test 2");
+				obj.setComplaintsList(getAllComplaints());
+				System.out.println("Comp List Size = " + obj.getComplaintsList().size());
+				//System.out.println("Get Complaints Test 3");
+				client.sendToClient(obj);
+				//System.out.println("Get Complaints Test 4");
+			}
 		}
 
 
@@ -460,6 +470,16 @@ public class SimpleServer extends AbstractServer {
 			complaintsToClient.setComplaintsList(recievedComplaints);
 			client.sendToClient(complaintsToClient);
 
+		}
+		if(msg instanceof Order){
+			SessionFactory sessionFactory = getSessionFactory();
+			session = sessionFactory.openSession();
+			Transaction tx1 = session.beginTransaction();
+
+
+			Order recievedMessage = (Order) msg;
+			int orderID = recievedMessage.getOrderID();
+			OrderUpdateManager.deliveredOrder(orderID);
 		}
 
 		if (msg instanceof ArrayList) { // arrived from the initializing of the program, so we initialize the database

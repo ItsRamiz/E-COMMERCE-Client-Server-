@@ -143,18 +143,18 @@ public class SimpleClient extends AbstractClient {
 
 		}
 		else if(msg instanceof GetAllComplaints){ // added new 21/7
+			System.out.println("Get Complaints Test 1");
 			GetAllComplaints recievedComps = (GetAllComplaints) msg;
+			System.out.println("Get Complaints Test 2");
 			PassAllComplaintsEvent complaintsEvent = new PassAllComplaintsEvent();
+			System.out.println("Get Complaints Test 3");
 			complaintsEvent.setComplaintsToPass(recievedComps.getComplaintsList());
-			new java.util.Timer().schedule(
-					new java.util.TimerTask() {
-						@Override
-						public void run() {
-							EventBus.getDefault().post(complaintsEvent);
-							System.out.println("the server sent me the account , NICE 4 !!");
-						}
-					},1000
-			);
+
+			System.out.println("Comp List Size = " + recievedComps.getComplaintsList().size());
+
+			System.out.println("Get Complaints Test 4");
+			EventBus.getDefault().post(complaintsEvent);
+			System.out.println("Get Complaints Test 5");
 		}
 	}
 

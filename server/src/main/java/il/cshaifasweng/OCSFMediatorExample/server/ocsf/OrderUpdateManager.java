@@ -149,4 +149,20 @@ public class OrderUpdateManager {
         SimpleServer.session.close();
 
     }
+    public static void deliveredOrder(int orderID){
+        System.out.println("Arrived to delivered order");
+        SessionFactory sessionFactory = SimpleServer.getSessionFactory();
+        SimpleServer.session = sessionFactory.openSession();
+        Transaction tx = SimpleServer.session.beginTransaction();
+
+        System.out.println("Arrived to delivered order 2");
+        Order updateOrder  = SimpleServer.session.load(Order.class, orderID);
+
+        updateOrder.setDelivered(true);
+
+        System.out.println("Arrived to delivered order 3");
+        SimpleServer.session.update(updateOrder);
+        System.out.println("Arrived to delivered order 4");
+        tx.commit();
+    }
 }

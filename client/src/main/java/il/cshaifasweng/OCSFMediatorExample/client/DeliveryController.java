@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 import il.cshaifasweng.OCSFMediatorExample.entities.Order;
 import il.cshaifasweng.OCSFMediatorExample.entities.Product;
+import il.cshaifasweng.OCSFMediatorExample.entities.getAllOrdersMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +19,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import static com.sun.xml.bind.v2.schemagen.Util.equal;
 
@@ -48,7 +52,12 @@ public class DeliveryController {
         {
             if(selected == Orders.get(i).getOrderID())
             {
-                // Turn Delivered To True
+                try {
+                    SimpleClient.getClient().sendToServer(Orders.get(i));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
         }
@@ -57,6 +66,19 @@ public class DeliveryController {
 
     @FXML
     void openCatalog(ActionEvent event) throws IOException {
+        Account recAcc = currentUser;
+        System.out.println("the server sent me the account , NICE 2 !!");
+        PassAccountEvent recievedAcc = new PassAccountEvent(recAcc);
+        System.out.println("the server sent me the account , NICE 3 !!");
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        EventBus.getDefault().post(recievedAcc);
+                        System.out.println("the server sent me the account , NICE 4 !!");
+                    }
+                },4000
+        );
         FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
         Parent roott = loader.load();
         PrimaryController cc = loader.getController();
@@ -69,10 +91,19 @@ public class DeliveryController {
         stagee.close();
     }
 
+    Account currentUser;
     static List<Order> Orders = new ArrayList<>();
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize()
-    {
+    void initialize() throws IOException {
+        // added 30/7
+        EventBus.getDefault().register(this);
+        // added 30/7
+        System.out.println("before sending getAllOrders message !");
+        getAllOrdersMessage getOrdersMsg = new getAllOrdersMessage();
+        // added 30/7
+        SimpleClient.getClient().sendToServer(getOrdersMsg);
+        // added 30/7
+        System.out.println("after sending getAllOrders message !");
         back.setVisible(true);
         assert deliver != null : "fx:id=\"deliver\" was not injected: check your FXML file 'delivery.fxml'.";
         assert deliveryList != null : "fx:id=\"deliveryList\" was not injected: check your FXML file 'delivery.fxml'.";
@@ -100,5 +131,29 @@ public class DeliveryController {
         listOrders.getItems().add(order4.getOrderID());
 */
     }
+    @Subscribe
+    public void passOrders(PassOrdersFromServer passOrders){ // added 30/7
+        System.out.println("arrived to subscriebr of passOrders in delivery controller !");
+        List<Order> recievedOrders = passOrders.getRecievedOrders();
+        for(int i=0;i<recievedOrders.size();i++){
+            System.out.println(recievedOrders.get(i).getOrderYear());
+        }
+    }
+
+
+    @Subscribe
+    public void PassAccountEvent(PassAccountEventDelivery passAcc){ // added 30/7
+        System.out.println("Arrived To Pass Account - deliveryManager!");
+        Account recvAccount = passAcc.getRecievedAccount();
+        System.out.println(recvAccount.getPassword());
+        System.out.println(recvAccount.getAccountID());
+        System.out.println(recvAccount.getEmail());
+        System.out.println(recvAccount.getFullName());
+        System.out.println(recvAccount.getAddress());
+        System.out.println(recvAccount.getCreditCardNumber());
+        System.out.println(recvAccount.getCreditMonthExpire());
+        currentUser = recvAccount;
+    }
+
 
 }

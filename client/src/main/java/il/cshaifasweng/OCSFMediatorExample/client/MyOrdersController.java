@@ -153,6 +153,9 @@ public class MyOrdersController {
     @FXML // fx:id="orderProducts"
     private ListView<String> orderProducts; // Value injected by FXMLLoader
 
+    @FXML // fx:id="cancelButton"
+    private Button cancelButton; // Value injected by FXMLLoader
+
 
     @FXML
     void refreshFunction(ActionEvent event) {
@@ -170,7 +173,8 @@ public class MyOrdersController {
     @FXML
     void cancelOrder(ActionEvent event)
     {
-        int refund;
+        boolean in24Hour = false;
+        int refund = 0;
         Calendar calle = Calendar.getInstance();
         int currentYear = calle.get(Calendar.YEAR);
         int currentMonth = calle.get(Calendar.MONTH);
@@ -214,12 +218,14 @@ public class MyOrdersController {
             {
                 if(diffDay == 0)
                 {
-                    if(diffHour <= 3 && diffHour >= 1 ) {
-                        refund = 50;
+                    if(diffHour > 3)
+                    {
+                        refund = 100;
                     }
-                    if(diffHour == 0)
+                    else if(diffHour < 1)
                         refund = 0;
-
+                    else
+                        refund = 50;
                 }
                 else
                 {
@@ -236,6 +242,21 @@ public class MyOrdersController {
         else
         {
             refund = 100;
+        }
+        boolean returned = false;
+        if(refund > 0)
+            returned = true;
+
+        Complaint cancelComplaint = new Complaint(0,currentUser.getAccountID(),SelectedOrder.getOrderID(),true,true,"Cancel Order",SelectedOrder.getShopID(),0,returned,refund/100*SelectedOrder.getTotalPrice(),currentDay,currentMonth,currentYear,"Automated Reply");
+        UpdateMessage new_msg=new UpdateMessage("complaint","add");
+        new_msg.setComplaint(cancelComplaint);
+        try {
+            System.out.println("before sending updateMessage to server ");
+            SimpleClient.getClient().sendToServer(new_msg); // sends the updated product to the server class
+            System.out.println("afater sending updateMessage to server ");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
 
 
@@ -321,6 +342,7 @@ public class MyOrdersController {
 
     }
 
+    Order retrievedOrder = new Order();  // This is the order with theID
     Order SelectedOrder;
     int viewOrderMode = 0;
     @FXML
@@ -370,8 +392,6 @@ public class MyOrdersController {
 
             viewOrder.setVisible(true);  // Value injected by FXMLLoader
 
-            complaintText.setVisible(true);  // Value injected by FXMLLoader
-
             openComplaint.setVisible(true);  // Value injected by FXMLLoader
 
             orderProducts.setVisible(true);
@@ -379,9 +399,10 @@ public class MyOrdersController {
         }
         else
         {
+            cancelButton.setVisible(true);
+
             int selected = orderList.getSelectionModel().getSelectedItem().charAt(0) - 48;
             System.out.println("Selected is " + selected);
-            Order retrievedOrder = new Order();  // This is the order with theID
             //int theID = Integer.parseInt(enterID.getText());
             for (int i = 0; i < allOrders.size(); i++) {
                 if (allOrders.get(i).getOrderID() == selected) {
@@ -408,8 +429,6 @@ public class MyOrdersController {
                     currentProduct = "";
             }
                 openComplaint.setVisible(true);
-                complaintText.setVisible(true);
-                sendComplaint.setVisible(true);
                 orderID.setText(String.valueOf(retrievedOrder.getOrderID()));
                 accountID.setText(String.valueOf(currentUser.getAccountID()));
                 creditNumber.setText(String.valueOf(retrievedOrder.getCreditCardNumber()));
@@ -501,6 +520,7 @@ public class MyOrdersController {
 
         complaintText.setVisible(false);
         sendComplaint.setVisible(false);
+        cancelButton.setVisible(false);
 
         viewOrder.setVisible(false);
         viewOrder.setText("Load Orders");
@@ -535,7 +555,6 @@ public class MyOrdersController {
                     }
                 },4000
         );
-
     }
     @Subscribe
     public void PassAccountEvent(PassAccountEventOrders passAcc){ // added today

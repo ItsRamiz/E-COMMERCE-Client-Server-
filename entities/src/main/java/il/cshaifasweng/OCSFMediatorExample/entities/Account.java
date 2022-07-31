@@ -183,6 +183,13 @@ public class Account implements Serializable {
         return belongShop;
     }
 
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
     /* public void setWallet(int wallet) {
         this.wallet = wallet;
     }

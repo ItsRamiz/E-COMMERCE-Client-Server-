@@ -386,6 +386,17 @@ public class PrimaryController {
 	@FXML
 	void openDelivery(ActionEvent event) throws IOException
 	{
+		PassAccountEventDelivery recievedAcc = new PassAccountEventDelivery(currentLoggedAccount);
+		new java.util.Timer().schedule(
+				new java.util.TimerTask() {
+					@Override
+					public void run() {
+						EventBus.getDefault().post(recievedAcc);
+						System.out.println("the server sent me the account , NICE 4 !!");
+					}
+				},4000
+		);
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("delivery.fxml"));
 		Parent roott = loader.load();
 		DeliveryController cc = loader.getController();
@@ -439,6 +450,33 @@ public class PrimaryController {
 	}
 	@FXML
 	void openComplaintManager(ActionEvent event) throws IOException {
+
+		GetAllComplaints allComplaints = new GetAllComplaints();
+		System.out.println("send request for complaints !!");
+		try {
+			System.out.println("before sending the getAllComplaints " );
+			SimpleClient.getClient().sendToServer(allComplaints);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		// added 30/7
+		PassAccountEventLogManager recievedAcc = new PassAccountEventLogManager(currentLoggedAccount);
+
+		new java.util.Timer().schedule(
+				new java.util.TimerTask() {
+					@Override
+					public void run() {
+						EventBus.getDefault().post(recievedAcc);
+						System.out.println("the server sent me the account , NICE 4 !!");
+					}
+				},4000
+		);
+
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("log_manager.fxml"));
 		Parent roott = loader.load();
 		LogManagerController cc = loader.getController();
@@ -528,6 +566,17 @@ public class PrimaryController {
 				},4000
 		);
 
+		// added new 30/7
+		GetAllComplaints allComplaints = new GetAllComplaints();
+		System.out.println("send request for complaints !!");
+		try {
+			System.out.println("before sending the getAllComplaints " );
+			SimpleClient.getClient().sendToServer(allComplaints);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
