@@ -163,6 +163,19 @@ public class ReplyComplaintController {
     }
     @FXML
     void BackToCatalog(ActionEvent event) throws IOException {
+
+        PassAccountEvent recievedAcc = new PassAccountEvent(currentUser);
+
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        EventBus.getDefault().post(recievedAcc);
+                        System.out.println("the server sent me the account , NICE 4 !!");
+                    }
+                },4000
+        );
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
         Parent roott = loader.load();
         PrimaryController cc = loader.getController();

@@ -1,10 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import com.sun.javafx.image.IntPixelGetter;
-import il.cshaifasweng.OCSFMediatorExample.entities.Account;
-import il.cshaifasweng.OCSFMediatorExample.entities.Order;
-import il.cshaifasweng.OCSFMediatorExample.entities.Product;
-import il.cshaifasweng.OCSFMediatorExample.entities.UpdateMessage;
+import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -269,6 +266,12 @@ public class CheckoutController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+
+        Message confirm = new Message();
+
+
+        // Add the message to database -- KHALID
     }
 
     @FXML
