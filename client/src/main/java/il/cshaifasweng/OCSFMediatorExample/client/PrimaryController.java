@@ -280,6 +280,18 @@ public class PrimaryController {
 		stage.show();
 		Stage stagee = (Stage)openComplaints.getScene().getWindow();
 		stagee.close();
+
+		PassAccountEventReplyComplaint recievedAcc = new PassAccountEventReplyComplaint(currentLoggedAccount);
+
+		new java.util.Timer().schedule(
+				new java.util.TimerTask() {
+					@Override
+					public void run() {
+						EventBus.getDefault().post(recievedAcc);
+						System.out.println("the server sent me the account , NICE 4 !!");
+					}
+				},4000
+		);
 	}
 
 

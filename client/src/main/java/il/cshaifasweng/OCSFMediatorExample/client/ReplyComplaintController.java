@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;
+import il.cshaifasweng.OCSFMediatorExample.entities.UpdateMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 public class ReplyComplaintController {
+
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -89,7 +91,17 @@ public class ReplyComplaintController {
         selectedComplaint.setReturnedMoney(willReturnMoney);
         selectedComplaint.setReturnedmoneyvalue(PercentInt);
 
-        //TO:DO Update
+        System.out.println("ReplyComplaintController before updating complaint");
+        UpdateMessage update_complaint = new UpdateMessage("complaint","edit");
+        update_complaint.setComplaint(selectedComplaint);
+
+        try {
+            SimpleClient.getClient().sendToServer(update_complaint);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("ReplyComplaintController after updating complaint");
 
     }
 

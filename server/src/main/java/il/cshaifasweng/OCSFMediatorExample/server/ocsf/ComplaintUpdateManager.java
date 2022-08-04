@@ -59,5 +59,39 @@ public class ComplaintUpdateManager {
 
         System.out.println("inside additemTocatalog12");
     }
+    public static void editComplaint(Complaint recievedComplaint){
+        System.out.println("Arrived to edit Complaint");
+        SessionFactory sessionFactory = SimpleServer.getSessionFactory();
+        SimpleServer.session = sessionFactory.openSession();
+        Transaction tx = SimpleServer.session.beginTransaction();
+
+        int receivedComplaintID = recievedComplaint.getComplaintID();
+
+        int recievedComplaintID = recievedComplaint.getComplaintID();
+        int recievedCustomerID = recievedComplaint.getCustomerID();
+        int recievedAnswerWorkerID = recievedComplaint.getAnswerworkerID();
+        String recievedReplyText = recievedComplaint.getReplyText();
+        int recievedMoneyValue = recievedComplaint.getReturnedmoneyvalue();
+        boolean recievedIsReturnMoney = recievedComplaint.isReturnedMoney();
+        boolean recievedIsAccpeted = recievedComplaint.isAccepted();
+
+
+        System.out.println("Arrived to edit Complaint 2");
+        Complaint updateComplaint  = SimpleServer.session.load(Complaint.class, recievedComplaintID);
+
+        updateComplaint.setComplaintID(recievedComplaintID);
+        updateComplaint.setCustomerID(recievedCustomerID);
+        updateComplaint.setAnswerworkerID(recievedAnswerWorkerID);
+        updateComplaint.setReplyText(recievedReplyText);
+        updateComplaint.setReturnedmoneyvalue(recievedMoneyValue);
+        updateComplaint.setReturnedMoney(recievedIsReturnMoney);
+        updateComplaint.setAccepted(recievedIsAccpeted);
+
+
+        System.out.println("Arrived to edit Complaint 3");
+        SimpleServer.session.update(updateComplaint);
+        System.out.println("Arrived to edit Complaint 4");
+        tx.commit();
+    }
 
 }

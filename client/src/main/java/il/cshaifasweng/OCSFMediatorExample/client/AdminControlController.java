@@ -1,7 +1,3 @@
-/**
- * Sample Skeleton for 'admincontrol.fxml' Controller Class
- */
-
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import java.io.IOException;
@@ -10,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.sun.javafx.image.IntPixelGetter;
 import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -144,18 +139,36 @@ public class AdminControlController {
         if(profileType.getSelectionModel().getSelectedItem() == "Customers")
         {
             Account acc = new Account(Integer.parseInt(accID.getText()),name.getText(),Integer.parseInt(customerID.getText()),address.getText(),email.getText(),password.getText(),Long.parseLong(phone.getText()),Long.parseLong(creditnum.getText()),Integer.parseInt(creditexpmonth.getText()),Integer.parseInt(creditexpyear.getText()),Integer.parseInt(cvv.getText()),false,thisShop,thisSub);
-            // Send this to the database
+            UpdateMessage update_acc = new UpdateMessage("account","edit");
+            update_acc.setAccount(acc);
+            try {
+                SimpleClient.getClient().sendToServer(update_acc);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         else if(profileType.getSelectionModel().getSelectedItem() == "Workers")
         {
             Worker work = new Worker(name.getText(),email.getText(),password.getText(),Integer.parseInt(customerID.getText()));
-            // Send this to the database
+            UpdateMessage update_worker = new UpdateMessage("worker","edit");
+            update_worker.setWorker(work);
+            try {
+                SimpleClient.getClient().sendToServer(update_worker);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         else if(profileType.getSelectionModel().getSelectedItem() == "Managers")
         {
             Manager manager = new Manager(name.getText(),email.getText(),password.getText(),Integer.parseInt(customerID.getText()));
-            // Send this to the database
+            UpdateMessage update_manager = new UpdateMessage("manager","edit");
+            update_manager.setManager(manager);
+            try {
+                SimpleClient.getClient().sendToServer(update_manager);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -165,117 +178,134 @@ public class AdminControlController {
     void loadSelectProfile(ActionEvent event)
     {
         int selectType = 0;
-        if(profileType.getSelectionModel().getSelectedItem() == "Customers")
-            selectType = 1;
-        else if(profileType.getSelectionModel().getSelectedItem() == "Workers")
-            selectType = 2;
-        else if(profileType.getSelectionModel().getSelectedItem() == "Managers")
-            selectType = 3;
-        String SelectedIDString = "";
-        int SelectedID;
-        String SelectedComplaint = accountsList.getSelectionModel().getSelectedItem();
-        Account selectedAcc = new Account();
-        Worker selectedWork = new Worker();
-        Manager selectedMan = new Manager();
-        for (int i = 1; SelectedComplaint.charAt(i) != ' '; i++) {
-            SelectedIDString = SelectedIDString + Character.toString(SelectedComplaint.charAt(i));
+        if(loadProfile.getText().equals("Load Selected Profile")){
+            if(profileType.getSelectionModel().getSelectedItem().equals("Customers")){
+                selectType = 1;
+                for(int i=0;i<all_accounts.size();i++){
+                    accountsList.getItems().add(all_accounts.get(i).getFullName());
+                }
+            }
+            else if(profileType.getSelectionModel().getSelectedItem().equals("Workers")) {
+                selectType = 2;
+                for (int i = 0; i < all_workers.size(); i++) {
+                    accountsList.getItems().add(all_workers.get(i).getFullName());
+                }
+            }
+            else if(profileType.getSelectionModel().getSelectedItem().equals("Managers")){
+                selectType = 3;
+                for (int i = 0; i < all_managers.size(); i++) {
+                    accountsList.getItems().add(all_managers.get(i).getFullName());
+                    System.out.println("managet list is " + accountsList.getItems().get(0));
+                }
+            }
+            loadProfile.setText("Load Selected Account");
         }
-        SelectedID = Integer.parseInt(SelectedIDString);
-        if(selectType == 1)
-        {
-            for(int i = 0 ; i < all_accounts.size() ; i++) {
-                if (SelectedID == all_accounts.get(i).getAccountID())
-                    selectedAcc = all_accounts.get(i);
+        else{
+            String SelectedIDString = "";
+            int SelectedID;
+            String SelectedComplaint = accountsList.getSelectionModel().getSelectedItem();
+            Account selectedAcc = new Account();
+            Worker selectedWork = new Worker();
+            Manager selectedMan = new Manager();
+            for (int i = 1; SelectedComplaint.charAt(i) != ' '; i++) {
+                SelectedIDString = SelectedIDString + Character.toString(SelectedComplaint.charAt(i));
             }
-            accID.setText(Integer.toString(selectedAcc.getAccountID()));
-            customerID.setText(Integer.toString(selectedAcc.getID()));
-            name.setText(selectedAcc.getFullName());
-            address.setText(selectedAcc.getAddress());
-            email.setText(selectedAcc.getEmail());
-            password.setText(selectedAcc.getPassword());
-            phone.setText(Long.toString(selectedAcc.getPhoneNumber()));
-            creditnum.setText(Long.toString(selectedAcc.getCreditCardNumber()));
-            creditexpmonth.setText(Integer.toString(selectedAcc.getCreditMonthExpire()));
-            creditexpyear.setText(Integer.toString(selectedAcc.getCreditYearExpire()));
-            cvv.setText(Integer.toString(selectedAcc.getCcv()));
-            switch (selectedAcc.getBelongShop()) {
-                case 0:
-                    shop.setText("ID 0: - Chain");
-                    thisShop = 0;
-                    break;
-                case 1:
-                    shop.setText("Tiberias, Big Danilof");
-                    thisShop = 1;
-                    break;
-                case 2:
-                    shop.setText("Haifa, Merkaz Zeiv");
-                    thisShop = 2;
-                    break;
-                case 3:
-                    shop.setText("Tel Aviv, Ramat Aviv");
-                    thisShop = 3;
-                    break;
-                case 4:
-                    shop.setText("Eilat, Ice mall");
-                    thisShop = 4;
-                    break;
-                case 5:
-                    shop.setText("Be'er Sheva, Big Beer Sheva");
-                    thisShop = 5;
-                    break;
+            SelectedID = Integer.parseInt(SelectedIDString);
+            if(selectType == 1)
+            {
+                for(int i = 0 ; i < all_accounts.size() ; i++) {
+                    if (SelectedID == all_accounts.get(i).getAccountID())
+                        selectedAcc = all_accounts.get(i);
+                }
+                accID.setText(Integer.toString(selectedAcc.getAccountID()));
+                customerID.setText(Integer.toString(selectedAcc.getID()));
+                name.setText(selectedAcc.getFullName());
+                address.setText(selectedAcc.getAddress());
+                email.setText(selectedAcc.getEmail());
+                password.setText(selectedAcc.getPassword());
+                phone.setText(Long.toString(selectedAcc.getPhoneNumber()));
+                creditnum.setText(Long.toString(selectedAcc.getCreditCardNumber()));
+                creditexpmonth.setText(Integer.toString(selectedAcc.getCreditMonthExpire()));
+                creditexpyear.setText(Integer.toString(selectedAcc.getCreditYearExpire()));
+                cvv.setText(Integer.toString(selectedAcc.getCcv()));
+                switch (selectedAcc.getBelongShop()) {
+                    case 0:
+                        shop.setText("ID 0: - Chain");
+                        thisShop = 0;
+                        break;
+                    case 1:
+                        shop.setText("Tiberias, Big Danilof");
+                        thisShop = 1;
+                        break;
+                    case 2:
+                        shop.setText("Haifa, Merkaz Zeiv");
+                        thisShop = 2;
+                        break;
+                    case 3:
+                        shop.setText("Tel Aviv, Ramat Aviv");
+                        thisShop = 3;
+                        break;
+                    case 4:
+                        shop.setText("Eilat, Ice mall");
+                        thisShop = 4;
+                        break;
+                    case 5:
+                        shop.setText("Be'er Sheva, Big Beer Sheva");
+                        thisShop = 5;
+                        break;
+                }
+                if(selectedAcc.isSubscription() == true) {
+                    thisSub = true;
+                    sub.setText("Yes");
+                }
+                else {
+                    thisSub = false;
+                    sub.setText("No");
+                }
             }
-            if(selectedAcc.isSubscription() == true) {
-                thisSub = true;
-                sub.setText("Yes");
+            if(selectType == 2)
+            {
+                for(int i = 0 ; i < all_workers.size() ; i++) {
+                    if (SelectedID == all_workers.get(i).getPersonID())
+                        selectedWork = all_workers.get(i);
+                }
+                accID.setText(Integer.toString(selectedWork.getPersonID()));
+                email.setText(selectedWork.getEmail());
+                name.setText(selectedWork.getFullName());
+                password.setText(selectedWork.getPassword());
             }
-            else {
-                thisSub = false;
-                sub.setText("No");
+            if(selectType == 3) {
+                for (int i = 0; i < all_managers.size(); i++) {
+                    if (SelectedID == all_managers.get(i).getPersonID())
+                        selectedMan = all_managers.get(i);
+                }
+                accID.setText(Integer.toString(selectedMan.getPersonID()));
+                email.setText(selectedMan.getEmail());
+                name.setText(selectedMan.getFullName());
+                password.setText(selectedMan.getPassword());
+                switch (selectedMan.getShopID()) {
+                    case 0:
+                        shop.setText("ID 0: - Chain");
+                        break;
+                    case 1:
+                        shop.setText("Tiberias, Big Danilof");
+                        break;
+                    case 2:
+                        shop.setText("Haifa, Merkaz Zeiv");
+                        break;
+                    case 3:
+                        shop.setText("Tel Aviv, Ramat Aviv");
+                        break;
+                    case 4:
+                        shop.setText("Eilat, Ice mall");
+                        break;
+                    case 5:
+                        shop.setText("Be'er Sheva, Big Beer Sheva");
+                        break;
+                }
             }
         }
-        if(selectType == 2)
-        {
-            for(int i = 0 ; i < all_workers.size() ; i++) {
-                if (SelectedID == all_workers.get(i).getPersonID())
-                    selectedWork = all_workers.get(i);
-            }
-            accID.setText(Integer.toString(selectedWork.getPersonID()));
-            email.setText(selectedWork.getEmail());
-            name.setText(selectedWork.getFullName());
-            password.setText(selectedWork.getPassword());
-        }
-        if(selectType == 3)
-        {
-            for(int i = 0 ; i < all_managers.size() ; i++) {
-                if (SelectedID == all_managers.get(i).getPersonID())
-                    selectedMan = all_managers.get(i);
-            }
-            accID.setText(Integer.toString(selectedMan.getPersonID()));
-            email.setText(selectedMan.getEmail());
-            name.setText(selectedMan.getFullName());
-            password.setText(selectedMan.getPassword());
-            switch (selectedMan.getShopID()) {
-                case 0:
-                    shop.setText("ID 0: - Chain");
-                    break;
-                case 1:
-                    shop.setText("Tiberias, Big Danilof");
-                    break;
-                case 2:
-                    shop.setText("Haifa, Merkaz Zeiv");
-                    break;
-                case 3:
-                    shop.setText("Tel Aviv, Ramat Aviv");
-                    break;
-                case 4:
-                    shop.setText("Eilat, Ice mall");
-                    break;
-                case 5:
-                    shop.setText("Be'er Sheva, Big Beer Sheva");
-                    break;
-            }
-        }
-
+        loadProfile.setText("Load Selected Profile");
     }
 
     @FXML
@@ -392,10 +422,18 @@ public class AdminControlController {
     public void getManagersOrWorkersFromDB(FoundTable foundTable){
         if(foundTable.getMessage().equals("managers table found")){
             all_managers = foundTable.getRecievedManagers();
+            System.out.println("all managers size is " + all_managers.size());
         }
         else{
             all_workers = foundTable.getRecievedWokers();
+            System.out.println("all workers size is " + all_workers.size());
         }
+    }
+    @Subscribe
+    public void getAllAccountFromDB(List<Account> receivedAccounts){
+        System.out.println("in getAllAccountFromDB");
+        all_accounts = receivedAccounts;
+        System.out.println("all accounts size is " + all_accounts.size());
     }
 
 }

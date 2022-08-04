@@ -156,6 +156,11 @@ public class SimpleClient extends AbstractClient {
 			EventBus.getDefault().post(complaintsEvent);
 			System.out.println("Get Complaints Test 5");
 		}
+		else if(msg instanceof GetAllAccounts){
+			System.out.println("Get Accounts Test 1");
+			GetAllAccounts recievedAccounts = (GetAllAccounts) msg;
+			EventBus.getDefault().post(recievedAccounts.getAll_accounts());
+		}
 	}
 
 

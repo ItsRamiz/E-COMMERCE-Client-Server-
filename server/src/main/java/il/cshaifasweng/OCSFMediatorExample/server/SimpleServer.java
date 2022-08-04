@@ -146,7 +146,7 @@ public class SimpleServer extends AbstractServer {
 				foundTbl.setRecievedWorkers(obj.workerGeneralList);
 				client.sendToClient(foundTbl);
 			}
-			if(recievedStr.equals("get complaints")){
+				if(recievedStr.equals("get complaints")){
 				//System.out.println("Get Complaints Test 1");
 				GetAllComplaints obj = new GetAllComplaints();
 				//System.out.println("Get Complaints Test 2");
@@ -155,6 +155,15 @@ public class SimpleServer extends AbstractServer {
 				//System.out.println("Get Complaints Test 3");
 				client.sendToClient(obj);
 				//System.out.println("Get Complaints Test 4");
+			}
+			if(recievedStr.equals("get Accounts")){
+				System.out.println("get accounts test 1");
+				GetAllAccounts obj = new GetAllAccounts();
+				System.out.println("get accounts test 2");
+				obj.setAll_accounts(getAllAccounts());
+				System.out.println("get accounts test 3");
+				client.sendToClient(obj);
+				System.out.println("get accounts test 4");
 			}
 		}
 
@@ -280,7 +289,6 @@ public class SimpleServer extends AbstractServer {
 					break;
 
 				case "complaint":
-					System.out.println("Tried Adding Complaint");
 					if (updateClassFunction.equals("add")) {
 						System.out.println("arrived to here inside complaint add");
 
@@ -288,14 +296,13 @@ public class SimpleServer extends AbstractServer {
 
 						ComplaintUpdateManager.addComplaint(recievedComp);
 
-						session.close();
-
-						break;
 					}
-
-				case "cart":
-
-
+					else if(updateClassFunction.equals("edit")){
+						System.out.println("arrived to here inside complaint edit");
+						Complaint recievedComp = recievedMessage.getComplaint();
+						ComplaintUpdateManager.editComplaint(recievedComp);
+					}
+					session.close();
 					break;
 
 			}
