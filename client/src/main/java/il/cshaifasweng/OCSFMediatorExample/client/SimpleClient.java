@@ -59,10 +59,13 @@ public class SimpleClient extends AbstractClient {
 					mailCheckEvent.setPasswordExists(true);
 					EventBus.getDefault().post(mailCheckEvent);
 				}
-
-
-
-
+				if(recievedStr.equals("already logged"))
+				{
+					MailChecker mailCheckEvent = new MailChecker(true);
+					mailCheckEvent.setPasswordExists(true);
+					mailCheckEvent.setLoggedIn(true);
+					EventBus.getDefault().post(mailCheckEvent);
+				}
 		}
 		else if(msg instanceof FoundTable){
 			FoundTable ft = (FoundTable) msg ;

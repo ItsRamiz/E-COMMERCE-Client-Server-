@@ -37,6 +37,8 @@ public class Account implements Serializable {
     private int belongShop;
     @Column(name = "Subscription")
     private boolean Subscription;
+    @Column(name = "Privilage")
+    private int privialge;
 
     /*
     public Account(String fullName, String address,String email, String password,long phoneNumber, long creditCardNumber,int creditYearExpire,int creditMonthExpire,int ccv,int belongShop)
@@ -71,6 +73,14 @@ public class Account implements Serializable {
         this.loggedIn = loggedIn;
         this.belongShop = belongShop;
         this.Subscription = subscription;
+    }
+
+    public void setPrivialge(int privialge) {
+        this.privialge = privialge;
+    }
+
+    public int getPrivialge() {
+        return privialge;
     }
 
     public Account()

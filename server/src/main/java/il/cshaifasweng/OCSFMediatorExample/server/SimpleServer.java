@@ -341,11 +341,18 @@ public class SimpleServer extends AbstractServer {
 					System.out.println(accountsList.get(i).getPassword());
 					if(accountsList.get(i).getPassword().equals(recievedPasswordStr))
 					{
-						foundThePassword = true;
-						System.out.println("found the password ! the iteration is: " + i);
-						client.sendToClient("found mail and password");
+						if(accountsList.get(i).getLoggedIn() == false) {
+							foundThePassword = true;
+							System.out.println("found the password ! the iteration is: " + i);
+							client.sendToClient("found mail and password");
 
+						}
+						else
+						{
+							client.sendToClient("already logged");
+						}
 					}
+
 
 				}
 			}

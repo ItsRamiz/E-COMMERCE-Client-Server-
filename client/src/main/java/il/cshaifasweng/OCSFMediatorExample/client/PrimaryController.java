@@ -1214,6 +1214,7 @@ public class PrimaryController {
 	Account currentLoggedAccount;
 	boolean availableProducts = false;
 	List<Product> userCart = new ArrayList<>();
+
 	@FXML
 	void initialize() throws MalformedURLException {
 		catalog_flag.setFlagg(3);
@@ -1405,12 +1406,16 @@ public class PrimaryController {
 		System.out.println("arrived to passAccountToPrimary sucessfuly");
 		Account recvAccount = passAcc.getRecievedAccount();
 		System.out.println(recvAccount.getPassword());
+		if(recvAccount.getPrivialge() == 1)
+		{
+			//TO:DO Adjust the buttons
+		}
 		System.out.println(recvAccount.getAccountID());
 		System.out.println(recvAccount.getEmail());
 		System.out.println(recvAccount.getFullName());
-		System.out.println(recvAccount.getAddress());
-		System.out.println(recvAccount.getCreditCardNumber());
-		System.out.println(recvAccount.getCreditMonthExpire());
+		//System.out.println(recvAccount.getAddress());
+		//System.out.println(recvAccount.getCreditCardNumber());
+		//System.out.println(recvAccount.getCreditMonthExpire());
 		currentLoggedAccount = recvAccount;
 	}
 	@Subscribe

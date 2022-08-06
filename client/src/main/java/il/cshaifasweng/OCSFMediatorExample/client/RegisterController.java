@@ -160,6 +160,7 @@ public class RegisterController {
             System.out.println("ID = " + id);
             //Account new_acc = new Account(Name.getText(),Address,Email.getText(),Password.getText(),Long.parseLong(PhoneNumber.getText()),Long.parseLong(CardNumber.getText()),Integer.parseInt(chooseYear.getSelectionModel().getSelectedItem()),Integer.parseInt(chooseMonth.getSelectionModel().getSelectedItem()) ,Integer.parseInt(CVV.getText()), shopID);
             Account new_acc = new Account(0,Name.getText(),id,Address,Email.getText(),Password.getText(),Long.parseLong(PhoneNumber.getText()),Long.parseLong(CardNumber.getText()),Integer.parseInt(chooseMonth.getSelectionModel().getSelectedItem()),Integer.parseInt(chooseYear.getSelectionModel().getSelectedItem()),Integer.parseInt(CVV.getText()),false,shopID,subscription.isSelected());
+            new_acc.setPrivialge(1);
             RegisteredAccounts.add(Email.getText());
 
 
