@@ -346,10 +346,13 @@ public class SimpleServer extends AbstractServer {
 							System.out.println("found the password ! the iteration is: " + i);
 							client.sendToClient("found mail and password");
 
+							// Set Account LoggedIn To 1
+
 						}
 						else
 						{
 							client.sendToClient("already logged");
+
 						}
 					}
 

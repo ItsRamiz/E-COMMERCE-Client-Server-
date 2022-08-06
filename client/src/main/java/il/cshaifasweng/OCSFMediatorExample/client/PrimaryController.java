@@ -59,6 +59,9 @@ public class PrimaryController {
 	@FXML // fx:id="adminEditCatalog"
 	private ComboBox<String> worker_edit; // Value injected by FXMLLoader
 
+	@FXML // fx:id="logout"
+	private Button logout; // Value injected by FXMLLoader
+
 
 	@FXML
 	private Button checkout;
@@ -268,6 +271,21 @@ public class PrimaryController {
 	@FXML // fx:id="openComplaints"
 	private Button openComplaints; // Value injected by FXMLLoader
 
+
+	@FXML
+	void goLogOut(ActionEvent event) throws IOException {
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInSecond.fxml"));
+		Parent roott = loader.load();
+		LogInSecondary cc = loader.getController();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(roott));
+		stage.setTitle("Test");
+		stage.show();
+		Stage stagee = (Stage)logout.getScene().getWindow();
+		stagee.close();
+
+	}
 
 	@FXML
 	void ReplyToComplaints(ActionEvent event) throws IOException {

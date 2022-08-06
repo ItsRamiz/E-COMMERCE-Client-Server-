@@ -137,6 +137,7 @@
               <Button fx:id="printProd" layoutX="1077.0" layoutY="10.0" mnemonicParsing="false" onAction="#printProducts" text="Print Products" />
             <Button fx:id="adminControlButtton" layoutX="1183.0" layoutY="13.0" mnemonicParsing="false" onAction="#openControlPanel" prefHeight="26.0" prefWidth="150.0" text="Admin Control Panel" />
             <Button fx:id="openComplaints" layoutX="798.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReplyToComplaints" prefHeight="26.0" prefWidth="125.0" text="Reply To Complaints" />
+            <Button fx:id="logout" layoutX="342.0" layoutY="13.0" mnemonicParsing="false" onAction="#goLogOut" prefHeight="26.0" prefWidth="115.0" text="Log Out" />
             </children>
         </AnchorPane>
         <Button fx:id="viewCart" layoutX="-57.0" layoutY="757.0" mnemonicParsing="false" onAction="#viewUserCart" text="View Cart" />
@@ -170,14 +171,14 @@
             </children>
         </AnchorPane>
           <Button id="btttn" fx:id="cartt" layoutX="-91.0" layoutY="754.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="cart" AnchorPane.rightAnchor="1511.0" AnchorPane.topAnchor="754.0" />
-          <Button id="btttn" fx:id="compln" layoutX="-86.0" layoutY="755.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#complinstart" prefHeight="30.0" prefWidth="100.0" text="complaint" AnchorPane.rightAnchor="1506.0" AnchorPane.topAnchor="755.0" />
+          <Button id="btttn" fx:id="compln" layoutX="-86.0" layoutY="754.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#complinstart" prefHeight="30.0" prefWidth="100.0" text="complaint" AnchorPane.rightAnchor="1506.0" AnchorPane.topAnchor="754.0" />
           <Button id="btttn" fx:id="CreateCustomItem" layoutX="351.0" layoutY="148.0" mnemonicParsing="false" onAction="#createCustomitem" prefHeight="40.0" prefWidth="150.0" text="Create Custom Item" />
           <ComboBox fx:id="chooseCustomType" layoutX="350.0" layoutY="204.0" prefWidth="150.0" promptText="Choose Type" />
           <ComboBox fx:id="chooseCustomColor" layoutX="340.0" layoutY="247.0" prefHeight="26.0" prefWidth="171.0" promptText="Choose Dominant Color" />
           <TextField fx:id="customPrice" layoutX="351.0" layoutY="288.0" text="Enter Price Range" />
           <Button id="btttn" fx:id="FinishCustomItem" layoutX="368.0" layoutY="326.0" mnemonicParsing="false" onAction="#cancelCustomitem" prefHeight="34.0" prefWidth="115.0" text="Add To Cart" />
           <Button id="btttn" fx:id="CancelCustomItem" layoutX="395.0" layoutY="373.0" mnemonicParsing="false" onAction="#cancelCustomitem" prefHeight="30.0" prefWidth="62.0" text="Cancel" />
-          <TextField fx:id="customid" layoutX="-22.0" layoutY="757.0" prefHeight="26.0" prefWidth="42.0" text="Item ID" />
+          <TextField fx:id="customid" layoutX="-36.0" layoutY="756.0" prefHeight="26.0" prefWidth="42.0" text="Item ID" />
 
     </children>
 </AnchorPane>
