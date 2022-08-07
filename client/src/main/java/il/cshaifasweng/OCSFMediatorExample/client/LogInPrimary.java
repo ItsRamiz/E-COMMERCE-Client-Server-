@@ -281,11 +281,17 @@ public class LogInPrimary {
             System.out.println("arrived to case incorrect password  succesfully");
             ErrorMsgPass.setVisible(true);
         }
-        else
+        else if(checkML.isLoggedIn() == false)
         {
             System.out.println("WE GOT HERE, GOOD EMAIL");
             itWorked = true;
         }
+        else
+        {
+            System.out.println("Already Logged In");
+            //TO:DO ...
+        }
+
     }
     boolean itWorked = false;
 

@@ -275,6 +275,18 @@ public class PrimaryController {
 	@FXML
 	void goLogOut(ActionEvent event) throws IOException {
 
+		LogOut logOutObject = new LogOut();
+		logOutObject.setMail(currentLoggedAccount.getEmail());
+
+		try {
+			System.out.println("before sending the logout object" );
+			SimpleClient.getClient().sendToServer(logOutObject);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInSecond.fxml"));
 		Parent roott = loader.load();
 		LogInSecondary cc = loader.getController();

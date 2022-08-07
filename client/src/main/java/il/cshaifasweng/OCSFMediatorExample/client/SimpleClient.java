@@ -57,6 +57,7 @@ public class SimpleClient extends AbstractClient {
 				{
 					MailChecker mailCheckEvent = new MailChecker(true);
 					mailCheckEvent.setPasswordExists(true);
+					mailCheckEvent.setLoggedIn(false);
 					EventBus.getDefault().post(mailCheckEvent);
 				}
 				if(recievedStr.equals("already logged"))

@@ -342,16 +342,37 @@ public class SimpleServer extends AbstractServer {
 					if(accountsList.get(i).getPassword().equals(recievedPasswordStr))
 					{
 						if(accountsList.get(i).getLoggedIn() == false) {
+
+
+							System.out.println("arrived to the new code 8/6");
 							foundThePassword = true;
+							Account updateAcc  = SimpleServer.session.load(Account.class, accountsList.get(i).getAccountID());
+							System.out.println(updateAcc.getID());
+							//System.out.println("the found mailid is :" + foundMailId);
+							updateAcc.setLoggedIn(true);
+
+
 							System.out.println("found the password ! the iteration is: " + i);
 							client.sendToClient("found mail and password");
+							new java.util.Timer().schedule(
+									new java.util.TimerTask() {
+										@Override
+										public void run() {
 
-							// Set Account LoggedIn To 1
+											SimpleServer.session.update(updateAcc);
+										}
+									},1000
+							);
+
+							tx1.commit();
+							SimpleServer.session.close();
 
 						}
 						else
 						{
+							System.out.println("arrived to already logged in");
 							client.sendToClient("already logged");
+							foundThePassword = true ;
 
 						}
 					}
@@ -462,6 +483,48 @@ public class SimpleServer extends AbstractServer {
 
 			 */
 		}
+
+		if(msg instanceof LogOut){
+			System.out.println("arrived to Logout in server 1");
+			SessionFactory sessionFactory = getSessionFactory();
+			session = sessionFactory.openSession();
+			Transaction tx1 = session.beginTransaction();
+			List<Account> accountsList = getAllAccounts();
+
+			System.out.println("arrived to Logout in server 2");
+			LogOut recievedMessage = (LogOut) msg;
+			String recievedMailStr = recievedMessage.getMail();
+			System.out.println("the mail is: " + recievedMailStr);
+			System.out.println("arrived to Logout in server 3");
+
+			for (int i=0;i<accountsList.size();i++) // search the email in all customer accounts and save the result object in the tempAccount object
+			{
+				System.out.println("arrived to Logout in server 4");
+				System.out.println(accountsList.get(i).getEmail());
+				if(accountsList.get(i).getEmail().equals(recievedMailStr))
+				{
+					System.out.println("foudn the email in interation " + i);
+					System.out.println("arrived to Logout in server 5");
+					Account updateAcc  = SimpleServer.session.load(Account.class, accountsList.get(i).getAccountID());
+
+					updateAcc.setLoggedIn(false);
+
+					System.out.println("arrived to Logout in server 6");
+					SimpleServer.session.update(updateAcc);
+					tx1.commit();
+					SimpleServer.session.close();
+					System.out.println("arrived to Logout in server 7");
+				}
+
+
+
+
+				}
+
+
+
+			}
+
 		if(msg instanceof getAllOrdersMessage ){ // added 18/7
 
 			SessionFactory sessionFactory = getSessionFactory();
