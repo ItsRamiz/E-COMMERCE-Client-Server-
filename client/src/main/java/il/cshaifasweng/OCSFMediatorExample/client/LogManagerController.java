@@ -450,43 +450,12 @@ public class LogManagerController {
             FromYear.getItems().add(i);
             UntilYear.getItems().add(i);
         }
-        /*
-        switch (currentUser.getBelongShop()) {
-            case 0:
-                chooseShop.getItems().add("ID 0: - Chain");
-                chooseShop.getItems().add("ID 1: Tiberias, Big Danilof");
-                chooseShop.getItems().add("ID 2: Haifa, Merkaz Zeiv");
-                chooseShop.getItems().add("ID 3: Tel Aviv, Ramat Aviv");
-                chooseShop.getItems().add("ID 4: Eilat, Ice mall");
-                chooseShop.getItems().add("ID 5: Be'er Sheva, Big Beer Sheva");
-                break;
-            case 1:
-                chooseShop.getItems().add("ID 1: Tiberias, Big Danilof");
-                break;
-            case 2:
-                chooseShop.getItems().add("ID 2: Haifa, Merkaz Zeiv");
-                break;
-            case 3:
-                chooseShop.getItems().add("ID 3: Tel Aviv, Ramat Aviv");
-                break;
-            case 4:
-                chooseShop.getItems().add("ID 4: Eilat, Ice mall");
-                break;
-            case 5:
-                chooseShop.getItems().add("ID 5: Be'er Sheva, Big Beer Sheva");
-                break;
-        }
-
-         */
-        /*
             chooseShop.getItems().add("ID 0: - Chain");
             chooseShop.getItems().add("ID 1: Tiberias, Big Danilof");
             chooseShop.getItems().add("ID 2: Haifa, Merkaz Zeiv");
             chooseShop.getItems().add("ID 3: Tel Aviv, Ramat Aviv");
             chooseShop.getItems().add("ID 4: Eilat, Ice mall");
             chooseShop.getItems().add("ID 5: Be'er Sheva, Big Beer Sheva");
-
-         */
 
         LogType.getItems().add("Income Log");
         LogType.getItems().add("Orders Log");

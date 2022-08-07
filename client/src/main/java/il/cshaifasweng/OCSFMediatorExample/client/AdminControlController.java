@@ -21,6 +21,8 @@ import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import javax.persistence.criteria.CriteriaBuilder;
+
 public class AdminControlController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -161,9 +163,14 @@ public class AdminControlController {
         }
         else if(profileType.getSelectionModel().getSelectedItem() == "Managers")
         {
+            System.out.println("Name : " + name.getText());
+            System.out.println("Mail: " + email.getText());
+            System.out.println("Pass : " + password.getText());
+            System.out.println("custemrID : " + customerID.getText());
             Manager manager = new Manager(name.getText(),email.getText(),password.getText(),Integer.parseInt(customerID.getText()));
             UpdateMessage update_manager = new UpdateMessage("manager","edit");
             update_manager.setManager(manager);
+            System.out.println(update_manager.getManager().getEmail());
             try {
                 SimpleClient.getClient().sendToServer(update_manager);
             } catch (IOException e) {
@@ -174,33 +181,10 @@ public class AdminControlController {
 
     boolean thisSub = false;
     int thisShop = 0;
+    int selectType = 0;
     @FXML
     void loadSelectProfile(ActionEvent event)
     {
-        int selectType = 0;
-        if(loadProfile.getText().equals("Load Selected Profile")){
-            if(profileType.getSelectionModel().getSelectedItem().equals("Customers")){
-                selectType = 1;
-                for(int i=0;i<all_accounts.size();i++){
-                    accountsList.getItems().add(all_accounts.get(i).getFullName());
-                }
-            }
-            else if(profileType.getSelectionModel().getSelectedItem().equals("Workers")) {
-                selectType = 2;
-                for (int i = 0; i < all_workers.size(); i++) {
-                    accountsList.getItems().add(all_workers.get(i).getFullName());
-                }
-            }
-            else if(profileType.getSelectionModel().getSelectedItem().equals("Managers")){
-                selectType = 3;
-                for (int i = 0; i < all_managers.size(); i++) {
-                    accountsList.getItems().add(all_managers.get(i).getFullName());
-                    System.out.println("managet list is " + accountsList.getItems().get(0));
-                }
-            }
-            loadProfile.setText("Load Selected Account");
-        }
-        else{
             String SelectedIDString = "";
             int SelectedID;
             String SelectedComplaint = accountsList.getSelectionModel().getSelectedItem();
@@ -213,7 +197,8 @@ public class AdminControlController {
             SelectedID = Integer.parseInt(SelectedIDString);
             if(selectType == 1)
             {
-                for(int i = 0 ; i < all_accounts.size() ; i++) {
+                for(int i = 0 ; i < all_accounts.size() ; i++)
+                {
                     if (SelectedID == all_accounts.get(i).getAccountID())
                         selectedAcc = all_accounts.get(i);
                 }
@@ -273,13 +258,14 @@ public class AdminControlController {
                 email.setText(selectedWork.getEmail());
                 name.setText(selectedWork.getFullName());
                 password.setText(selectedWork.getPassword());
+                customerID.setText(Integer.toString(selectedWork.getPersonID()));
             }
             if(selectType == 3) {
                 for (int i = 0; i < all_managers.size(); i++) {
                     if (SelectedID == all_managers.get(i).getPersonID())
                         selectedMan = all_managers.get(i);
                 }
-                accID.setText(Integer.toString(selectedMan.getPersonID()));
+                customerID.setText(Integer.toString(selectedMan.getPersonID()));
                 email.setText(selectedMan.getEmail());
                 name.setText(selectedMan.getFullName());
                 password.setText(selectedMan.getPassword());
@@ -305,8 +291,6 @@ public class AdminControlController {
                 }
             }
         }
-        loadProfile.setText("Load Selected Profile");
-    }
 
     @FXML
     void openCatalog(ActionEvent event) throws IOException {
@@ -325,31 +309,40 @@ public class AdminControlController {
     @FXML
     void selectType(ActionEvent event) {
         String aString = "";
+        accountsList.getItems().clear();
         if(profileType.getSelectionModel().getSelectedItem() == "Customers")
         {
+            selectType = 1;
             for(int i = 0 ; i < all_accounts.size() ; i++)
             {
                 aString = "#" + all_accounts.get(i).getAccountID() + " - " + all_accounts.get(i).getFullName();
+                accountsList.getItems().add(aString);
                 aString = "";
             }
         }
         else if(profileType.getSelectionModel().getSelectedItem() == "Workers")
         {
+            selectType = 2;
             for(int i = 0 ; i < all_workers.size() ; i++)
             {
                 aString = "#" + all_workers.get(i).getPersonID() + " - " + all_workers.get(i).getFullName();
+                accountsList.getItems().add(aString);
                 aString = "";
             }
 
         }
         else if(profileType.getSelectionModel().getSelectedItem() == "Managers")
         {
+            selectType = 3;
             for(int i = 0 ; i < all_managers.size() ; i++)
             {
                 aString = "#" + all_managers.get(i).getPersonID() + " - " + all_managers.get(i).getFullName();
+                accountsList.getItems().add(aString);
                 aString = "";
             }
         }
+        loadProfile.setVisible(true);
+
     }
 
     public List<Account> all_accounts = new ArrayList<>();
@@ -413,9 +406,11 @@ public class AdminControlController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         profileType.getItems().add("Customers");
         profileType.getItems().add("Workers");
         profileType.getItems().add("Managers");
+        loadProfile.setVisible(false);
     }
 
     @Subscribe

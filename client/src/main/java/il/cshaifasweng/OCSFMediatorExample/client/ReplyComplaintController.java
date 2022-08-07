@@ -101,6 +101,16 @@ public class ReplyComplaintController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("ReplyComplaintController before updating complaint");
+        UpdateMessage update_complainte = new UpdateMessage("complaint","edit");
+        update_complainte.setComplaint(selectedComplaint);
+
+        try {
+            SimpleClient.getClient().sendToServer(update_complaint);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("ReplyComplaintController after updating complaint");
 
     }

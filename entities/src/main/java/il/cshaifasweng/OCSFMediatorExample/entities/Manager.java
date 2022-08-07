@@ -79,4 +79,16 @@ public class Manager implements Serializable{
     public boolean isLoggedIn() {
         return loggedIn;
     }
+
+    @Override
+    public String toString() {
+        return "Manager{" +
+                "personID=" + personID +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", ShopID=" + ShopID +
+                ", loggedIn=" + loggedIn +
+                '}';
+    }
 }

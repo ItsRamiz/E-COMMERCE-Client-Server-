@@ -163,7 +163,14 @@ public class SimpleClient extends AbstractClient {
 		else if(msg instanceof GetAllAccounts){
 			System.out.println("Get Accounts Test 1");
 			GetAllAccounts recievedAccounts = (GetAllAccounts) msg;
-			EventBus.getDefault().post(recievedAccounts.getAll_accounts());
+			new java.util.Timer().schedule(
+					new java.util.TimerTask() {
+						@Override
+						public void run() {
+							EventBus.getDefault().post(recievedAccounts.getAll_accounts());
+						}
+					},4000
+			);
 		}
 	}
 

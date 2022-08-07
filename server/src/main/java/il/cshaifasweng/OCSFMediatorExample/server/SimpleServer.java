@@ -289,17 +289,19 @@ public class SimpleServer extends AbstractServer {
 					break;
 
 				case "complaint":
+					System.out.println("Tried Adding Complaint");
 					if (updateClassFunction.equals("add")) {
 						System.out.println("arrived to here inside complaint add");
 
 						Complaint recievedComp = recievedMessage.getComplaint();
 
 						ComplaintUpdateManager.addComplaint(recievedComp);
-
 					}
 					else if(updateClassFunction.equals("edit")){
 						System.out.println("arrived to here inside complaint edit");
+
 						Complaint recievedComp = recievedMessage.getComplaint();
+
 						ComplaintUpdateManager.editComplaint(recievedComp);
 					}
 					session.close();

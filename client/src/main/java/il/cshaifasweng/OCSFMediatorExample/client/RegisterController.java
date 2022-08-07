@@ -101,7 +101,7 @@ public class RegisterController {
 
     private LinkedList<String> RegisteredAccounts = new LinkedList<>(); // list of all registered emails
 
-    String email_regex = "^(.+)@(.+)$";
+    String email_regex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$";
     String creditCard_regex = "^\\d{16}$";
     String CVV_regex = "^\\d{3}$";
     String phoneNum_regex = "^\\d{10}$";

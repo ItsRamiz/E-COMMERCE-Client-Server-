@@ -275,6 +275,8 @@ public class PrimaryController {
 	@FXML
 	void goLogOut(ActionEvent event) throws IOException {
 
+
+
 		LogOut logOutObject = new LogOut();
 		logOutObject.setMail(currentLoggedAccount.getEmail());
 
@@ -287,12 +289,12 @@ public class PrimaryController {
 			e.printStackTrace();
 		}
 
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInSecond.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInPrim.fxml"));
 		Parent roott = loader.load();
-		LogInSecondary cc = loader.getController();
+		LogInPrimary cc = loader.getController();
 		Stage stage = new Stage();
 		stage.setScene(new Scene(roott));
-		stage.setTitle("Test");
+		stage.setTitle("Welcome");
 		stage.show();
 		Stage stagee = (Stage)logout.getScene().getWindow();
 		stagee.close();
@@ -1273,7 +1275,7 @@ public class PrimaryController {
 		switch (catalog_flag.getFlagg()){
 			case 0:{
 				System.out.println("case 0");
-				accbtn.setText("Log In");
+				accbtn.setText("Useless");
 				infoo.setVisible(false);
 				cartt.setVisible(false);
 				compln.setVisible(false);
@@ -1284,7 +1286,7 @@ public class PrimaryController {
 			}
 			case 1:{
 				System.out.println("case 1");
-				accbtn.setText("Log Out");
+				accbtn.setText("Useless");
 				infoo.setVisible(true);
 				cartt.setVisible(true);
 				compln.setVisible(true);
@@ -1295,7 +1297,7 @@ public class PrimaryController {
 			}
 			case 2:{
 				System.out.println("case 2");
-				accbtn.setText("Log Out");
+				accbtn.setText("Useless");
 				infoo.setVisible(true);
 				cartt.setVisible(true);
 				compln.setVisible(true);
@@ -1306,7 +1308,7 @@ public class PrimaryController {
 			}
 			case 3:{
 				System.out.println("case 3");
-				accbtn.setText("Log Out");
+				accbtn.setText("Useless");
 				infoo.setVisible(true);
 				cartt.setVisible(true);
 				compln.setVisible(true);
@@ -1582,19 +1584,6 @@ public class PrimaryController {
 
 	@FXML
 	void accbtnlogin(ActionEvent event) throws IOException {
-		if(catalog_flag.getFlagg() !=0){
-			catalog_flag.setFlagg(0);
-		}
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("LogInPrim.fxml"));
-		Parent roott = loader.load();
-		LogInPrimary cc = loader.getController();
-		Stage stage = new Stage();
-		stage.setScene(new Scene(roott));
-		stage.setTitle("complaint application");
-		stage.show();
-
-		Stage stagee = (Stage) accbtn.getScene().getWindow();
-		// do what you have to do
-		stagee.close();
+		System.out.println(".");
 	}
 }
