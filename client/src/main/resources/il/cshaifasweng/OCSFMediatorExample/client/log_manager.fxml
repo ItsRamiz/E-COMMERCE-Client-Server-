@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
@@ -33,5 +34,9 @@
       <Button fx:id="goBack" layoutX="566.0" layoutY="36.0" mnemonicParsing="false" onAction="#backToCatalog" prefHeight="26.0" prefWidth="82.0" text="Back" />
       <CheckBox fx:id="compareButton" layoutX="700.0" layoutY="40.0" mnemonicParsing="false" onAction="#clickedCompareButton" prefHeight="17.0" prefWidth="233.0" text="Compare With Another Shop" />
       <ComboBox fx:id="CompareShops" layoutX="700.0" layoutY="74.0" prefHeight="25.0" prefWidth="179.0" promptText="Choose Compare Shop" />
+      <Label fx:id="shopError" layoutX="46.0" layoutY="14.0" prefHeight="18.0" prefWidth="118.0" text="Please choose a shop" textFill="WHITE" />
+      <Label fx:id="logError" layoutX="40.0" layoutY="65.0" prefHeight="18.0" prefWidth="129.0" text="Please choose a log" textFill="WHITE" />
+      <Label fx:id="fieldsError" layoutX="336.0" layoutY="65.0" prefHeight="18.0" prefWidth="130.0" text="Please fill all date fields" textFill="WHITE" />
+      <Label fx:id="shopError2" layoutX="706.0" layoutY="104.0" prefHeight="18.0" prefWidth="189.0" text="Please choose a shop to compare" textFill="WHITE" />
    </children>
 </AnchorPane>

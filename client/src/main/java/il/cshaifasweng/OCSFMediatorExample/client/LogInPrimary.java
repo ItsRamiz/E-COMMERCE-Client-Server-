@@ -77,6 +77,26 @@ public class LogInPrimary {
     @FXML // fx:id="logSucc"
     private Text logSucc; // Value injected by FXMLLoader
 
+    @FXML // fx:id="backLog"
+    private Button backLog; // Value injected by FXMLLoader
+
+    @FXML
+    void ReturnFromLogin(ActionEvent event) {
+        logSucc.setVisible(false);
+        OpenCatalogplz.setVisible(false);
+        Email.setVisible(false);
+        Password.setVisible(false);
+        LogIn.setVisible(false);
+        ErrorMsg.setVisible(false);
+        ErrorMsgPass.setVisible(false);
+        backLog.setVisible(false);
+        LogInTab.setVisible(true);
+        RegisterTab.setVisible(true);
+        Guest.setVisible(true);
+
+
+    }
+
     @FXML
     void gotoCatalog(ActionEvent event) throws IOException {
         catalog_flag.setFlagg(0);
@@ -101,6 +121,7 @@ public class LogInPrimary {
         LogIn.setVisible(true);
         Email.setVisible(true);
         Password.setVisible(true);
+        backLog.setVisible(true);
     }
 
     @FXML
@@ -129,6 +150,7 @@ public class LogInPrimary {
         LogIn.setVisible(false);
         ErrorMsg.setVisible(false);
         ErrorMsgPass.setVisible(false);
+        backLog.setVisible(false);
 
     }
     @FXML

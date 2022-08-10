@@ -14,6 +14,7 @@ public class UpdateMessage implements Serializable {
     private Manager manager = null;
     private Order order = null;
     private Complaint complaint = null;
+    private Message message;
 
 
     public UpdateMessage(String update_class, String update_function){
@@ -88,5 +89,10 @@ public class UpdateMessage implements Serializable {
     public void setOrder(Order order) {
         this.order = order;
     }
+    public Message getMessage()
+    {   return message; }
+
+    public void setMessage(Message message)
+    { this.message=message; }
 }
 

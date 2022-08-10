@@ -25,9 +25,9 @@
       </Text>
       <Text layoutX="276.0" layoutY="426.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Was Answered :" wrappingWidth="130.13671875" />
       <Text layoutX="276.0" layoutY="466.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Refunded Money : " wrappingWidth="130.13671875" />
-      <TextField fx:id="answerBool" layoutX="363.0" layoutY="408.0" prefHeight="26.0" prefWidth="100.0" text="nan" />
-      <TextField fx:id="refundMoney" layoutX="374.0" layoutY="448.0" prefHeight="26.0" prefWidth="81.0" text="nan" />
+      <TextField fx:id="answerBool" editable="false" layoutX="363.0" layoutY="408.0" prefHeight="26.0" prefWidth="100.0" text="#" />
+      <TextField fx:id="refundMoney" editable="false" layoutX="374.0" layoutY="448.0" prefHeight="26.0" prefWidth="81.0" text="#" />
       <Text layoutX="534.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Replied By :" wrappingWidth="93.33673095703125" />
-      <TextField fx:id="replyWorker" layoutX="604.0" layoutY="326.0" prefHeight="26.0" prefWidth="93.0" />
+      <TextField fx:id="replyWorker" editable="false" layoutX="604.0" layoutY="326.0" prefHeight="26.0" prefWidth="93.0" />
    </children>
 </AnchorPane>

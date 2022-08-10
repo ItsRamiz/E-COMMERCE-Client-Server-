@@ -1,9 +1,10 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetAllAccounts {
+public class GetAllAccounts implements Serializable {
     List<Account> all_accounts = new ArrayList<>();
     public GetAllAccounts(){
 

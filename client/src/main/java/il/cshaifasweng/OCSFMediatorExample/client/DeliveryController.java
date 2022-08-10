@@ -22,6 +22,8 @@ import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import javax.swing.*;
+
 import static com.sun.xml.bind.v2.schemagen.Util.equal;
 
 public class DeliveryController {
@@ -45,20 +47,43 @@ public class DeliveryController {
     private Button back;
 
     @FXML
-    void ApplyDelivery(ActionEvent event)
-    {
-        int selected = listOrders.getSelectionModel().getSelectedItem();
-        for (int i = 0; i < Orders.size(); i++)
+    void ApplyDelivery(ActionEvent event) {
+        String aString = "";
+        if (deliver.getText().equals("Load Pending Orders"))
         {
-            if(selected == Orders.get(i).getOrderID())
-            {
-                try {
-                    SimpleClient.getClient().sendToServer(Orders.get(i));
+            for (int i = 0; i < Orders.size(); i++) {
+                aString = "#" + Orders.get(i).getOrderID() + " - Ordered On " + Orders.get(i).getOrderDay() + "/" + Orders.get(i).getOrderMonth() + "/" + Orders.get(i).getOrderYear() + " Prepare For " + Orders.get(i).getPrepareDay() + "/" + Orders.get(i).getOrderMonth() + "/" + Orders.get(i).getPrepareYear();
+                deliveryList.getItems().add(aString);
+                aString = "";
 
-                } catch (IOException e) {
-                    e.printStackTrace();
+            }
+            deliver.setText("Deliver Selected");
+
+        }
+        else
+        {
+            String bb = "";
+            String aa = deliveryList.getSelectionModel().getSelectedItem();
+            for(int i = 1 ; aa.charAt(i) != ' '; i++)
+            {
+                bb = Character.toString(aa.charAt(i));
+            }
+
+
+            System.out.println("bb = " + bb);
+            int selected = Integer.parseInt(bb);
+            for (int i = 0; i < Orders.size(); i++) {
+                if (selected == Orders.get(i).getOrderID())
+                {
+                    Orders.get(i).setDelivered(true);
+                    try {
+                        SimpleClient.getClient().sendToServer(Orders.get(i));
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
                 }
-                break;
             }
         }
 
@@ -95,15 +120,10 @@ public class DeliveryController {
     static List<Order> Orders = new ArrayList<>();
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws IOException {
-        // added 30/7
+        deliver.setVisible(false);
         EventBus.getDefault().register(this);
-        // added 30/7
-        System.out.println("before sending getAllOrders message !");
         getAllOrdersMessage getOrdersMsg = new getAllOrdersMessage();
-        // added 30/7
         SimpleClient.getClient().sendToServer(getOrdersMsg);
-        // added 30/7
-        System.out.println("after sending getAllOrders message !");
         back.setVisible(true);
         assert deliver != null : "fx:id=\"deliver\" was not injected: check your FXML file 'delivery.fxml'.";
         assert deliveryList != null : "fx:id=\"deliveryList\" was not injected: check your FXML file 'delivery.fxml'.";
@@ -129,15 +149,21 @@ public class DeliveryController {
         listOrders.getItems().add(order2.getOrderID());
         listOrders.getItems().add(order3.getOrderID());
         listOrders.getItems().add(order4.getOrderID());
-*/
+        */
+        		new java.util.Timer().schedule(
+				new java.util.TimerTask() {
+					@Override
+					public void run() {
+						deliver.setVisible(true);
+					}
+				},2000
+		);
     }
     @Subscribe
     public void passOrders(PassOrdersFromServer passOrders){ // added 30/7
         System.out.println("arrived to subscriebr of passOrders in delivery controller !");
         List<Order> recievedOrders = passOrders.getRecievedOrders();
-        for(int i=0;i<recievedOrders.size();i++){
-            System.out.println(recievedOrders.get(i).getOrderYear());
-        }
+        Orders = recievedOrders;
     }
 
 

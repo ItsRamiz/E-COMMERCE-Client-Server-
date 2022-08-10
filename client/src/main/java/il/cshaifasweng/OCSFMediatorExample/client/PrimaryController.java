@@ -563,7 +563,15 @@ public class PrimaryController {
 	}
 
 
+	@Subscribe
+	public void messageEvent(passAllMessagesEvent allMessages){ // added new 21/7
+		System.out.println("arrived to MESSAGE Event Subscriber in primary!!!!!");
+		List<Message> recievedMessagess = allMessages.getMessagesToPassToPass();
 
+		for(int i=0;i<recievedMessagess.size();i++){
+			System.out.println(recievedMessagess.get(i));
+		}
+	}
 
 	@FXML
 	void nextPageUpate(ActionEvent event)
@@ -1405,6 +1413,7 @@ public class PrimaryController {
 		cartTextDiscount.setText("0");
 
 
+		worker_edit.setVisible(false);
 	}
 
 

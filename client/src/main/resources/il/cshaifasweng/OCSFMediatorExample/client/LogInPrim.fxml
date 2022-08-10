@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="523.0" prefWidth="600.0" stylesheets="@mycsss.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.LogInPrimary">
     <children>
-        <Button fx:id="LogInTab" layoutX="246.0" layoutY="201.0" mnemonicParsing="false" onAction="#gotoLogInSecondary" prefHeight="35.0" prefWidth="90.0" text="Log In" />
+        <Button fx:id="LogInTab" layoutX="247.0" layoutY="232.0" mnemonicParsing="false" onAction="#gotoLogInSecondary" prefHeight="35.0" prefWidth="90.0" text="Log In" />
         <Button fx:id="RegisterTab" layoutX="247.0" layoutY="286.0" mnemonicParsing="false" onAction="#gotoRegisterPage" prefHeight="35.0" prefWidth="90.0" text="Register" />
         <Button fx:id="Guest" layoutX="177.0" layoutY="372.0" mnemonicParsing="false" onAction="#gotoCatalog" prefHeight="29.0" prefWidth="230.0" text="Continue as a Guest" />
       <Label layoutX="198.0" layoutY="100.0" text="Welcome To LILACH" textAlignment="CENTER" textFill="WHITE">
@@ -23,6 +23,7 @@
       <Label fx:id="ErrorMsgPass" layoutX="387.0" layoutY="265.0" text="Password doesn't match Email!" textFill="WHITE" />
       <Button fx:id="LogIn" layoutX="248.0" layoutY="304.0" mnemonicParsing="false" onAction="#LogIn" prefHeight="38.0" prefWidth="87.0" text="Log in" />
       <Text fx:id="logSucc" layoutX="30.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Successful" wrappingWidth="126.39999999999986" />
-      <Button fx:id="OpenCatalogplz" layoutX="14.0" layoutY="236.0" mnemonicParsing="false" onAction="#openCatalogFunc" prefHeight="26.0" prefWidth="126.0" text="Button" />
+      <Button fx:id="backLog" layoutX="248.0" layoutY="363.0" mnemonicParsing="false" onAction="#ReturnFromLogin" prefHeight="38.0" prefWidth="87.0" text="Back" />
+      <Button fx:id="OpenCatalogplz" layoutX="14.0" layoutY="236.0" mnemonicParsing="false" onAction="#openCatalogFunc" prefHeight="26.0" prefWidth="126.0" text="Continue" />
     </children>
 </AnchorPane>

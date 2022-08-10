@@ -23,7 +23,6 @@
         <Button fx:id="backk" layoutX="317.0" layoutY="505.0" mnemonicParsing="false" onAction="#backkk" prefHeight="26.0" prefWidth="79.0" text="back" />
         <Label layoutX="38.0" layoutY="24.0" text="Lilach Customer Registration" textFill="WHITE" />
         <Label layoutX="38.0" layoutY="293.0" text="Default Credit Card" textFill="WHITE" />
-        <Label fx:id="email_regex_error" layoutX="247.0" layoutY="56.0" prefHeight="17.0" prefWidth="178.0" text="Email should contain @ and ." textFill="WHITE" />
         <Label fx:id="phone_regex_error" layoutX="253.0" layoutY="193.0" prefHeight="35.0" prefWidth="166.0" text="Phone number should be&#10;10 digits" textAlignment="CENTER" textFill="WHITE" />
         <Label fx:id="card_regex_error" layoutX="326.0" layoutY="306.0" prefHeight="35.0" prefWidth="166.0" text="Card number should be&#10;16 digits" textAlignment="CENTER" textFill="WHITE" />
         <Label fx:id="CVV_regex_error" layoutX="99.0" layoutY="379.0" prefHeight="35.0" prefWidth="148.0" text="CVV should be 3 digits" textAlignment="CENTER" textFill="WHITE" />
@@ -32,6 +31,10 @@
       <ComboBox fx:id="chooseYear" layoutX="127.0" layoutY="345.0" prefWidth="150.0" promptText="Year" />
       <CheckBox fx:id="registerChain" layoutX="419.0" layoutY="55.0" mnemonicParsing="false" onAction="#checkedChain" prefHeight="18.0" prefWidth="178.0" text="Register as chain account" />
       <CheckBox fx:id="registerShop" layoutX="419.0" layoutY="83.0" mnemonicParsing="false" onAction="#checkedShop" prefHeight="18.0" prefWidth="166.0" text="Register as shop account" />
-      <CheckBox fx:id="subscription" layoutX="41.0" layoutY="429.0" mnemonicParsing="false" onAction="#checkSubscription" prefHeight="18.0" prefWidth="393.0" text="Add annual subscription 100₪ - Offers 10% off purchases over 50₪ " />
+      <CheckBox fx:id="subscription" layoutX="41.0" layoutY="429.0" mnemonicParsing="false" onAction="#checkSubscription" prefHeight="18.0" prefWidth="393.0" text="Add annual subscription 100₪ - Offers 10% off purchases over 50₪ " textFill="WHITE" />
+        <Label fx:id="email_regex_error" layoutX="247.0" layoutY="56.0" prefHeight="17.0" prefWidth="178.0" text="Email should contain @ and ." textFill="WHITE" />
+      <Label fx:id="email_regex_error1" layoutX="419.0" layoutY="528.0" prefHeight="17.0" prefWidth="178.0" text="Email should contain @ and ." textFill="WHITE" />
+      <Label fx:id="shopError" layoutX="419.0" layoutY="145.0" prefHeight="18.0" prefWidth="123.0" text="Please choose to shop" textFill="WHITE" />
+      <Label fx:id="fieldsError" layoutX="251.0" layoutY="480.0" prefHeight="18.0" prefWidth="190.0" text="Please fill all the fields" textFill="WHITE" />
     </children>
 </AnchorPane>

@@ -151,6 +151,7 @@ public class ReplyComplaintController {
         }
         else
         {
+            sendButton.setVisible(true);
             String SelectedIDString = "";
             int SelectedID;
             String SelectedComplaint = complaintList.getSelectionModel().getSelectedItem();
@@ -223,6 +224,7 @@ public class ReplyComplaintController {
         //Complaint a = new Complaint(0,23,22,false,false,"Fuck you",2,0,false,0,23,2,2004,"");
         refundPercent.setVisible(false);
         loadButton.setVisible(false);
+        sendButton.setVisible(false);
         //String aString = "Complaint #" + a.getComplaintID() + " " + "Received: " + a.getDay() + "/" + a.getMonth() + "/" + a.getYear();
         //complaintList.getItems().add(aString);
         //retrievedComplaints.add(a);

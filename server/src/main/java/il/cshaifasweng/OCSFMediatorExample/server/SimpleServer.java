@@ -65,6 +65,7 @@ public class SimpleServer extends AbstractServer {
 		configuration.addAnnotatedClass(Manager.class);
 		configuration.addAnnotatedClass(Order.class);
 		configuration.addAnnotatedClass(Complaint.class);
+		configuration.addAnnotatedClass(Message.class);
 
 
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
@@ -307,6 +308,17 @@ public class SimpleServer extends AbstractServer {
 					session.close();
 					break;
 
+				case "message":
+					if (updateClassFunction.equals("add")) {
+						System.out.println("arrived to here inside message  add");
+
+						Message recievedMESSAGE = recievedMessage.getMessage();
+
+						addMessage(recievedMESSAGE);
+
+					}
+					session.close();
+					break;
 			}
 		}
 		System.out.println("Arrived At UpdateMessage 3");
@@ -1035,6 +1047,53 @@ public class SimpleServer extends AbstractServer {
 				session.close();
 			}
 		}*/
+	}
+	public void addMessage(Message newMessage) {
+
+		System.out.println("inside Add Account To Catalog");
+		long numOfRows = countAccountRows();
+		int castedId = (int) numOfRows;
+		int newId = castedId + 1;
+		newMessage.setMessageID(newId);
+		/*String recievedName = newAcc.getFullName();   // CHANGED WITH YARA
+		String Adress=newAcc.getAddress();
+		String Email=newAcc.getEmail();
+		String Password=newAcc.getPassword();
+		long Phonnum=newAcc.getPhoneNumber();
+		long creditcardnum=newAcc.getCreditCardNumber();
+
+		Date newdate=newAcc.getCreditCardExpire();
+
+		int Cvv=newAcc.getCcv();
+		boolean is_login=newAcc.getLogged();
+		int belongedshop=newAcc.getBelongShop();
+		*/
+
+		System.out.println("Session Testing 000###");
+
+		SessionFactory sessionFactory = getSessionFactory();
+		session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		System.out.println("Done Session Testing 000###");
+
+		session.save(newMessage);
+		session.flush();
+		tx.commit();
+		System.out.println("khaled");
+		session.close();
+	}
+	public Long countMessageRows() {
+		System.out.println("Arrived to coutnrwos 1");
+		final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+		System.out.println("Arrived to coutnrwos 2");
+		CriteriaQuery<Long> criteria = criteriaBuilder.createQuery(Long.class);
+		System.out.println("Arrived to coutnrwos 3");
+		Root<Message> root = criteria.from(Message.class);
+		System.out.println("Arrived to coutnrwos 4");
+		criteria.select(criteriaBuilder.count(root));
+		System.out.println("Arrived to coutnrwos 5");
+		System.out.println(session.createQuery(criteria).getSingleResult());
+		return session.createQuery(criteria).getSingleResult();
 	}
 
 

@@ -269,9 +269,21 @@ public class CheckoutController {
 
 
         Message confirm = new Message();
+        confirm.setCustomerID(currentUser.getAccountID());
+        confirm.setMsgText(currentYear + "/" + currentMonth + "/" + currentDay + " - " + currentHour + ":" + currentMintue + ":" +"Your Order Has Been Placed!");
 
 
-        // Add the message to database -- KHALID
+        UpdateMessage updateMessage1 = new UpdateMessage("message", "add");
+        updateMessage1.setMessage(confirm);
+        System.out.println("before try - edit");
+        try {
+            System.out.println("before sending updateMessage to server ");
+            SimpleClient.getClient().sendToServer(updateMessage1);
+            System.out.println("afater sending updateMessage to server ");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @FXML

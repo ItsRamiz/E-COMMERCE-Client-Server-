@@ -21,6 +21,14 @@ import javafx.stage.Stage;
 
 public class RegisterController {
 
+
+    @FXML // fx:id="fieldsError"
+    private Label fieldsError; // Value injected by FXMLLoader
+
+
+    @FXML // fx:id="shopError"
+    private Label shopError; // Value injected by FXMLLoader
+
     @FXML
     private ResourceBundle resources;
 
@@ -108,7 +116,25 @@ public class RegisterController {
 
 
     @FXML
-    void AddCustomerToDB(ActionEvent event) throws IOException {
+        void AddCustomerToDB(ActionEvent event) throws IOException {
+        email_regex_error.setVisible(false);
+        phone_regex_error.setVisible(false);
+        card_regex_error.setVisible(false);
+        CVV_regex_error.setVisible(false);
+        fieldsError.setVisible(false);
+        shopError.setVisible(false);
+
+        if(registerShop.isSelected())
+        {
+            if(selectChain.getSelectionModel().getSelectedIndex() == -1)
+            {
+                shopError.setVisible(true);
+            }
+        }
+        if(Email.getText() == "" || Password.getText() == "" || Name.getText() == "" || userID.getText() == "" || PhoneNumber.getText() == "" || Street_Address.getText() == "" || City_Address.getText() == "" || CardNumber.getText() == "" || CVV.getText() == "" || chooseMonth.getSelectionModel().getSelectedIndex() == -1 || chooseYear.getSelectionModel().getSelectedIndex() == -1)
+        {
+            fieldsError.setVisible(true);
+        }
         Pattern pattern = Pattern.compile(email_regex);
         Matcher matcher = pattern.matcher(Email.getText());
         if(!matcher.matches()){
@@ -249,6 +275,9 @@ public class RegisterController {
         selectChain.getItems().add("Be'er Sheva, Big Beer Sheva");
         selectChain.setVisible(true);
         registerShop.setSelected(true);
+
+        shopError.setVisible(false);
+        fieldsError.setVisible(false);
 
 
         ErrorMsg.setVisible(false);
