@@ -1,9 +1,14 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 
-public class Message {
+@Entity
+@Table(name = "messages_table")
+public class Message implements Serializable {
     @Id
     int messageID;
     @Column(name = "customer_ID")

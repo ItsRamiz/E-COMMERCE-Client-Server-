@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import antlr.debug.MessageEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import org.greenrobot.eventbus.EventBus;
 
@@ -159,6 +160,20 @@ public class SimpleClient extends AbstractClient {
 			System.out.println("Get Complaints Test 4");
 			EventBus.getDefault().post(complaintsEvent);
 			System.out.println("Get Complaints Test 5");
+		}
+		else if(msg instanceof GetAllMessages){ // added 16.8
+			System.out.println("Get Messages Test 1");
+			GetAllMessages recievedMessages = (GetAllMessages) msg;
+			System.out.println("Get Messages Test 2");
+			passAllMessagesEvent messagesEvent = new passAllMessagesEvent();
+			System.out.println("Get Messages Test 3");
+			messagesEvent.setMessagesToPasssToPass(recievedMessages.getMessageList());
+
+			System.out.println("msg List Size = " + recievedMessages.getMessageList().size());
+
+			System.out.println("Get messages Test 4");
+			EventBus.getDefault().post(messagesEvent);
+			System.out.println("Get messages Test 5");
 		}
 		else if(msg instanceof GetAllAccounts){
 			System.out.println("Get Accounts Test 1");

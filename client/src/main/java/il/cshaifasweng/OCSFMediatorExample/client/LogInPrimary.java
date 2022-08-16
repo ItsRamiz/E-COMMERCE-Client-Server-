@@ -179,6 +179,20 @@ public class LogInPrimary {
             e.printStackTrace();
         }
 
+
+        // added 16.8
+        GetAllMessages allMessages = new GetAllMessages();
+        System.out.println("send request for messages !!");
+        try {
+            System.out.println("before sending the getAllMessagaes " );
+            SimpleClient.getClient().sendToServer(allMessages);
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
         Parent roott = loader.load();
         PrimaryController cc = loader.getController();

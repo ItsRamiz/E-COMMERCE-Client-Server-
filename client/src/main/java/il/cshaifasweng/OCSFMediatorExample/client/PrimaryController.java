@@ -1442,6 +1442,17 @@ public class PrimaryController {
 			System.out.println(recievedComplaints.get(i).getDate());
 		}
 	}
+
+	@Subscribe
+	public void messageEventFunction(passAllMessagesEvent allMsg){ // added new 21/7
+		System.out.println("arrived to messageEvent Subscriber in primary!!!!!");
+		List<Message> recievedMessages = allMsg.getMessagesToPassToPass();
+
+		for(int i=0;i<recievedMessages.size();i++){
+			System.out.println(recievedMessages.get(i).getMsgText());
+		}
+	}
+
 	@Subscribe
 	public void PassAccountEvent(PassAccountEvent passAcc){ // added today
 		System.out.println("arrived to passAccountToPrimary sucessfuly");

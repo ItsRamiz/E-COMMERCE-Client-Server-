@@ -565,6 +565,17 @@ public class SimpleServer extends AbstractServer {
 			client.sendToClient(complaintsToClient);
 
 		}
+		if(msg instanceof GetAllMessages){ // added 16.8
+			SessionFactory sessionFactory = getSessionFactory();
+			session = sessionFactory.openSession();
+			Transaction tx1 = session.beginTransaction();
+
+			System.out.println("arrived to getAllComplaints in server !");
+			GetAllMessages messagesToClient = new GetAllMessages();
+			List<Message> recievedMessages = getAllMessages();
+			messagesToClient.setMessageList(recievedMessages);
+			client.sendToClient(messagesToClient);
+		}
 		if(msg instanceof Order){
 			SessionFactory sessionFactory = getSessionFactory();
 			session = sessionFactory.openSession();
@@ -615,6 +626,19 @@ public class SimpleServer extends AbstractServer {
 
 	}
 
+	private static List<Message> getAllMessages() { // added 16.8
+		System.out.println("Arrived to getAllmessages 1");
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		System.out.println("Arrived to getAllMessages 2");
+		CriteriaQuery<Message> query = builder.createQuery(Message.class);
+		System.out.println("Arrived to getAllMessages 3");
+		query.from(Message.class);
+		System.out.println("Arrived to getAllMessages 4");
+		List<Message> result = session.createQuery(query).getResultList();
+		System.out.println("Arrived to getAllMessages 5");
+		return result;
+	}
+
 	private static List<Complaint> getAllComplaints() { // added 21/7
 		System.out.println("Arrived to getAllComplaints 1");
 		CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -627,6 +651,7 @@ public class SimpleServer extends AbstractServer {
 		System.out.println("Arrived to getAllComplaints 5");
 		return result;
 	}
+
 
 	private static List<Order> getAllOrders() { // added 18/7
 		System.out.println("Arrived to getAllOrders 1");
