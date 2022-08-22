@@ -14,7 +14,7 @@ public class Account implements Serializable {
     @Id
     private int accountID;
     @Column(name = "UserID")
-    private int ID;
+    private long ID;
     @Column(name = "Full_Name")
     private String fullName;
     @Column(name = "Address")
@@ -58,7 +58,7 @@ public class Account implements Serializable {
     }
      */
 
-    public Account(int accountID, String fullName,int ID, String address, String email, String password, long phoneNumber, long creditCardNumber, int creditMonthExpire, int creditYearExpire, int ccv, Boolean loggedIn, int belongShop,boolean subscription) {
+    public Account(int accountID, String fullName,long ID, String address, String email, String password, long phoneNumber, long creditCardNumber, int creditMonthExpire, int creditYearExpire, int ccv, Boolean loggedIn, int belongShop,boolean subscription) {
         this.accountID = accountID;
         this.ID = ID;
         this.fullName = fullName;
@@ -193,7 +193,7 @@ public class Account implements Serializable {
         return belongShop;
     }
 
-    public int getID() {
+    public long getID() {
         return ID;
     }
 

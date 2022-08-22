@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import net.bytebuddy.implementation.ToStringMethod;
@@ -22,6 +19,8 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CheckoutController {
 
@@ -109,6 +108,19 @@ public class CheckoutController {
     @FXML // fx:id="totalPrice"
     private Text totalPrice; // Value injected by FXMLLoader
 
+    @FXML // fx:id="credit_regex"
+    private Label credit_regex; // Value injected by FXMLLoader
+
+    @FXML // fx:id="cvv_regex"
+    private Label cvv_regex; // Value injected by FXMLLoader
+
+
+    @FXML // fx:id="phone_regex"
+    private Label phone_regex; // Value injected by FXMLLoader
+
+    @FXML // fx:id="viewInboxPlz"
+    private Button viewInboxPlz; // Value injected by FXMLLoader
+
 
     @FXML
     void openCatalog(ActionEvent event) throws IOException {
@@ -138,8 +150,17 @@ public class CheckoutController {
         );
 
     }
+    //String email_regex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$";
+    String creditCard_regex = "^\\d{16}$";
+    String CVV_regex = "^\\d{3}$";
+    String phoneNum_regex = "^\\d{10}$";
+
+    String ID_regex = "^\\d{9}$";
+
     @FXML
     void PlaceOrder(ActionEvent event) {
+        boolean fail;
+        fail = false;
         int shopID = 0;
         Calendar calle = Calendar.getInstance();
         int currentYear = calle.get(Calendar.YEAR);
@@ -149,140 +170,162 @@ public class CheckoutController {
         int currentMintue = calle.get(Calendar.MINUTE);
         int currentDay = calle.get(Calendar.DAY_OF_MONTH);
         String chainShop = chooseShopID.getSelectionModel().toString();
-        switch (chooseShopID.getSelectionModel().toString()) {
-            case "ID 0: - Chain":
-                shopID = 0;
-                break;
-            case "ID 1: Tiberias, Big Danilof":
-                shopID = 1;
-                break;
-            case "ID 2: Haifa, Merkaz Zeiv":
-                shopID = 2;
-                break;
-            case "ID 3: Tel Aviv, Ramat Aviv":
-                shopID = 3;
-                break;
-            case "ID 4: Eilat, Ice mall":
-                shopID = 4;
-                break;
-            case "ID 5: Be'er Sheva, Big Beer Sheva":
-                shopID = 5;
-                break;
-        }
-        boolean pickUp = true;
-        boolean gift = false;
-        String deliveredAddress = "";
-        String recepName = "";
-        long recepPhone = 0;
-        if (deliverToHome.isSelected()) {
-            pickUp = true;
-            gift = false;
-            recepName = currentUser.getFullName();
-            recepPhone = currentUser.getPhoneNumber();
-            deliveredAddress = currentUser.getAddress();
-        }
-        if (deliveryBox.isSelected()) {
-            recepPhone = Integer.parseInt(recepPhoneField.getText());
-            recepName = recepNameField.getText();
-            deliveredAddress = recepAddressField.getText();
-            gift = true;
-            pickUp = false;
-        }
-        String greeting = "";
-        if (greetingBoxCheckout.isSelected()) {
-            greeting = greetingTextCheckout.getText();
-        } else {
-            greeting = "none";
-        }
-        long creditCardNumber;
-        int creditCardMonth;
-        int creditCardYear;
-        int creditCardCVV;
-        if (anotherMethodBox.isSelected() == true) {
-            creditCardNumber = Integer.parseInt(creditNumberField.getText());
-            creditCardMonth = expiryMonth.getSelectionModel().getSelectedItem();
-            creditCardYear = expiryYear.getSelectionModel().getSelectedItem();
-            creditCardCVV = Integer.parseInt(cvvField.getText());
-        } else {
-            creditCardNumber = currentUser.getCreditCardNumber();
-            creditCardMonth = currentUser.getCreditMonthExpire();
-            creditCardYear = currentUser.getCreditYearExpire();
-            creditCardCVV = currentUser.getCcv();
-        }
-        int dayCheckoutInt = dayCheckout.getSelectionModel().getSelectedItem();
-        int monthCheckoutInt = monthCheckout.getSelectionModel().getSelectedItem();
-        int yearCheckoutInt = yearCheckout.getSelectionModel().getSelectedItem();
-        String OrderedProducts = "";
-        for(int i = 0 ; i < cart.size() ; i++)
-        {
-            OrderedProducts = OrderedProducts + "%" + cart.get(i).getName() + " - " + cart.get(i).getPrice() + "%";
-        }
-        int prepareHour = 0;
-        int prepareMinute = 0;
-        String TempString = "";
-        String prepareSelect = hourCheckout.getSelectionModel().getSelectedItem();
-        for(int x = 0 ; x < prepareSelect.length() ; x++)
-        {
-            if(prepareSelect.charAt(x) == ':')
-            {
-                prepareHour = Integer.parseInt(TempString);
-                TempString = "";
+        Pattern pattern;
+        Matcher matcher;
+
+        pattern = Pattern.compile(creditCard_regex);
+        matcher = pattern.matcher(creditNumberField.getText());
+        if(anotherMethodBox.isSelected() == true) {
+            if (!matcher.matches()) {
+                credit_regex.setVisible(true);
+                fail = true;
             }
-            else {
-                TempString = TempString + Character.toString(prepareSelect.charAt(x));
+            pattern = Pattern.compile(CVV_regex);
+            matcher = pattern.matcher(cvvField.getText());
+            if (!matcher.matches()) {
+                cvv_regex.setVisible(true);
+                fail = true;
             }
         }
-        prepareMinute = Integer.parseInt(TempString);
-
-        int totalPrice = 0;
-        String currentPrice = "";
-        for(int z = 0 ; z < cart.size() ; z++)
-        {
-            for(int x = 0 ; x < cart.get(z).getPrice().length(); x++)
-            {
-                currentPrice = currentPrice + Character.toString(cart.get(z).getPrice().charAt(x));
+        if(deliveryBox.isSelected() == true) {
+            pattern = Pattern.compile(phoneNum_regex);
+            matcher = pattern.matcher(recepPhoneField.getText());
+            if (!matcher.matches()) {
+                phone_regex.setVisible(true);
+                fail = true;
             }
-            totalPrice = totalPrice + Integer.valueOf(currentPrice);
-            currentPrice = "";
         }
-        if(deliveryBox.isSelected())
-            totalPrice = totalPrice + 15;
-        if(currentUser.isSubscription() == true)
-        {
-            if(totalPrice > 50)
-                totalPrice = (int)(totalPrice * 0.9);
-        }
+        if(fail == false) {
+            switch (chooseShopID.getSelectionModel().toString()) {
+                case "ID 0: - Chain":
+                    shopID = 0;
+                    break;
+                case "ID 1: Tiberias, Big Danilof":
+                    shopID = 1;
+                    break;
+                case "ID 2: Haifa, Merkaz Zeiv":
+                    shopID = 2;
+                    break;
+                case "ID 3: Tel Aviv, Ramat Aviv":
+                    shopID = 3;
+                    break;
+                case "ID 4: Eilat, Ice mall":
+                    shopID = 4;
+                    break;
+                case "ID 5: Be'er Sheva, Big Beer Sheva":
+                    shopID = 5;
+                    break;
+            }
+            boolean pickUp = true;
+            boolean gift = false;
+            String deliveredAddress = "";
+            String recepName = "";
+            long recepPhone = 0;
+            if (deliverToHome.isSelected()) {
+                pickUp = true;
+                gift = false;
+                recepName = currentUser.getFullName();
+                recepPhone = currentUser.getPhoneNumber();
+                deliveredAddress = currentUser.getAddress();
+            }
+            if (deliveryBox.isSelected()) {
+                recepPhone = Integer.parseInt(recepPhoneField.getText());
+                recepName = recepNameField.getText();
+                deliveredAddress = recepAddressField.getText();
+                gift = true;
+                pickUp = false;
 
-        Order newOrder = new Order(0,pickUp,shopID,greeting,totalPrice,deliveredAddress,currentUser.getAccountID(),gift,false,dayCheckoutInt,monthCheckoutInt,yearCheckoutInt,currentDay,currentMonth,currentYear,creditCardNumber,creditCardMonth,creditCardYear,creditCardCVV,recepName,recepPhone,deliveredAddress,OrderedProducts,currentHour,currentMintue,prepareHour,prepareMinute);
 
-        System.out.println(newOrder);
-        UpdateMessage new_msg2=new UpdateMessage("order","add");
-        new_msg2.setOrder(newOrder);
-        try {
-            System.out.println("before sending updateMessage to server ");
-            SimpleClient.getClient().sendToServer(new_msg2); // sends the updated product to the server class
-            System.out.println("afater sending updateMessage to server ");
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+            }
+            String greeting = "";
+            if (greetingBoxCheckout.isSelected()) {
+                greeting = greetingTextCheckout.getText();
+            } else {
+                greeting = "none";
+            }
+            long creditCardNumber;
+            int creditCardMonth;
+            int creditCardYear;
+            int creditCardCVV;
+            if (anotherMethodBox.isSelected() == true) {
+                creditCardNumber = Long.parseLong(creditNumberField.getText());
+                creditCardMonth = expiryMonth.getSelectionModel().getSelectedItem();
+                creditCardYear = expiryYear.getSelectionModel().getSelectedItem();
+                creditCardCVV = Integer.parseInt(cvvField.getText());
+            } else {
+                creditCardNumber = currentUser.getCreditCardNumber();
+                creditCardMonth = currentUser.getCreditMonthExpire();
+                creditCardYear = currentUser.getCreditYearExpire();
+                creditCardCVV = currentUser.getCcv();
+            }
+            int dayCheckoutInt = dayCheckout.getSelectionModel().getSelectedItem();
+            int monthCheckoutInt = monthCheckout.getSelectionModel().getSelectedItem();
+            int yearCheckoutInt = yearCheckout.getSelectionModel().getSelectedItem();
+            String OrderedProducts = "";
+            for (int i = 0; i < cart.size(); i++) {
+                OrderedProducts = OrderedProducts + "%" + cart.get(i).getName() + " - " + cart.get(i).getPrice() + "%";
+            }
+            int prepareHour = 0;
+            int prepareMinute = 0;
+            String TempString = "";
+            String prepareSelect = hourCheckout.getSelectionModel().getSelectedItem();
+            for (int x = 0; x < prepareSelect.length(); x++) {
+                if (prepareSelect.charAt(x) == ':') {
+                    prepareHour = Integer.parseInt(TempString);
+                    TempString = "";
+                } else {
+                    TempString = TempString + Character.toString(prepareSelect.charAt(x));
+                }
+            }
+            prepareMinute = Integer.parseInt(TempString);
+
+            int totalPrice = 0;
+            String currentPrice = "";
+            for (int z = 0; z < cart.size(); z++) {
+                for (int x = 0; x < cart.get(z).getPrice().length(); x++) {
+                    currentPrice = currentPrice + Character.toString(cart.get(z).getPrice().charAt(x));
+                }
+                totalPrice = totalPrice + Integer.valueOf(currentPrice);
+                currentPrice = "";
+            }
+            if (deliveryBox.isSelected())
+                totalPrice = totalPrice + 15;
+            if (currentUser.isSubscription() == true) {
+                if (totalPrice > 50)
+                    totalPrice = (int) (totalPrice * 0.9);
+            }
+
+            Order newOrder = new Order(0, pickUp, shopID, greeting, totalPrice, deliveredAddress, currentUser.getAccountID(), gift, false, dayCheckoutInt, monthCheckoutInt, yearCheckoutInt, currentDay, currentMonth, currentYear, creditCardNumber, creditCardMonth, creditCardYear, creditCardCVV, recepName, recepPhone, deliveredAddress, OrderedProducts, currentHour, currentMintue, prepareHour, prepareMinute);
+
+            System.out.println(newOrder);
+            UpdateMessage new_msg2 = new UpdateMessage("order", "add");
+            new_msg2.setOrder(newOrder);
+            try {
+                System.out.println("before sending updateMessage to server ");
+                SimpleClient.getClient().sendToServer(new_msg2); // sends the updated product to the server class
+                System.out.println("afater sending updateMessage to server ");
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
 
-        Message confirm = new Message();
-        confirm.setCustomerID(currentUser.getAccountID());
-        confirm.setMsgText(currentYear + "/" + currentMonth + "/" + currentDay + " - " + currentHour + ":" + currentMintue + ":" +"Your Order Has Been Placed!");
+            Message confirm = new Message();
+            confirm.setCustomerID(currentUser.getAccountID());
+            confirm.setMsgText(currentYear + "/" + currentMonth + "/" + currentDay + " - " + currentHour + ":" + currentMintue + ":" + "Your Order Has Been Placed!");
 
 
-        UpdateMessage updateMessage1 = new UpdateMessage("message", "add");
-        updateMessage1.setMessage(confirm);
-        System.out.println("before try - edit");
-        try {
-            System.out.println("before sending updateMessage to server ");
-            SimpleClient.getClient().sendToServer(updateMessage1);
-            System.out.println("afater sending updateMessage to server ");
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            UpdateMessage updateMessage1 = new UpdateMessage("message", "add");
+            updateMessage1.setMessage(confirm);
+            System.out.println("before try - edit");
+            try {
+                System.out.println("before sending updateMessage to server ");
+                SimpleClient.getClient().sendToServer(updateMessage1);
+                System.out.println("afater sending updateMessage to server ");
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
     }
 
@@ -378,6 +421,9 @@ public class CheckoutController {
     void initialize() throws MalformedURLException
     {
         EventBus.getDefault().register(this);
+        phone_regex.setVisible(false);
+        credit_regex.setVisible(false);
+        cvv_regex.setVisible(false);
         int i;
         System.out.println("Here");
         for(i = 1 ; i < 31 ; i++)

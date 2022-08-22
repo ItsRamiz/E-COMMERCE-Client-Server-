@@ -272,6 +272,52 @@ public class PrimaryController {
 	private Button openComplaints; // Value injected by FXMLLoader
 
 
+	@FXML // fx:id="inboxList"
+	private ListView<String> inboxList; // Value injected by FXMLLoader
+
+	@FXML // fx:id="openMessage"
+	private Button openMessage; // Value injected by FXMLLoader
+
+	@FXML // fx:id="viewInboxPlz"
+	private Button viewInboxPlz; // Value injected by FXMLLoader
+
+	@FXML
+	void viewMessage(ActionEvent event) {
+
+
+	}
+
+	@FXML
+	void openInbox(ActionEvent event) {
+		inboxList.getItems().clear();
+		if(viewInboxPlz.getText().equals("Open Inbox")) {
+			String MsgTemp = "";
+			System.out.println("Message Length Is :" + MessageList.size());
+			for (int i = 0; i < MessageList.size(); i++) {
+				if (MessageList.get(i).getCustomerID() == currentLoggedAccount.getAccountID()) ;
+				{
+					MsgTemp = "";
+					int j = 0;
+					while (MessageList.get(i).getMsgText().charAt(j) != ':') {
+						MsgTemp = MsgTemp + MessageList.get(i).getMsgText().charAt(j);
+						j++;
+					}
+					inboxList.getItems().add(MsgTemp);
+				}
+			}
+			viewInboxPlz.setText("Close Inbox");
+			inboxList.setVisible(true);
+			openMessage.setVisible(true);
+		}
+		else
+		{
+			viewInboxPlz.setText("Open Inbox");
+			inboxList.setVisible(false);
+			openMessage.setVisible(false);
+		}
+
+	}
+
 	@FXML
 	void goLogOut(ActionEvent event) throws IOException {
 
@@ -1260,6 +1306,7 @@ public class PrimaryController {
 		catalog_flag.setFlagg(3);
 		justText.setVisible(true);
 		justButton.setVisible(false);
+
 		System.out.println("arrived to initialize 1");
 		EventBus.getDefault().register(this);
 		assert flower_button1 != null : "fx:id=\"flower_button1\" was not injected: check your FXML file 'primary.fxml'.";
@@ -1443,14 +1490,14 @@ public class PrimaryController {
 		}
 	}
 
+	List<Message> MessageList = new ArrayList<>();
+
 	@Subscribe
 	public void messageEventFunction(passAllMessagesEvent allMsg){ // added new 21/7
 		System.out.println("arrived to messageEvent Subscriber in primary!!!!!");
 		List<Message> recievedMessages = allMsg.getMessagesToPassToPass();
-
-		for(int i=0;i<recievedMessages.size();i++){
-			System.out.println(recievedMessages.get(i).getMsgText());
-		}
+		System.out.println("ReceviedMessages = " + recievedMessages.size());
+		MessageList = recievedMessages;
 	}
 
 	@Subscribe
@@ -1472,6 +1519,7 @@ public class PrimaryController {
 	}
 	@Subscribe
 	public void retRieveDatabase(RetrieveDataBaseEvent rtEvent) {
+
 		System.out.println("arrived to the retreivedatabse event");
 		System.out.println("the current table is:");
 		for (int i = 0; i < rtEvent.getRecievedList().size(); i++) {

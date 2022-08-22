@@ -107,12 +107,16 @@ public class RegisterController {
     private CheckBox subscription; // Value injected by FXMLLoader
 
 
+    @FXML // fx:id="ID_Bad"
+    private Label ID_Bad; // Value injected by FXMLLoader
+
     private LinkedList<String> RegisteredAccounts = new LinkedList<>(); // list of all registered emails
 
     String email_regex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$";
     String creditCard_regex = "^\\d{16}$";
     String CVV_regex = "^\\d{3}$";
     String phoneNum_regex = "^\\d{10}$";
+    String ID_regex = "^\\d{9}$";
 
 
     @FXML
@@ -123,6 +127,7 @@ public class RegisterController {
         CVV_regex_error.setVisible(false);
         fieldsError.setVisible(false);
         shopError.setVisible(false);
+        ID_Bad.setVisible(false);
 
         if(registerShop.isSelected())
         {
@@ -155,6 +160,11 @@ public class RegisterController {
         if(!matcher.matches()){
             phone_regex_error.setVisible(true);
         }
+        pattern = Pattern.compile(ID_regex);
+        matcher = pattern.matcher(userID.getText());
+        if(!matcher.matches()){
+            ID_Bad.setVisible(true);
+        }
         else if(!RegisteredAccounts.contains(Email.getText()))
         {
             String Address = Street_Address.getText() + ", " + City_Address.getText();
@@ -182,7 +192,7 @@ public class RegisterController {
                 }
 
             }
-            int id = Integer.parseInt(userID.getText());
+            long id = Integer.parseInt(userID.getText());
             System.out.println("ID = " + id);
             //Account new_acc = new Account(Name.getText(),Address,Email.getText(),Password.getText(),Long.parseLong(PhoneNumber.getText()),Long.parseLong(CardNumber.getText()),Integer.parseInt(chooseYear.getSelectionModel().getSelectedItem()),Integer.parseInt(chooseMonth.getSelectionModel().getSelectedItem()) ,Integer.parseInt(CVV.getText()), shopID);
             Account new_acc = new Account(0,Name.getText(),id,Address,Email.getText(),Password.getText(),Long.parseLong(PhoneNumber.getText()),Long.parseLong(CardNumber.getText()),Integer.parseInt(chooseMonth.getSelectionModel().getSelectedItem()),Integer.parseInt(chooseYear.getSelectionModel().getSelectedItem()),Integer.parseInt(CVV.getText()),false,shopID,subscription.isSelected());
@@ -285,6 +295,7 @@ public class RegisterController {
         phone_regex_error.setVisible(false);
         email_regex_error.setVisible(false);
         card_regex_error.setVisible(false);
+        ID_Bad.setVisible(false);
 
         int i;
         for(i = 1 ; i < 13 ; i++)

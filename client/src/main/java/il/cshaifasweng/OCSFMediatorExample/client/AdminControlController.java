@@ -203,7 +203,7 @@ public class AdminControlController {
                         selectedAcc = all_accounts.get(i);
                 }
                 accID.setText(Integer.toString(selectedAcc.getAccountID()));
-                customerID.setText(Integer.toString(selectedAcc.getID()));
+                customerID.setText(Long.toString(selectedAcc.getID()));
                 name.setText(selectedAcc.getFullName());
                 address.setText(selectedAcc.getAddress());
                 email.setText(selectedAcc.getEmail());

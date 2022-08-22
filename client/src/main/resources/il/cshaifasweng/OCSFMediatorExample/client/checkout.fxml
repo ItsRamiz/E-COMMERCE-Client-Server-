@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
@@ -35,5 +36,8 @@
       <CheckBox fx:id="deliverToHome" layoutX="24.0" layoutY="96.0" mnemonicParsing="false" onAction="#DeliverToMyHome" prefHeight="18.0" prefWidth="130.0" text="Store pickup" />
       <ComboBox fx:id="chooseShopID" layoutX="512.0" layoutY="60.0" prefHeight="26.0" prefWidth="154.0" promptText="Choose Shop" />
       <Button fx:id="back" layoutX="241.0" layoutY="442.0" mnemonicParsing="false" onAction="#openCatalog" prefHeight="25.0" prefWidth="206.0" text="Back To Catalog" />
+      <Label fx:id="credit_regex" layoutX="330.0" layoutY="277.0" prefHeight="18.0" prefWidth="130.0" text="You must enter 16 digits" />
+      <Label fx:id="phone_regex" layoutX="344.0" layoutY="188.0" prefHeight="18.0" prefWidth="142.0" text="You must enter 10 digits" />
+      <Label fx:id="cvv_regex" layoutX="124.0" layoutY="358.0" prefHeight="18.0" prefWidth="142.0" text="You must enter 3 digits" />
    </children>
 </AnchorPane>

@@ -36,5 +36,6 @@
       <Label fx:id="email_regex_error1" layoutX="419.0" layoutY="528.0" prefHeight="17.0" prefWidth="178.0" text="Email should contain @ and ." textFill="WHITE" />
       <Label fx:id="shopError" layoutX="419.0" layoutY="145.0" prefHeight="18.0" prefWidth="123.0" text="Please choose to shop" textFill="WHITE" />
       <Label fx:id="fieldsError" layoutX="251.0" layoutY="480.0" prefHeight="18.0" prefWidth="190.0" text="Please fill all the fields" textFill="WHITE" />
+      <Label fx:id="ID_Bad" layoutX="239.0" layoutY="170.0" prefHeight="18.0" prefWidth="148.0" text="ID must be 9 digit number" />
     </children>
 </AnchorPane>
