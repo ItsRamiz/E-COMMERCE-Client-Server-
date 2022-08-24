@@ -185,4 +185,23 @@ public class Complaint implements Serializable {
             return false;
     }
 
+    @Override
+    public String toString() {
+        return "Complaint{" +
+                "complaintID=" + complaintID +
+                ", CustomerID=" + CustomerID +
+                ", OrderID=" + OrderID +
+                ", Accepted=" + Accepted +
+                ", in24Hours=" + in24Hours +
+                ", complaintText='" + complaintText + '\'' +
+                ", shopID=" + shopID +
+                ", answerworkerID=" + answerworkerID +
+                ", returnedMoney=" + returnedMoney +
+                ", returnedmoneyvalue=" + returnedmoneyvalue +
+                ", day=" + day +
+                ", month=" + month +
+                ", year=" + year +
+                ", ReplyText='" + ReplyText + '\'' +
+                '}';
+    }
 }

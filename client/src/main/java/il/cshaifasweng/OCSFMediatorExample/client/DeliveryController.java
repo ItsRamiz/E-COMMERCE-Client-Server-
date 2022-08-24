@@ -104,6 +104,7 @@ public class DeliveryController {
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
+                        System.out.println("Deliver Privilage: " + recievedAcc.getRecievedAccount().getPrivialge());
                         EventBus.getDefault().post(recievedAcc);
                         System.out.println("the server sent me the account , NICE 4 !!");
                     }

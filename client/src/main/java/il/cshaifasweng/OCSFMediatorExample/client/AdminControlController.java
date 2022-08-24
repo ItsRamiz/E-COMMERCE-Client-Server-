@@ -302,6 +302,19 @@ public class AdminControlController {
 
     @FXML
     void openCatalog(ActionEvent event) throws IOException {
+
+        PassAccountEvent recievedAcc = new PassAccountEvent(currentUser);
+
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        EventBus.getDefault().post(recievedAcc);
+                        System.out.println("the server sent me the account , NICE 4 !!");
+                    }
+                },4000
+        );
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
         Parent roott = loader.load();
         PrimaryController cc = loader.getController();
@@ -461,6 +474,20 @@ public class AdminControlController {
         System.out.println("in getAllAccountFromDB");
         all_accounts = receivedAccounts;
         System.out.println("all accounts size is " + all_accounts.size());
+    }
+
+    @Subscribe
+    public void PassAccountEvent(PassAccountEventAdmin passAcc){ // added 30/7
+        System.out.println("Arrived To Pass Account - deliveryManager!");
+        Account recvAccount = passAcc.getRecievedAccount();
+        System.out.println(recvAccount.getPassword());
+        System.out.println(recvAccount.getAccountID());
+        System.out.println(recvAccount.getEmail());
+        System.out.println(recvAccount.getFullName());
+        System.out.println(recvAccount.getAddress());
+        System.out.println(recvAccount.getCreditCardNumber());
+        System.out.println(recvAccount.getCreditMonthExpire());
+        currentUser = recvAccount;
     }
 
 }

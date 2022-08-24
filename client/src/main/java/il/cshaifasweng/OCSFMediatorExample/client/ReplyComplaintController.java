@@ -164,11 +164,15 @@ public class ReplyComplaintController {
                 SelectedIDString = SelectedIDString + Character.toString(SelectedComplaint.charAt(i));
             }
             SelectedID = Integer.parseInt(SelectedIDString);
-            for (int i = 0; i < complaintList.getItems().size(); i++) {
+            for (int i = 0; i < retrievedComplaints.size(); i++) {
                 if (retrievedComplaints.get(i).getComplaintID() == SelectedID) {
                     selectedComplaint = retrievedComplaints.get(i);
+                    break;
                 }
             }
+            complaintList.getItems().clear();
+            loadButton.setText("Load Complaints");
+
             complaintID.setText(String.valueOf(selectedComplaint.getComplaintID()));
             accountID.setText(String.valueOf(selectedComplaint.getCustomerID()));
             orderID.setText(String.valueOf(selectedComplaint.getOrderID()));
@@ -268,6 +272,19 @@ public class ReplyComplaintController {
         for(int i = 0 ; i < allComplaints.size(); i++) {
             System.out.println(allComplaints.get(i).getComplaintText());
         }
+    }
+    @Subscribe
+    public void PassAccountEventReplyComplaint(PassAccountEventReplyComplaint passAcc){ // added today
+        System.out.println("Arrived To Pass Account - Reply");
+        Account recvAccount = passAcc.getRecievedAccount();
+        System.out.println(recvAccount.getPassword());
+        System.out.println(recvAccount.getAccountID());
+        System.out.println(recvAccount.getEmail());
+        System.out.println(recvAccount.getFullName());
+        System.out.println(recvAccount.getAddress());
+        System.out.println(recvAccount.getCreditCardNumber());
+        System.out.println(recvAccount.getCreditMonthExpire());
+        currentUser = recvAccount;
     }
 
 }

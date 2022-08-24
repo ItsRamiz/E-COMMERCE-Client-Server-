@@ -356,15 +356,6 @@ public class PrimaryController {
 
 	@FXML
 	void ReplyToComplaints(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("replycomplaint.fxml"));
-		Parent roott = loader.load();
-		ReplyComplaintController cc = loader.getController();
-		Stage stage = new Stage();
-		stage.setScene(new Scene(roott));
-		stage.setTitle("Reply Complaint");
-		stage.show();
-		Stage stagee = (Stage)openComplaints.getScene().getWindow();
-		stagee.close();
 
 		PassAccountEventReplyComplaint recievedAcc = new PassAccountEventReplyComplaint(currentLoggedAccount);
 
@@ -377,11 +368,35 @@ public class PrimaryController {
 					}
 				},4000
 		);
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("replycomplaint.fxml"));
+		Parent roott = loader.load();
+		ReplyComplaintController cc = loader.getController();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(roott));
+		stage.setTitle("Reply Complaint");
+		stage.show();
+		Stage stagee = (Stage)openComplaints.getScene().getWindow();
+		stagee.close();
+
 	}
 
 
 	@FXML
 	void openControlPanel(ActionEvent event) throws IOException {
+
+		PassAccountEventAdmin recievedAcc = new PassAccountEventAdmin(currentLoggedAccount);
+
+		new java.util.Timer().schedule(
+				new java.util.TimerTask() {
+					@Override
+					public void run() {
+						EventBus.getDefault().post(recievedAcc);
+						System.out.println("the server sent me the account , NICE 4 !!");
+					}
+				},4000
+		);
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("admincontrol.fxml"));
 		Parent roott = loader.load();
 		AdminControlController cc = loader.getController();
