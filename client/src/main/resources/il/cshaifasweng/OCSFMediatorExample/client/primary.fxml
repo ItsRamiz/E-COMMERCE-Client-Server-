@@ -125,15 +125,13 @@
         <Button id="btttn" fx:id="nextPage" layoutX="898.0" layoutY="715.0" mnemonicParsing="false" onAction="#nextPageUpate" prefHeight="34.0" prefWidth="115.0" text="Next Page" AnchorPane.bottomAnchor="50.60000000000002" AnchorPane.rightAnchor="506.79999999999995" />
         <AnchorPane id="cath" layoutY="-3.0" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="1520.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-100.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Button id="btttn" fx:id="accbtn" layoutX="229.0" layoutY="12.0" maxHeight="30.0" maxWidth="100.0" minHeight="27.0" minWidth="100.0" mnemonicParsing="false" onAction="#accbtnlogin" prefHeight="27.0" prefWidth="100.0" text="My Account" AnchorPane.rightAnchor="1291.0" AnchorPane.topAnchor="12.0" />
-                <Button id="btttn" fx:id="infoo" layoutX="951.0" layoutY="7.0" maxHeight="30.0" maxWidth="125.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#openComplaintManager" prefHeight="30.0" prefWidth="125.0" text="Log Manager" AnchorPane.rightAnchor="543.4000000000001" AnchorPane.topAnchor="7.0" />
-            <Button fx:id="viewMyOrders" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onAction="#openMyOrders" text="My Orders" />
+                <Button id="btttn" fx:id="infoo" layoutX="1041.0" layoutY="13.0" maxHeight="30.0" maxWidth="134.0" minHeight="25.0" minWidth="100.0" mnemonicParsing="false" onAction="#openComplaintManager" prefHeight="27.0" prefWidth="134.0" text="Log Manager" AnchorPane.rightAnchor="445.0" AnchorPane.topAnchor="13.0" />
+            <Button fx:id="viewMyOrders" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMyOrders" text="My Orders" />
             <Button fx:id="viewMyComplaints" layoutX="97.0" layoutY="12.0" mnemonicParsing="false" onAction="#openMyComplaints" prefHeight="26.0" prefWidth="125.0" text="My Complaints" />
-            <Button fx:id="deliveryButton" layoutX="701.0" layoutY="12.0" mnemonicParsing="false" onAction="#openDelivery" text="Delivery Man" />
-              <Button fx:id="printProd" layoutX="1077.0" layoutY="10.0" mnemonicParsing="false" onAction="#printProducts" text="Print Products" />
+            <Button fx:id="deliveryButton" layoutX="817.0" layoutY="14.0" mnemonicParsing="false" onAction="#openDelivery" text="Delivery Man" />
             <Button fx:id="adminControlButtton" layoutX="1183.0" layoutY="13.0" mnemonicParsing="false" onAction="#openControlPanel" prefHeight="26.0" prefWidth="150.0" text="Admin Control Panel" />
-            <Button fx:id="openComplaints" layoutX="798.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReplyToComplaints" prefHeight="26.0" prefWidth="125.0" text="Reply To Complaints" />
-            <Button fx:id="logout" layoutX="342.0" layoutY="13.0" mnemonicParsing="false" onAction="#goLogOut" prefHeight="26.0" prefWidth="115.0" text="Log Out" />
+            <Button fx:id="openComplaints" layoutX="909.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReplyToComplaints" prefHeight="26.0" prefWidth="125.0" text="Reply To Complaints" />
+            <Button fx:id="logout" layoutX="232.0" layoutY="12.0" mnemonicParsing="false" onAction="#goLogOut" prefHeight="26.0" prefWidth="115.0" text="Log Out" />
             </children>
         </AnchorPane>
         <Button fx:id="viewCart" layoutX="-57.0" layoutY="757.0" mnemonicParsing="false" onAction="#viewUserCart" text="View Cart" />
@@ -183,6 +181,8 @@
           <Button id="btttn" fx:id="AddItem" layoutX="428.0" layoutY="661.0" mnemonicParsing="false" onAction="#adminAddItemFunc" prefHeight="26.0" prefWidth="62.0" text="Add" />
           <Button id="btttn" fx:id="RemoveItem" layoutX="433.0" layoutY="692.0" mnemonicParsing="false" onAction="#adminRemoveItemFunc" prefHeight="26.0" prefWidth="62.0" text="Remove" />
           <Button id="btttn" fx:id="UpdateItem" layoutX="429.0" layoutY="725.0" mnemonicParsing="false" onAction="#adminUpdateItemFunc" prefHeight="25.0" prefWidth="72.0" text="Update" />
+          <Button id="btttn" fx:id="accbtn" layoutX="177.0" layoutY="-36.0" maxHeight="30.0" maxWidth="100.0" minHeight="27.0" minWidth="100.0" mnemonicParsing="false" onAction="#accbtnlogin" prefHeight="27.0" prefWidth="100.0" text="My Account" AnchorPane.rightAnchor="1343.0" AnchorPane.topAnchor="-36.0" />
+        <Button fx:id="printProd" layoutX="1105.0" layoutY="-31.0" mnemonicParsing="false" onAction="#printProducts" text="Print Products" />
 
     </children>
 </AnchorPane>

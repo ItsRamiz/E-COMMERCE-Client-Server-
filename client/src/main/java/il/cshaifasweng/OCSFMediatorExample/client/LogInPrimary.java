@@ -152,9 +152,12 @@ public class LogInPrimary {
         ErrorMsgPass.setVisible(false);
         backLog.setVisible(false);
 
+
+
     }
     @FXML
     void openCatalogFunc(ActionEvent event) throws IOException {
+        catalog_flag.setFlagg(1);
 
         String theEmail = Email.getText();
         System.out.println("the email is " + theEmail);

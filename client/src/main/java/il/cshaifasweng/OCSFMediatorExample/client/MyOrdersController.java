@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -155,6 +156,10 @@ public class MyOrdersController {
 
     @FXML // fx:id="cancelButton"
     private Button cancelButton; // Value injected by FXMLLoader
+
+
+    @FXML // fx:id="wait"
+    private Label wait; // Value injected by FXMLLoader
 
 
     @FXML
@@ -516,13 +521,14 @@ public class MyOrdersController {
         assert text99 != null : "fx:id=\"text99\" was not injected: check your FXML file 'myorders.fxml'.";
         assert totalPrice != null : "fx:id=\"totalPrice\" was not injected: check your FXML file 'myorders.fxml'.";
         assert viewOrder != null : "fx:id=\"viewOrder\" was not injected: check your FXML file 'myorders.fxml'.";
+        assert wait != null : "fx:id=\"wait\" was not injected: check your FXML file 'myorders.fxml'.";
 
 
+        wait.setVisible(true);
         complaintText.setVisible(false);
         sendComplaint.setVisible(false);
         cancelButton.setVisible(false);
 
-        viewOrder.setVisible(false);
         viewOrder.setText("Load Orders");
         String orderDetails = "";
 
@@ -546,14 +552,19 @@ public class MyOrdersController {
         openComplaint.setVisible(false);  // Value injected by FXMLLoader
         orderProducts.setVisible(false);
 
+        viewOrder.setDisable(true);
+        backToCatalog.setDisable(true);
+
 
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        viewOrder.setVisible(true);
+                        viewOrder.setDisable(false);
+                        backToCatalog.setDisable(false);
+                        wait.setVisible(false);
                     }
-                },4000
+                },4500
         );
     }
     @Subscribe

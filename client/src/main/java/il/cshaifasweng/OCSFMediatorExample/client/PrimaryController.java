@@ -281,6 +281,10 @@ public class PrimaryController {
 	@FXML // fx:id="viewInboxPlz"
 	private Button viewInboxPlz; // Value injected by FXMLLoader
 
+	@FXML // fx:id="deliveryButton"
+	private Button deliveryButton; // Value injected by FXMLLoader
+
+
 	@FXML
 	void viewMessage(ActionEvent event) {
 
@@ -289,6 +293,9 @@ public class PrimaryController {
 
 	@FXML
 	void openInbox(ActionEvent event) {
+
+
+
 		inboxList.getItems().clear();
 		if(viewInboxPlz.getText().equals("Open Inbox")) {
 			String MsgTemp = "";
@@ -727,6 +734,19 @@ public class PrimaryController {
 	int justViewMode = 0;
 	@FXML
 	void justView(ActionEvent event) {
+
+
+		GetAllMessages allMessages = new GetAllMessages();
+		System.out.println("send request for messages !!");
+		try {
+			System.out.println("before sending the getAllMessagaes " );
+			SimpleClient.getClient().sendToServer(allMessages);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		init_container.setVisible(false);
 		justText.setVisible(false);
 		if(justViewMode == 0) {
@@ -749,6 +769,81 @@ public class PrimaryController {
 		justText.setVisible(false);
 		justButton.setVisible(false);
 		System.out.println(catalog_flag.getFlagg());
+		System.out.println("Just view 0");
+		System.out.println("Current Logged Priv : " + currentLoggedAccount.getPrivialge());
+		if(currentLoggedAccount.getPrivialge() == 1)
+		{
+			System.out.println("Just view 1");
+			viewMyOrders.setVisible(true);
+			viewMyComplaints.setVisible(true);
+			viewInboxPlz.setVisible(true);
+			inboxList.setVisible(true);
+			openMessage.setVisible(true);
+			checkout.setVisible(true);
+			cartTextPrice.setVisible(true);
+			cartTextDiscount.setVisible(true);
+			cartTextPriceDiscount.setVisible(true);
+			cartTextPriceFinal.setVisible(true);
+			CartItemsList.setVisible(true);
+			cartTopText.setVisible(true);
+			flower1_addCart.setVisible(true);
+			flower2_addCart.setVisible(true);
+			flower3_addCart.setVisible(true);
+			flower4_addCart.setVisible(true);
+			flower5_addCart.setVisible(true);
+			flower6_addCart.setVisible(true);
+			CreateCustomItem.setVisible(true);
+		}
+		if(currentLoggedAccount.getPrivialge() == 2)
+		{
+			viewMyOrders.setVisible(true);
+			viewMyComplaints.setVisible(true);
+			viewInboxPlz.setVisible(true);
+			inboxList.setVisible(true);
+			openMessage.setVisible(true);
+			checkout.setVisible(true);
+			cartTextPrice.setVisible(true);
+			cartTextDiscount.setVisible(true);
+			cartTextPriceDiscount.setVisible(true);
+			cartTextPriceFinal.setVisible(true);
+			CartItemsList.setVisible(true);
+			cartTopText.setVisible(true);
+			flower1_addCart.setVisible(true);
+			flower2_addCart.setVisible(true);
+			flower3_addCart.setVisible(true);
+			flower4_addCart.setVisible(true);
+			flower5_addCart.setVisible(true);
+			flower6_addCart.setVisible(true);
+			CreateCustomItem.setVisible(true);
+			deliveryButton.setVisible(true);
+			openComplaints.setVisible(true);
+		}
+		if(currentLoggedAccount.getPrivialge() == 3)
+		{
+			viewMyOrders.setVisible(true);
+			viewMyComplaints.setVisible(true);
+			viewInboxPlz.setVisible(true);
+			inboxList.setVisible(true);
+			openMessage.setVisible(true);
+			checkout.setVisible(true);
+			cartTextPrice.setVisible(true);
+			cartTextDiscount.setVisible(true);
+			cartTextPriceDiscount.setVisible(true);
+			cartTextPriceFinal.setVisible(true);
+			CartItemsList.setVisible(true);
+			cartTopText.setVisible(true);
+			flower1_addCart.setVisible(true);
+			flower2_addCart.setVisible(true);
+			flower3_addCart.setVisible(true);
+			flower4_addCart.setVisible(true);
+			flower5_addCart.setVisible(true);
+			flower6_addCart.setVisible(true);
+			CreateCustomItem.setVisible(true);
+			deliveryButton.setVisible(true);
+			openComplaints.setVisible(true);
+			infoo.setVisible(true);
+			adminControlButtton.setVisible(true);
+		}
 	}
 	@FXML
 	void printProducts(ActionEvent event)
@@ -1303,7 +1398,6 @@ public class PrimaryController {
 
 	@FXML
 	void initialize() throws MalformedURLException {
-		catalog_flag.setFlagg(3);
 		justText.setVisible(true);
 		justButton.setVisible(false);
 
@@ -1327,49 +1421,47 @@ public class PrimaryController {
 		assert flower_price4 != null : "fx:id=\"flower_price4\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_price5 != null : "fx:id=\"flower_price5\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_price6 != null : "fx:id=\"flower_price6\" was not injected: check your FXML file 'primary.fxml'.";
+		assert deliveryButton != null : "fx:id=\"deliveryButton\" was not injected: check your FXML file 'primary.fxml'.";
+
+		viewMyOrders.setVisible(false);
+		viewMyComplaints.setVisible(false);
+		deliveryButton.setVisible(false);
+		openComplaints.setVisible(false);
+		infoo.setVisible(false);
+		adminControlButtton.setVisible(false);
+		viewInboxPlz.setVisible(false);
+		inboxList.setVisible(false);
+		openMessage.setVisible(false);
+		checkout.setVisible(false);
+		cartTextPrice.setVisible(false);
+		cartTextDiscount.setVisible(false);
+		cartTextPriceDiscount.setVisible(false);
+		cartTextPriceFinal.setVisible(false);
+		CartItemsList.setVisible(false);
+		cartTopText.setVisible(false);
+		flower1_addCart.setVisible(false);
+		flower2_addCart.setVisible(false);
+		flower3_addCart.setVisible(false);
+		flower4_addCart.setVisible(false);
+		flower5_addCart.setVisible(false);
+		flower6_addCart.setVisible(false);
+		CreateCustomItem.setVisible(false);
+		adminEditCatalog.setVisible(false);
+
 		switch (catalog_flag.getFlagg()){
 			case 0:{
-				System.out.println("case 0");
-				accbtn.setText("Useless");
-				infoo.setVisible(false);
-				cartt.setVisible(false);
-				compln.setVisible(false);
-				adminEditCatalog.setVisible(false);
-				CreateCustomItem.setVisible(false);
-				worker_edit.setVisible(false);
 				break;
 			}
 			case 1:{
 				System.out.println("case 1");
-				accbtn.setText("Useless");
-				infoo.setVisible(true);
-				cartt.setVisible(true);
-				compln.setVisible(true);
-				adminEditCatalog.setVisible(false);
-				CreateCustomItem.setVisible(true);
-				worker_edit.setVisible(false);
 				break;
 			}
 			case 2:{
 				System.out.println("case 2");
-				accbtn.setText("Useless");
-				infoo.setVisible(true);
-				cartt.setVisible(true);
-				compln.setVisible(true);
-				adminEditCatalog.setVisible(true);
-				CreateCustomItem.setVisible(true);
-				worker_edit.setVisible(false);
 				break;
 			}
 			case 3:{
 				System.out.println("case 3");
-				accbtn.setText("Useless");
-				infoo.setVisible(true);
-				cartt.setVisible(true);
-				compln.setVisible(true);
-				adminEditCatalog.setVisible(true);
-				CreateCustomItem.setVisible(true);
-				worker_edit.setVisible(true);
 				break;
 			}
 		}
@@ -1455,12 +1547,10 @@ public class PrimaryController {
 		);
 		System.out.println("PRINTING FLAG");
 		System.out.println(catalog_flag.getFlagg());
-
 		cartTextPrice.setText("0");
 		cartTextDiscount.setText("0");
-
-
 		worker_edit.setVisible(false);
+
 	}
 
 
@@ -1515,7 +1605,10 @@ public class PrimaryController {
 		//System.out.println(recvAccount.getAddress());
 		//System.out.println(recvAccount.getCreditCardNumber());
 		//System.out.println(recvAccount.getCreditMonthExpire());
+		System.out.println("Acc Priv: " + recvAccount.getPrivialge());
 		currentLoggedAccount = recvAccount;
+		System.out.println(" Current Priv : " + currentLoggedAccount.getPrivialge());
+
 	}
 	@Subscribe
 	public void retRieveDatabase(RetrieveDataBaseEvent rtEvent) {

@@ -12,10 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
@@ -136,11 +133,21 @@ public class AdminControlController {
     @FXML // fx:id="subTxt"
     private Text subTxt; // Value injected by FXMLLoader
 
+    @FXML // fx:id="wait"
+    private Label wait; // Value injected by FXMLLoader
+
+    @FXML // fx:id="Save"
+    private Button Save; // Value injected by FXMLLoader
+
+    @FXML // fx:id="privilageField"
+    private TextField privilageField; // Value injected by FXMLLoader
+
     @FXML
     void SaveChanges(ActionEvent event) {
         if(profileType.getSelectionModel().getSelectedItem() == "Customers")
         {
             Account acc = new Account(Integer.parseInt(accID.getText()),name.getText(),Integer.parseInt(customerID.getText()),address.getText(),email.getText(),password.getText(),Long.parseLong(phone.getText()),Long.parseLong(creditnum.getText()),Integer.parseInt(creditexpmonth.getText()),Integer.parseInt(creditexpyear.getText()),Integer.parseInt(cvv.getText()),false,thisShop,thisSub);
+            acc.setPrivialge(Integer.parseInt(privilageField.getText()));
             UpdateMessage update_acc = new UpdateMessage("account","edit");
             update_acc.setAccount(acc);
             try {
@@ -213,6 +220,7 @@ public class AdminControlController {
                 creditexpmonth.setText(Integer.toString(selectedAcc.getCreditMonthExpire()));
                 creditexpyear.setText(Integer.toString(selectedAcc.getCreditYearExpire()));
                 cvv.setText(Integer.toString(selectedAcc.getCcv()));
+                privilageField.setText(Integer.toString(selectedAcc.getPrivialge()));
                 switch (selectedAcc.getBelongShop()) {
                     case 0:
                         shop.setText("ID 0: - Chain");
@@ -387,6 +395,9 @@ public class AdminControlController {
         assert shopTxt != null : "fx:id=\"shopTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
         assert sub != null : "fx:id=\"sub\" was not injected: check your FXML file 'admincontrol.fxml'.";
         assert subTxt != null : "fx:id=\"subTxt\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert wait != null : "fx:id=\"wait\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert Save != null : "fx:id=\"Save\" was not injected: check your FXML file 'admincontrol.fxml'.";
+        assert privilageField != null : "fx:id=\"privilageField\" was not injected: check your FXML file 'admincontrol.fxml'.";
 
         try {
             SimpleClient.getClient().sendToServer("get Managers");
@@ -411,6 +422,27 @@ public class AdminControlController {
         profileType.getItems().add("Workers");
         profileType.getItems().add("Managers");
         loadProfile.setVisible(false);
+
+        freeze.setVisible(false);
+        profileType.setDisable(true);
+        loadProfile.setDisable(true);
+        Save.setDisable(true);
+        backButton.setDisable(true);
+
+
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+
+                        profileType.setDisable(false);
+                        loadProfile.setDisable(false);
+                        Save.setDisable(false);
+                        backButton.setDisable(false);
+                        wait.setVisible(false);
+                    }
+                },4500
+        );
     }
 
     @Subscribe

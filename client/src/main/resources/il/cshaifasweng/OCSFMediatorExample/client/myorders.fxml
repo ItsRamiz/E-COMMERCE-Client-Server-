@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -69,5 +70,10 @@
          </font>
       </Text>
       <Button fx:id="cancelButton" layoutX="396.0" layoutY="38.0" mnemonicParsing="false" onAction="#cancelOrder" prefHeight="26.0" prefWidth="138.0" text="Cancel Order" />
+      <Label fx:id="wait" contentDisplay="RIGHT" layoutX="388.0" layoutY="290.0" prefHeight="157.0" prefWidth="571.0" text="Please Wait">
+         <font>
+            <Font size="96.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

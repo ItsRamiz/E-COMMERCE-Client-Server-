@@ -438,7 +438,7 @@ public class SimpleServer extends AbstractServer {
 					tempAccount.setPassword(accountsList.get(i).getPassword());
 					tempAccount.setPhoneNumber(accountsList.get(i).getPhoneNumber());
 					tempAccount.setCreditMonthExpire(accountsList.get(i).getCreditMonthExpire());
-
+					tempAccount.setPrivialge(accountsList.get(i).getPrivialge()); //Added
 				}
 
 				client.sendToClient(tempAccount);

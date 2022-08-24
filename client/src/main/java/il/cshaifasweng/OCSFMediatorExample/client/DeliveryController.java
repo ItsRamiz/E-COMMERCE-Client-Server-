@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
@@ -42,6 +43,10 @@ public class DeliveryController {
 
     @FXML // fx:id="listOrders"
     private ComboBox<Integer> listOrders; // Value injected by FXMLLoader
+
+    @FXML // fx:id="wait"
+    private Label wait; // Value injected by FXMLLoader
+
 
     @FXML
     private Button back;
@@ -120,43 +125,28 @@ public class DeliveryController {
     static List<Order> Orders = new ArrayList<>();
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws IOException {
-        deliver.setVisible(false);
         EventBus.getDefault().register(this);
         getAllOrdersMessage getOrdersMsg = new getAllOrdersMessage();
         SimpleClient.getClient().sendToServer(getOrdersMsg);
-        back.setVisible(true);
         assert deliver != null : "fx:id=\"deliver\" was not injected: check your FXML file 'delivery.fxml'.";
         assert deliveryList != null : "fx:id=\"deliveryList\" was not injected: check your FXML file 'delivery.fxml'.";
         assert listOrders != null : "fx:id=\"listOrders\" was not injected: check your FXML file 'delivery.fxml'.";
-        /*Order order1 = new Order(1,true,2,"a",3,"Tel Aviv",true,false,2,2);
-        Order order2 = new Order(2,true,2,"ddasd",3,"Haifa - Laskov",true,false,2,2);
-        Order order3 = new Order(3,true,2,"a",3,"Tiberias - St 5",true,false,2,2);
-        Order order4 = new Order(4,true,2,"a",3,"Eilaboun",true,false,2,2);
-        Orders.add(order1);
-        Orders.add(order2);
-        Orders.add(order3);
-        Orders.add(order4);
-        String x;
-        x = String.valueOf(order1.getOrderID()) + " - " + order1.getDeliveredAddress();
-        deliveryList.getItems().add(x);
-        x = String.valueOf(order2.getOrderID()) + " - " + order2.getDeliveredAddress();
-        deliveryList.getItems().add(x);
-        x = String.valueOf(order3.getOrderID()) + " - " + order3.getDeliveredAddress();
-        deliveryList.getItems().add(x);
-        x = String.valueOf(order4.getOrderID()) + " - " + order4.getDeliveredAddress();
-        deliveryList.getItems().add(x);
-        listOrders.getItems().add(order1.getOrderID());
-        listOrders.getItems().add(order2.getOrderID());
-        listOrders.getItems().add(order3.getOrderID());
-        listOrders.getItems().add(order4.getOrderID());
-        */
+        assert wait != null : "fx:id=\"wait\" was not injected: check your FXML file 'delivery.fxml'.";
+
+        deliver.setDisable(true);
+        listOrders.setDisable(true);
+        back.setDisable(true);
+        wait.setVisible(true);
         		new java.util.Timer().schedule(
 				new java.util.TimerTask() {
 					@Override
 					public void run() {
-						deliver.setVisible(true);
+                        deliver.setDisable(false);
+                        listOrders.setDisable(false);
+                        back.setDisable(false);
+                        wait.setVisible(false);
 					}
-				},2000
+				},4500
 		);
     }
     @Subscribe

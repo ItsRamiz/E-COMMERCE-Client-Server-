@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -22,7 +23,7 @@
       <TextField fx:id="orderID" editable="false" layoutX="325.0" layoutY="158.0" prefHeight="26.0" prefWidth="81.0" />
       <Text layoutX="260.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Complaint Received :" wrappingWidth="117.33673095703125" />
       <TextField fx:id="complaintDate" editable="false" layoutX="373.0" layoutY="191.0" prefHeight="26.0" prefWidth="175.0" />
-      <Text layoutX="319.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reply To Complaint" wrappingWidth="348.53680419921875">
+      <Text fx:id="other" layoutX="319.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reply To Complaint" wrappingWidth="348.53680419921875">
          <font>
             <Font size="38.0" />
          </font>
@@ -35,5 +36,10 @@
       <Button fx:id="backButton" layoutX="366.0" layoutY="546.0" mnemonicParsing="false" onAction="#BackToCatalog" prefHeight="26.0" prefWidth="190.0" text="Back To Catalog" />
       <TextField fx:id="complaintText" editable="false" layoutX="548.0" layoutY="79.0" prefHeight="175.0" prefWidth="242.0" />
       <Text layoutX="622.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Complaint Text" wrappingWidth="110.40000000000009" />
+      <Label fx:id="wait" layoutX="157.0" layoutY="231.0" prefHeight="175.0" prefWidth="557.0" text="Please Wait">
+         <font>
+            <Font size="96.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

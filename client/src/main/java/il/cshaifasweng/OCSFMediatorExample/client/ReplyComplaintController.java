@@ -18,11 +18,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -68,6 +65,14 @@ public class ReplyComplaintController {
 
     @FXML // fx:id="sendButton"
     private Button sendButton; // Value injected by FXMLLoader
+
+
+    @FXML // fx:id="other"
+    private Text other; // Value injected by FXMLLoader
+
+
+    @FXML // fx:id="wait"
+    private Label wait; // Value injected by FXMLLoader
 
     @FXML
     private TextField replyText;
@@ -215,6 +220,8 @@ public class ReplyComplaintController {
         assert refundCheck != null : "fx:id=\"refundCheck\" was not injected: check your FXML file 'replycomplaint.fxml'.";
         assert refundPercent != null : "fx:id=\"refundPercent\" was not injected: check your FXML file 'replycomplaint.fxml'.";
         assert sendButton != null : "fx:id=\"sendButton\" was not injected: check your FXML file 'replycomplaint.fxml'.";
+        assert wait != null : "fx:id=\"wait\" was not injected: check your FXML file 'replycomplaint.fxml'.";
+        assert other != null : "fx:id=\"other\" was not injected: check your FXML file 'replycomplaint.fxml'.";
 
         refundPercent.getItems().add("25%");
         refundPercent.getItems().add("50%");
@@ -223,7 +230,10 @@ public class ReplyComplaintController {
 
         //Complaint a = new Complaint(0,23,22,false,false,"Fuck you",2,0,false,0,23,2,2004,"");
         refundPercent.setVisible(false);
-        loadButton.setVisible(false);
+        loadButton.setDisable(true);
+        backButton.setDisable(true);
+        other.setVisible(false);
+        wait.setVisible(true);
         sendButton.setVisible(false);
         //String aString = "Complaint #" + a.getComplaintID() + " " + "Received: " + a.getDay() + "/" + a.getMonth() + "/" + a.getYear();
         //complaintList.getItems().add(aString);
@@ -234,9 +244,12 @@ public class ReplyComplaintController {
                     @Override
                     public void run() {
 
-                        loadButton.setVisible(true);
+                        loadButton.setDisable(false);
+                        backButton.setDisable(false);
+                        other.setVisible(true);
+                        wait.setVisible(false);
                     }
-                },2000
+                },4500
         );
         try {
             SimpleClient.getClient().sendToServer("get complaints");
@@ -252,6 +265,9 @@ public class ReplyComplaintController {
         List<Complaint> allComplaints = complaints.getComplaintsToPass();
         System.out.println("SIZE = " + allComplaints.size());
         retrievedComplaints = allComplaints;
+        for(int i = 0 ; i < allComplaints.size(); i++) {
+            System.out.println(allComplaints.get(i).getComplaintText());
+        }
     }
 
 }

@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -56,6 +57,8 @@ public class MyComplaintsController {
     @FXML // fx:id="replyWorker"
     private TextField replyWorker; // Value injected by FXMLLoader
 
+    @FXML // fx:id="wait"
+    private Label wait; // Value injected by FXMLLoader
 
     @FXML
     void openCatalog(ActionEvent event) throws IOException {
@@ -140,7 +143,22 @@ public class MyComplaintsController {
         assert orderID != null : "fx:id=\"orderID\" was not injected: check your FXML file 'mycomplaints.fxml'.";
         assert refundMoney != null : "fx:id=\"refundMoney\" was not injected: check your FXML file 'mycomplaints.fxml'.";
         assert replyWorker != null : "fx:id=\"replyWorker\" was not injected: check your FXML file 'mycomplaints.fxml'.";
+        assert wait != null : "fx:id=\"wait\" was not injected: check your FXML file 'mycomplaints.fxml'.";
 
+        loadButton.setDisable(true);
+        backToCatalog.setDisable(true);
+        wait.setVisible(true);
+
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        loadButton.setDisable(false);
+                        backToCatalog.setDisable(false);
+                        wait.setVisible(false);
+                    }
+                },4500
+        );
     }
     @Subscribe
     public void PassAccountEvent(PassAccountEventComplaints passAcc){ // added today

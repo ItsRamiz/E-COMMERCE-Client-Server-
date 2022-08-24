@@ -103,6 +103,9 @@ public class LogManagerController {
     @FXML
     private CheckBox compareButton;
 
+    @FXML // fx:id="wait"
+    private Label wait; // Value injected by FXMLLoader
+
     @FXML
     void backToCatalog(ActionEvent event) throws IOException {
         Account recAcc = currentUser;
@@ -550,6 +553,7 @@ public class LogManagerController {
         assert logError != null : "fx:id=\"logError\" was not injected: check your FXML file 'log_manager.fxml'.";
         assert shopError != null : "fx:id=\"shopError\" was not injected: check your FXML file 'log_manager.fxml'.";
         assert shopError2 != null : "fx:id=\"shopError2\" was not injected: check your FXML file 'log_manager.fxml'.";
+        assert wait != null : "fx:id=\"wait\" was not injected: check your FXML file 'log_manager.fxml'.";
         CompareShops.setVisible(false);
         fieldsError.setVisible(false);
         logError.setVisible(false);
@@ -583,6 +587,22 @@ public class LogManagerController {
         LogType.getItems().add("Orders Log");
         LogType.getItems().add("Complaint Log");
         Day.setAnimated(false);
+
+        goBack.setDisable(true);
+        LoadLogButton.setDisable(true);
+        wait.setVisible(true);
+
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+
+                        goBack.setDisable(false);
+                        LoadLogButton.setDisable(false);
+                        wait.setVisible(false);
+                    }
+                },4500
+        );
     }
     @Subscribe
     public void complaintEvent(PassAllComplaintsEvent allComps){ // added new 30/7
