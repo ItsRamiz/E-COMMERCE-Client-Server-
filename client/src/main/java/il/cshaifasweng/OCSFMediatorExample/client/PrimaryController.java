@@ -1558,7 +1558,7 @@ public class PrimaryController {
 					public void run() {
 						justButton.setVisible(true);
 					}
-				},4000
+				},5000
 		);
 		System.out.println("PRINTING FLAG");
 		System.out.println(catalog_flag.getFlagg());
