@@ -19,10 +19,11 @@
         <AnchorPane id="menuu-content" layoutX="800.0" layoutY="50.0" maxWidth="200.0" minWidth="181.0" prefHeight="749.0" prefWidth="181.0" stylesheets="@mycsss.css" AnchorPane.bottomAnchor="1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
             <children>
                 <ComboBox id="btttn" fx:id="worker_edit" layoutX="16.0" layoutY="698.0" onAction="#chooseAdminEditCatalog" prefHeight="26.0" prefWidth="150.0" promptText="           Edit workers" />
-            <ListView fx:id="inboxList" layoutX="3.0" layoutY="53.0" prefHeight="200.0" prefWidth="176.0" />
             <Text layoutX="54.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Inbox" wrappingWidth="73.99999999999966" />
             <Button fx:id="openMessage" layoutX="47.0" layoutY="266.0" mnemonicParsing="false" onAction="#viewMessage" prefHeight="25.0" prefWidth="100.0" text="View Message" />
             <Button fx:id="viewInboxPlz" layoutX="33.0" layoutY="14.0" mnemonicParsing="false" onAction="#openInbox" prefHeight="25.0" prefWidth="115.0" text="Open Inbox" />
+            <ListView fx:id="inboxList" layoutX="3.0" layoutY="53.0" prefHeight="200.0" prefWidth="176.0" />
+            <TextField fx:id="messageField" alignment="TOP_LEFT" editable="false" layoutX="16.0" layoutY="317.0" prefHeight="210.0" prefWidth="149.0" />
             </children>
         </AnchorPane>
         <AnchorPane id="ee" fx:id="container2" layoutX="273.0" layoutY="148.0" prefHeight="202.0" prefWidth="206.0" AnchorPane.rightAnchor="526.0" AnchorPane.topAnchor="148.0">
@@ -170,7 +171,7 @@
           <ComboBox fx:id="chooseCustomType" layoutX="350.0" layoutY="204.0" prefWidth="150.0" promptText="Choose Type" />
           <ComboBox fx:id="chooseCustomColor" layoutX="340.0" layoutY="247.0" prefHeight="26.0" prefWidth="171.0" promptText="Choose Dominant Color" />
           <TextField fx:id="customPrice" layoutX="351.0" layoutY="288.0" text="Enter Price Range" />
-          <Button id="btttn" fx:id="FinishCustomItem" layoutX="368.0" layoutY="326.0" mnemonicParsing="false" onAction="#cancelCustomitem" prefHeight="34.0" prefWidth="115.0" text="Add To Cart" />
+          <Button id="btttn" fx:id="FinishCustomItem" layoutX="368.0" layoutY="326.0" mnemonicParsing="false" onAction="#addCartCustomitem" prefHeight="34.0" prefWidth="115.0" text="Add To Cart" />
           <Button id="btttn" fx:id="CancelCustomItem" layoutX="395.0" layoutY="373.0" mnemonicParsing="false" onAction="#cancelCustomitem" prefHeight="30.0" prefWidth="62.0" text="Cancel" />
           <TextField fx:id="customid" layoutX="-36.0" layoutY="756.0" prefHeight="26.0" prefWidth="42.0" text="Item ID" />
           <ComboBox id="btttn" fx:id="adminEditCatalog" layoutX="370.0" layoutY="474.0" onAction="#chooseAdminEditCatalog" prefHeight="26.0" prefWidth="150.0" promptText="           Edit Catalog" />

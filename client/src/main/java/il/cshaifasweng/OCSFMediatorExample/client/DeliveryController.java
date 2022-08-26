@@ -48,6 +48,7 @@ public class DeliveryController {
     private Label wait; // Value injected by FXMLLoader
 
 
+
     @FXML
     private Button back;
 
@@ -57,9 +58,11 @@ public class DeliveryController {
         if (deliver.getText().equals("Load Pending Orders"))
         {
             for (int i = 0; i < Orders.size(); i++) {
-                aString = "#" + Orders.get(i).getOrderID() + " - Ordered On " + Orders.get(i).getOrderDay() + "/" + Orders.get(i).getOrderMonth() + "/" + Orders.get(i).getOrderYear() + " Prepare For " + Orders.get(i).getPrepareDay() + "/" + Orders.get(i).getOrderMonth() + "/" + Orders.get(i).getPrepareYear();
-                deliveryList.getItems().add(aString);
-                aString = "";
+                if(Orders.get(i).isDelivered() == false) {
+                    aString = "#" + Orders.get(i).getOrderID() + " - Ordered On " + Orders.get(i).getOrderDay() + "/" + Orders.get(i).getOrderMonth() + "/" + Orders.get(i).getOrderYear() + " Prepare For " + Orders.get(i).getPrepareDay() + "/" + Orders.get(i).getOrderMonth() + "/" + Orders.get(i).getPrepareYear();
+                    deliveryList.getItems().add(aString);
+                    aString = "";
+                }
 
             }
             deliver.setText("Deliver Selected");
@@ -71,10 +74,8 @@ public class DeliveryController {
             String aa = deliveryList.getSelectionModel().getSelectedItem();
             for(int i = 1 ; aa.charAt(i) != ' '; i++)
             {
-                bb = Character.toString(aa.charAt(i));
+                bb = bb + Character.toString(aa.charAt(i));
             }
-
-
             System.out.println("bb = " + bb);
             int selected = Integer.parseInt(bb);
             for (int i = 0; i < Orders.size(); i++) {
@@ -90,6 +91,8 @@ public class DeliveryController {
                     break;
                 }
             }
+            deliveryList.getItems().clear();
+            deliver.setText("Load Pending Orders");
         }
 
     }
@@ -149,12 +152,14 @@ public class DeliveryController {
 					}
 				},4500
 		);
+        		listOrders.setVisible(false);
     }
     @Subscribe
     public void passOrders(PassOrdersFromServer passOrders){ // added 30/7
         System.out.println("arrived to subscriebr of passOrders in delivery controller !");
         List<Order> recievedOrders = passOrders.getRecievedOrders();
         Orders = recievedOrders;
+        System.out.println("Orders Size : " + Orders.size());
     }
 
 

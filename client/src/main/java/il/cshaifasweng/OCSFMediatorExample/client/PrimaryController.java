@@ -284,24 +284,50 @@ public class PrimaryController {
 	@FXML // fx:id="deliveryButton"
 	private Button deliveryButton; // Value injected by FXMLLoader
 
+	@FXML // fx:id="messageField"
+	private TextField messageField; // Value injected by FXMLLoader
 
 	@FXML
-	void viewMessage(ActionEvent event) {
-
+	void viewMessage(ActionEvent event)
+	{
+		System.out.println("viewMessage 1");
+		messageField.setVisible(true);
+		int i;
+		String bb = "";
+		String aa = inboxList.getSelectionModel().getSelectedItem();
+		int selected = 0;
+		for(i = 0 ; aa.charAt(i) != '-'; i++)
+		{
+		}
+		i = i + 2;
+		for(i = i ; i < aa.length() ; i++)
+		{
+			bb = bb + Character.toString(aa.charAt(i));
+		}
+		selected = Integer.parseInt(bb);
+		System.out.println("Selected =  " + selected);
+		for(i = 0 ; i < MessageList.size() ; i++)
+		{
+			if(MessageList.get(i).getMessageID() == selected)
+			{
+				messageField.setText(MessageList.get(i).getMsgText());
+				System.out.println("Setting Text : " +MessageList.get(i).getMsgText());
+				break;
+			}
+		}
 
 	}
 
 	@FXML
 	void openInbox(ActionEvent event) {
 
-
-
 		inboxList.getItems().clear();
-		if(viewInboxPlz.getText().equals("Open Inbox")) {
+		if(viewInboxPlz.getText().equals("Open Inbox"))
+		{
 			String MsgTemp = "";
-			System.out.println("Message Length Is :" + MessageList.size());
-			for (int i = 0; i < MessageList.size(); i++) {
-				if (MessageList.get(i).getCustomerID() == currentLoggedAccount.getAccountID()) ;
+			for (int i = 0; i < MessageList.size(); i++)
+			{
+				if (MessageList.get(i).getCustomerID() == currentLoggedAccount.getAccountID())
 				{
 					MsgTemp = "";
 					int j = 0;
@@ -315,6 +341,7 @@ public class PrimaryController {
 			viewInboxPlz.setText("Close Inbox");
 			inboxList.setVisible(true);
 			openMessage.setVisible(true);
+
 		}
 		else
 		{
@@ -749,8 +776,6 @@ public class PrimaryController {
 	int justViewMode = 0;
 	@FXML
 	void justView(ActionEvent event) {
-
-
 		GetAllMessages allMessages = new GetAllMessages();
 		System.out.println("send request for messages !!");
 		try {
@@ -792,8 +817,8 @@ public class PrimaryController {
 			viewMyOrders.setVisible(true);
 			viewMyComplaints.setVisible(true);
 			viewInboxPlz.setVisible(true);
-			inboxList.setVisible(true);
-			openMessage.setVisible(true);
+			//inboxList.setVisible(true);
+			//openMessage.setVisible(true);
 			checkout.setVisible(true);
 			cartTextPrice.setVisible(true);
 			cartTextDiscount.setVisible(true);
@@ -814,8 +839,8 @@ public class PrimaryController {
 			viewMyOrders.setVisible(true);
 			viewMyComplaints.setVisible(true);
 			viewInboxPlz.setVisible(true);
-			inboxList.setVisible(true);
-			openMessage.setVisible(true);
+			//inboxList.setVisible(true);
+			//openMessage.setVisible(true);
 			checkout.setVisible(true);
 			cartTextPrice.setVisible(true);
 			cartTextDiscount.setVisible(true);
@@ -838,8 +863,8 @@ public class PrimaryController {
 			viewMyOrders.setVisible(true);
 			viewMyComplaints.setVisible(true);
 			viewInboxPlz.setVisible(true);
-			inboxList.setVisible(true);
-			openMessage.setVisible(true);
+			//inboxList.setVisible(true);
+			//openMessage.setVisible(true);
 			checkout.setVisible(true);
 			cartTextPrice.setVisible(true);
 			cartTextDiscount.setVisible(true);
@@ -858,6 +883,7 @@ public class PrimaryController {
 			openComplaints.setVisible(true);
 			infoo.setVisible(true);
 			adminControlButtton.setVisible(true);
+			adminEditCatalog.setVisible(true);
 		}
 	}
 	@FXML
@@ -968,11 +994,20 @@ public class PrimaryController {
 	{
 		String color = chooseCustomColor.getSelectionModel().getSelectedItem();
 		String Type = chooseCustomType.getSelectionModel().getSelectedItem();
-		int avg = (Integer.parseInt(color) + Integer.parseInt(Type)) / 2;
-		Product product = new Product(0, "btn", "Custom Item", "A " + chooseCustomType + " With dominant color " + chooseCustomColor, Integer.toString(avg));
+		String avg = customPrice.getText();
+		Product product = new Product(0, "btn", "Custom Item", "A " + chooseCustomType + " With dominant color " + chooseCustomColor, avg);
 
+		int basePrice = Integer.parseInt(cartTextPrice.getText());
+		int addedPrice = Integer.parseInt(product.getPrice());
+		CartItemsList.getItems().add(product.getName());
+		basePrice = basePrice + addedPrice;
+		cartTextPrice.setText(String.valueOf(basePrice));
+		userCart.add(product);
+		if(currentLoggedAccount.isSubscription() == true && basePrice > 50)
+			cartTextDiscount.setText("" + basePrice*0.9);
+		else
+			cartTextDiscount.setText("" + basePrice);
 
-		// TODO: Add the item to the cart :)
 
 
 		customid.setVisible(false);
@@ -983,6 +1018,7 @@ public class PrimaryController {
 		chooseCustomType.setVisible(false);
 		chooseCustomColor.setVisible(false);
 		customPrice.setVisible(false);
+		CreateCustomItem.setVisible(true);
 
 	}
 
@@ -1074,6 +1110,16 @@ public class PrimaryController {
 		//	RemoveItem.setVisible(false);
 		//.setVisible(false);
 
+		init_container.setVisible(true);
+		justText.setVisible(true);
+		justText.setText("Catalog Updated Successfully - 0 Errors");
+		justButton.setVisible(true);
+		RemoveItem.setVisible(false);
+
+		allProducts.remove(Integer.parseInt(EditItemExtra.getText())-1);
+
+		updateFields(2);
+
 	}
 
 	@FXML
@@ -1145,7 +1191,11 @@ public class PrimaryController {
 		EditItemExtra.setVisible(false);
 		//	UpdateItem.setVisible(false);
 
-		updateFields(1);
+		updateFields(2);
+
+		justText.setVisible(true);
+		justText.setText("Catalog Updated Successfully - 0 Errors");
+		justButton.setVisible(true);
 	}
 
 	@FXML
@@ -1437,7 +1487,9 @@ public class PrimaryController {
 		assert flower_price5 != null : "fx:id=\"flower_price5\" was not injected: check your FXML file 'primary.fxml'.";
 		assert flower_price6 != null : "fx:id=\"flower_price6\" was not injected: check your FXML file 'primary.fxml'.";
 		assert deliveryButton != null : "fx:id=\"deliveryButton\" was not injected: check your FXML file 'primary.fxml'.";
+		assert messageField != null : "fx:id=\"messageField\" was not injected: check your FXML file 'primary.fxml'.";
 
+		messageField.setVisible(false);
 		viewMyOrders.setVisible(false);
 		viewMyComplaints.setVisible(false);
 		deliveryButton.setVisible(false);
@@ -1565,6 +1617,9 @@ public class PrimaryController {
 		cartTextPrice.setText("0");
 		cartTextDiscount.setText("0");
 		worker_edit.setVisible(false);
+
+		inboxList.setVisible(false);
+		openMessage.setVisible(false);
 
 	}
 

@@ -312,7 +312,7 @@ public class CheckoutController {
 
             Message confirm = new Message();
             confirm.setCustomerID(currentUser.getAccountID());
-            confirm.setMsgText(currentYear + "/" + currentMonth + "/" + currentDay + " - " + currentHour + ":" + currentMintue + ":" + "Your Order Has Been Placed!");
+            confirm.setMsgText(currentYear + "/" + currentMonth + "/" + currentDay + " - " + currentHour + ":" + currentMintue + ":" + "\n" +  "Your Order Has Been Placed!");
 
 
             UpdateMessage updateMessage1 = new UpdateMessage("message", "add");
@@ -327,6 +327,7 @@ public class CheckoutController {
                 e.printStackTrace();
             }
         }
+        placeOrderButton.setVisible(false);
     }
 
     @FXML
@@ -483,5 +484,18 @@ public class CheckoutController {
 
         greetingTextCheckout.setVisible(false);
         deliveryBox.setVisible(true);
+
+        placeOrderButton.setDisable(true);
+        back.setDisable(true);
+
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        placeOrderButton.setDisable(false);
+                        back.setDisable(false);
+                    }
+                },4500
+        );
     }
 }

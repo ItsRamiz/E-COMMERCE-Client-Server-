@@ -7,11 +7,13 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;
+import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.UpdateMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -117,6 +119,30 @@ public class ReplyComplaintController {
             e.printStackTrace();
         }
         System.out.println("ReplyComplaintController after updating complaint");
+
+        Calendar calle = Calendar.getInstance();
+        int currentYear = calle.get(Calendar.YEAR);
+        int currentMonth = calle.get(Calendar.MONTH);
+        currentMonth++;
+        int currentHour = calle.get(Calendar.HOUR_OF_DAY);
+        int currentMintue = calle.get(Calendar.MINUTE);
+        int currentDay = calle.get(Calendar.DAY_OF_MONTH);
+
+        Message confirm = new Message();
+        confirm.setCustomerID(selectedComplaint.getCustomerID());
+        confirm.setMsgText(currentYear + "/" + currentMonth + "/" + currentDay + " - " + currentHour + ":" + currentMintue + ":" + "\n" +  "Your Complaint Has Been Answered!");
+
+        UpdateMessage updateMessage1 = new UpdateMessage("message", "add");
+        updateMessage1.setMessage(confirm);
+        System.out.println("before try - edit");
+        try {
+            System.out.println("before sending updateMessage to server ");
+            SimpleClient.getClient().sendToServer(updateMessage1);
+            System.out.println("afater sending updateMessage to server ");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
     }
 
