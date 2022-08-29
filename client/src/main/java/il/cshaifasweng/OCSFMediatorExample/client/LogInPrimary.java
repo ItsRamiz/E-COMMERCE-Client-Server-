@@ -80,6 +80,10 @@ public class LogInPrimary {
     @FXML // fx:id="backLog"
     private Button backLog; // Value injected by FXMLLoader
 
+
+    @FXML // fx:id="alLog"
+    private Text alLog; // Value injected by FXMLLoader
+
     @FXML
     void ReturnFromLogin(ActionEvent event) {
         logSucc.setVisible(false);
@@ -142,6 +146,19 @@ public class LogInPrimary {
 
     @FXML
     void initialize() {
+        assert Email != null : "fx:id=\"Email\" was not injected: check your FXML file 'LogInPrim.fxml'.";
+        assert ErrorMsg != null : "fx:id=\"ErrorMsg\" was not injected: check your FXML file 'LogInPrim.fxml'.";
+        assert ErrorMsgPass != null : "fx:id=\"ErrorMsgPass\" was not injected: check your FXML file 'LogInPrim.fxml'.";
+        assert Guest != null : "fx:id=\"Guest\" was not injected: check your FXML file 'LogInPrim.fxml'.";
+        assert LogIn != null : "fx:id=\"LogIn\" was not injected: check your FXML file 'LogInPrim.fxml'.";
+        assert LogInTab != null : "fx:id=\"LogInTab\" was not injected: check your FXML file 'LogInPrim.fxml'.";
+        assert OpenCatalogplz != null : "fx:id=\"OpenCatalogplz\" was not injected: check your FXML file 'LogInPrim.fxml'.";
+        assert Password != null : "fx:id=\"Password\" was not injected: check your FXML file 'LogInPrim.fxml'.";
+        assert RegisterTab != null : "fx:id=\"RegisterTab\" was not injected: check your FXML file 'LogInPrim.fxml'.";
+        assert alLog != null : "fx:id=\"alLog\" was not injected: check your FXML file 'LogInPrim.fxml'.";
+        assert backLog != null : "fx:id=\"backLog\" was not injected: check your FXML file 'LogInPrim.fxml'.";
+        assert logSucc != null : "fx:id=\"logSucc\" was not injected: check your FXML file 'LogInPrim.fxml'.";
+
         logSucc.setVisible(false);
         OpenCatalogplz.setVisible(false);
         EventBus.getDefault().register(this);
@@ -151,9 +168,7 @@ public class LogInPrimary {
         ErrorMsg.setVisible(false);
         ErrorMsgPass.setVisible(false);
         backLog.setVisible(false);
-
-
-
+        alLog.setVisible(false);
     }
     @FXML
     void openCatalogFunc(ActionEvent event) throws IOException {
@@ -274,6 +289,8 @@ public class LogInPrimary {
 
      */
 
+    int requestFix = 0;
+    boolean alreadyLogged = false;
     public void LogIn(javafx.event.ActionEvent actionEvent) throws IOException {
         CheckMail checkML  = new CheckMail(Email.getText(),login_flag,Password.getText()); // check if employee's/customer's email exists
         try
@@ -283,8 +300,14 @@ public class LogInPrimary {
                     new java.util.TimerTask() {
                         @Override
                         public void run() {
-                            if(itWorked == true)
+                            if(alreadyLogged == true && requestFix == 0)
                             {
+                                alLog.setVisible(true);
+                            }
+                            else if(itWorked == true)
+                            {
+                                LogIn.setVisible(false);
+                                backLog.setVisible(false);
                                 logSucc.setVisible(true);
                                 OpenCatalogplz.setVisible(true);
                             }
@@ -324,11 +347,12 @@ public class LogInPrimary {
         {
             System.out.println("WE GOT HERE, GOOD EMAIL");
             itWorked = true;
+            requestFix++;
         }
-        else
+        else if(checkML.isLoggedIn() == true)
         {
             System.out.println("Already Logged In");
-            //TO:DO ...
+            alreadyLogged = true;
         }
 
     }

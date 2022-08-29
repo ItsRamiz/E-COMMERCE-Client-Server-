@@ -22,8 +22,9 @@
       <Label fx:id="ErrorMsg" layoutX="387.0" layoutY="227.0" text="This Email doesn't exist!" textFill="WHITE" />
       <Label fx:id="ErrorMsgPass" layoutX="387.0" layoutY="265.0" text="Password doesn't match Email!" textFill="WHITE" />
       <Button fx:id="LogIn" layoutX="248.0" layoutY="304.0" mnemonicParsing="false" onAction="#LogIn" prefHeight="38.0" prefWidth="87.0" text="Log in" />
-      <Text fx:id="logSucc" layoutX="30.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Successful" wrappingWidth="126.39999999999986" />
+      <Text fx:id="logSucc" layoutX="237.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Successful" wrappingWidth="126.39999999999986" />
       <Button fx:id="backLog" layoutX="248.0" layoutY="363.0" mnemonicParsing="false" onAction="#ReturnFromLogin" prefHeight="38.0" prefWidth="87.0" text="Back" />
-      <Button fx:id="OpenCatalogplz" layoutX="14.0" layoutY="236.0" mnemonicParsing="false" onAction="#openCatalogFunc" prefHeight="26.0" prefWidth="126.0" text="Continue" />
+      <Button fx:id="OpenCatalogplz" layoutX="229.0" layoutY="342.0" mnemonicParsing="false" onAction="#openCatalogFunc" prefHeight="26.0" prefWidth="126.0" text="Continue" />
+      <Text fx:id="alLog" fill="WHITE" layoutX="34.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account already logged in" wrappingWidth="164.0" />
     </children>
 </AnchorPane>
