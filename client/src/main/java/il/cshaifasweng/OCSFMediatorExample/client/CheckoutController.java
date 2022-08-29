@@ -96,6 +96,10 @@ public class CheckoutController {
     @FXML
     private Button back;
 
+    @FXML // fx:id="noDate"
+    private Text noDate; // Value injected by FXMLLoader
+
+
     @FXML
     private CheckBox deliverToHome;
 
@@ -120,6 +124,14 @@ public class CheckoutController {
 
     @FXML // fx:id="viewInboxPlz"
     private Button viewInboxPlz; // Value injected by FXMLLoader
+
+    @FXML // fx:id="noShop"
+    private Text noShop; // Value injected by FXMLLoader
+
+
+    @FXML // fx:id="noDateTwo"
+    private Text noDateTwo; // Value injected by FXMLLoader
+
 
 
     @FXML
@@ -159,6 +171,14 @@ public class CheckoutController {
 
     @FXML
     void PlaceOrder(ActionEvent event) {
+
+        phone_regex.setVisible(false);
+        credit_regex.setVisible(false);
+        cvv_regex.setVisible(false);
+        noDate.setVisible(false);
+        noShop.setVisible(false);
+        noDateTwo.setVisible(false);
+
         boolean fail;
         fail = false;
         int shopID = 0;
@@ -195,27 +215,54 @@ public class CheckoutController {
                 fail = true;
             }
         }
-        if(fail == false) {
-            switch (chooseShopID.getSelectionModel().toString()) {
-                case "ID 0: - Chain":
-                    shopID = 0;
-                    break;
-                case "ID 1: Tiberias, Big Danilof":
-                    shopID = 1;
-                    break;
-                case "ID 2: Haifa, Merkaz Zeiv":
-                    shopID = 2;
-                    break;
-                case "ID 3: Tel Aviv, Ramat Aviv":
-                    shopID = 3;
-                    break;
-                case "ID 4: Eilat, Ice mall":
-                    shopID = 4;
-                    break;
-                case "ID 5: Be'er Sheva, Big Beer Sheva":
-                    shopID = 5;
-                    break;
+        if(dayCheckout.getSelectionModel().getSelectedIndex() == -1 || monthCheckout.getSelectionModel().getSelectedIndex() == -1 || yearCheckout.getSelectionModel().getSelectedIndex() == -1 || hourCheckout.getSelectionModel().getSelectedIndex() == -1)
+        {
+            noDate.setVisible(true);
+            fail = true;
+        }
+        if(chooseShopID.isVisible() == true) {
+            if (chooseShopID.getSelectionModel().getSelectedIndex() == -1) {
+                noShop.setVisible(true);
+                fail = true;
             }
+        }
+        if(anotherMethodBox.isSelected())
+        {
+            if(expiryMonth.getSelectionModel().getSelectedIndex() == -1 || expiryYear.getSelectionModel().getSelectedIndex() == -1) {
+                noDateTwo.setVisible(true);
+                fail = true;
+            }
+
+
+        }
+        if(fail == false)
+        {
+            if(currentUser.getBelongShop() == 0)
+            {
+                switch (chooseShopID.getValue().toString()) {
+                    case "ID 0: - Chain":
+                        shopID = 0;
+                        break;
+                    case "ID 1: Tiberias, Big Danilof":
+                        shopID = 1;
+                        break;
+                    case "ID 2: Haifa, Merkaz Zeiv":
+                        shopID = 2;
+                        break;
+                    case "ID 3: Tel Aviv, Ramat Aviv":
+                        shopID = 3;
+                        break;
+                    case "ID 4: Eilat, Ice mall":
+                        shopID = 4;
+                        break;
+                    case "ID 5: Be'er Sheva, Big Beer Sheva":
+                        shopID = 5;
+                        break;
+                }
+            }
+            else
+                shopID = currentUser.getBelongShop();
+
             boolean pickUp = true;
             boolean gift = false;
             String deliveredAddress = "";
@@ -326,8 +373,8 @@ public class CheckoutController {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            placeOrderButton.setVisible(false);
         }
-        placeOrderButton.setVisible(false);
     }
 
     @FXML
@@ -422,9 +469,45 @@ public class CheckoutController {
     void initialize() throws MalformedURLException
     {
         EventBus.getDefault().register(this);
+        assert anotherMethodBox != null : "fx:id=\"anotherMethodBox\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert chooseShopID != null : "fx:id=\"chooseShopID\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert creditNumberField != null : "fx:id=\"creditNumberField\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert creditNumberText != null : "fx:id=\"creditNumberText\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert credit_regex != null : "fx:id=\"credit_regex\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert cvvField != null : "fx:id=\"cvvField\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert cvvText != null : "fx:id=\"cvvText\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert cvv_regex != null : "fx:id=\"cvv_regex\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert dayCheckout != null : "fx:id=\"dayCheckout\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert deliverToHome != null : "fx:id=\"deliverToHome\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert deliveryBox != null : "fx:id=\"deliveryBox\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert deliveryDateCheckout != null : "fx:id=\"deliveryDateCheckout\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert expiryMonth != null : "fx:id=\"expiryMonth\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert expiryText != null : "fx:id=\"expiryText\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert expiryYear != null : "fx:id=\"expiryYear\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert greetingBoxCheckout != null : "fx:id=\"greetingBoxCheckout\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert greetingTextCheckout != null : "fx:id=\"greetingTextCheckout\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert hourCheckout != null : "fx:id=\"hourCheckout\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert monthCheckout != null : "fx:id=\"monthCheckout\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert noDate != null : "fx:id=\"noDate\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert noDateTwo != null : "fx:id=\"noDateTwo\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert noShop != null : "fx:id=\"noShop\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert phone_regex != null : "fx:id=\"phone_regex\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert placeOrderButton != null : "fx:id=\"placeOrderButton\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert recepAddressField != null : "fx:id=\"recepAddressField\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert recepAddressText != null : "fx:id=\"recepAddressText\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert recepNameField != null : "fx:id=\"recepNameField\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert recepNameText != null : "fx:id=\"recepNameText\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert recepPhoneField != null : "fx:id=\"recepPhoneField\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert recepPhoneText != null : "fx:id=\"recepPhoneText\" was not injected: check your FXML file 'checkout.fxml'.";
+        assert yearCheckout != null : "fx:id=\"yearCheckout\" was not injected: check your FXML file 'checkout.fxml'.";
         phone_regex.setVisible(false);
         credit_regex.setVisible(false);
         cvv_regex.setVisible(false);
+        noDate.setVisible(false);
+        noShop.setVisible(false);
+        noDateTwo.setVisible(false);
+
         int i;
         System.out.println("Here");
         for(i = 1 ; i < 31 ; i++)
@@ -455,12 +538,6 @@ public class CheckoutController {
             hourCheckout.getItems().add(FullHour);
             startHour++;
         }
-        chooseShopID.getItems().add("ID 1: Tiberias, Big Danilof");
-        chooseShopID.getItems().add("ID 2: Haifa, Merkaz Zeiv");
-        chooseShopID.getItems().add("ID 3: Tel Aviv, Ramat Aviv");
-        chooseShopID.getItems().add("ID 4: Eilat, Ice mall");
-        chooseShopID.getItems().add("ID 5: Be'er Sheva, Big Beer Sheva");
-
         deliverToHome.setSelected(true);
         deliveryBox.setSelected(false);
 
@@ -487,6 +564,7 @@ public class CheckoutController {
 
         placeOrderButton.setDisable(true);
         back.setDisable(true);
+        chooseShopID.setVisible(false);
 
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
@@ -494,6 +572,21 @@ public class CheckoutController {
                     public void run() {
                         placeOrderButton.setDisable(false);
                         back.setDisable(false);
+
+                        if(currentUser.getBelongShop() == 0) {
+                            chooseShopID.getItems().add("ID 0: - Chain");
+                            chooseShopID.getItems().add("ID 1: Tiberias, Big Danilof");
+                            chooseShopID.getItems().add("ID 2: Haifa, Merkaz Zeiv");
+                            chooseShopID.getItems().add("ID 3: Tel Aviv, Ramat Aviv");
+                            chooseShopID.getItems().add("ID 4: Eilat, Ice mall");
+                            chooseShopID.getItems().add("ID 5: Be'er Sheva, Big Beer Sheva");
+                            chooseShopID.setVisible(true);
+                        }
+                        else
+                        {
+                            chooseShopID.setVisible(false);
+                        }
+
                     }
                 },4500
         );

@@ -184,6 +184,7 @@
           <Button id="btttn" fx:id="UpdateItem" layoutX="429.0" layoutY="725.0" mnemonicParsing="false" onAction="#adminUpdateItemFunc" prefHeight="25.0" prefWidth="72.0" text="Update" />
           <Button id="btttn" fx:id="accbtn" layoutX="177.0" layoutY="-36.0" maxHeight="30.0" maxWidth="100.0" minHeight="27.0" minWidth="100.0" mnemonicParsing="false" onAction="#accbtnlogin" prefHeight="27.0" prefWidth="100.0" text="My Account" AnchorPane.rightAnchor="1343.0" AnchorPane.topAnchor="-36.0" />
         <Button fx:id="printProd" layoutX="1105.0" layoutY="-31.0" mnemonicParsing="false" onAction="#printProducts" text="Print Products" />
+      <Text fx:id="customError" fill="WHITE" layoutX="335.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error Msg" wrappingWidth="181.0" />
 
     </children>
 </AnchorPane>

@@ -28,7 +28,7 @@
       <TextField fx:id="creditNumberField" layoutX="102.0" layoutY="271.0" prefHeight="26.0" prefWidth="215.0" />
       <Text fx:id="expiryText" layoutX="28.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expire Date" wrappingWidth="68.79997558593755" />
       <ComboBox fx:id="expiryMonth" layoutX="97.0" layoutY="314.0" prefHeight="26.0" prefWidth="86.0" promptText="Month" />
-      <ComboBox fx:id="expiryYear" layoutX="202.0" layoutY="314.0" prefHeight="26.0" prefWidth="69.0" promptText="Year" />
+      <ComboBox fx:id="expiryYear" layoutX="193.0" layoutY="314.0" prefHeight="26.0" prefWidth="69.0" promptText="Year" />
       <Text fx:id="cvvText" layoutX="28.0" layoutY="370.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CVV" wrappingWidth="31.13595962524414" />
       <TextField fx:id="cvvField" layoutX="60.0" layoutY="353.0" prefHeight="26.0" prefWidth="61.0" />
       <Button fx:id="placeOrderButton" layoutX="244.0" layoutY="399.0" mnemonicParsing="false" onAction="#PlaceOrder" prefHeight="26.0" prefWidth="200.0" text="Place Order" />
@@ -39,5 +39,9 @@
       <Label fx:id="credit_regex" layoutX="330.0" layoutY="277.0" prefHeight="18.0" prefWidth="130.0" text="You must enter 16 digits" />
       <Label fx:id="phone_regex" layoutX="344.0" layoutY="188.0" prefHeight="18.0" prefWidth="142.0" text="You must enter 10 digits" />
       <Label fx:id="cvv_regex" layoutX="124.0" layoutY="358.0" prefHeight="18.0" prefWidth="142.0" text="You must enter 3 digits" />
+      <Text fx:id="noDate" layoutX="196.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please choose a valid preparation date &amp; hour" wrappingWidth="276.13671875" />
+      <Text fx:id="noShop" layoutX="506.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please choose a shop to buy from" wrappingWidth="184.0" />
+      <Text fx:id="noDateTwo" layoutX="273.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please choose credit expiry dates" wrappingWidth="142.0" />
+      
    </children>
 </AnchorPane>

@@ -251,6 +251,9 @@ public class PrimaryController {
 	private Text cartTextPriceFinal;
 
 
+	@FXML // fx:id="customError"
+	private Text customError; // Value injected by FXMLLoader
+
 	@FXML
 	private Text cartTopText;
 
@@ -992,33 +995,63 @@ public class PrimaryController {
 	@FXML
 	void addCartCustomitem(ActionEvent event)
 	{
-		String color = chooseCustomColor.getSelectionModel().getSelectedItem();
-		String Type = chooseCustomType.getSelectionModel().getSelectedItem();
-		String avg = customPrice.getText();
-		Product product = new Product(0, "btn", "Custom Item", "A " + chooseCustomType + " With dominant color " + chooseCustomColor, avg);
+		customError.setVisible(false);
+		String customPriceString = "";
+		boolean fail = false;
+		if(chooseCustomType.getSelectionModel().getSelectedIndex() == -1)
+		{
+			customError.setText("Please choose a type");
+			customError.setVisible(true);
+			fail = true;
+		}
+		if(chooseCustomColor.getSelectionModel().getSelectedIndex() == -1)
+		{
+			customError.setText("Please choose a color");
+			customError.setVisible(true);
+			fail = true;
+		}
+		customPriceString = customPrice.getText();
+		for(int i = 0 ; i < customPriceString.length() ; i++)
+		{
+			if(customPriceString.charAt(i) < '0' || customPriceString.charAt(i) > '9')
+			{
+				fail = true;
+				customError.setText("Please enter a valid price");
+				customError.setVisible(true);
 
-		int basePrice = Integer.parseInt(cartTextPrice.getText());
-		int addedPrice = Integer.parseInt(product.getPrice());
-		CartItemsList.getItems().add(product.getName());
-		basePrice = basePrice + addedPrice;
-		cartTextPrice.setText(String.valueOf(basePrice));
-		userCart.add(product);
-		if(currentLoggedAccount.isSubscription() == true && basePrice > 50)
-			cartTextDiscount.setText("" + basePrice*0.9);
-		else
-			cartTextDiscount.setText("" + basePrice);
+			}
+		}
+
+		if(fail == false)
+		{
+			String color = chooseCustomColor.getSelectionModel().getSelectedItem();
+			String Type = chooseCustomType.getSelectionModel().getSelectedItem();
+			String avg = customPrice.getText();
+			Product product = new Product(0, "btn", "Custom Item", "A " + chooseCustomType + " With dominant color " + chooseCustomColor, avg);
+
+			int basePrice = Integer.parseInt(cartTextPrice.getText());
+			int addedPrice = Integer.parseInt(product.getPrice());
+			CartItemsList.getItems().add(product.getName());
+			basePrice = basePrice + addedPrice;
+			cartTextPrice.setText(String.valueOf(basePrice));
+			userCart.add(product);
+			if (currentLoggedAccount.isSubscription() == true && basePrice > 50)
+				cartTextDiscount.setText("" + basePrice * 0.9);
+			else
+				cartTextDiscount.setText("" + basePrice);
 
 
+			customid.setVisible(false);
 
-		customid.setVisible(false);
+			CancelCustomItem.setVisible(false);
+			FinishCustomItem.setVisible(false);
 
-		CancelCustomItem.setVisible(false);
-		FinishCustomItem.setVisible(false);
-
-		chooseCustomType.setVisible(false);
-		chooseCustomColor.setVisible(false);
-		customPrice.setVisible(false);
-		CreateCustomItem.setVisible(true);
+			chooseCustomType.setVisible(false);
+			chooseCustomColor.setVisible(false);
+			customPrice.setVisible(false);
+			CreateCustomItem.setVisible(true);
+			customError.setVisible(false);
+		}
 
 	}
 
@@ -1488,7 +1521,9 @@ public class PrimaryController {
 		assert flower_price6 != null : "fx:id=\"flower_price6\" was not injected: check your FXML file 'primary.fxml'.";
 		assert deliveryButton != null : "fx:id=\"deliveryButton\" was not injected: check your FXML file 'primary.fxml'.";
 		assert messageField != null : "fx:id=\"messageField\" was not injected: check your FXML file 'primary.fxml'.";
+		assert customError != null : "fx:id=\"customError\" was not injected: check your FXML file 'primary.fxml'.";
 
+		customError.setVisible(false);
 		messageField.setVisible(false);
 		viewMyOrders.setVisible(false);
 		viewMyComplaints.setVisible(false);
@@ -1514,6 +1549,9 @@ public class PrimaryController {
 		flower6_addCart.setVisible(false);
 		CreateCustomItem.setVisible(false);
 		adminEditCatalog.setVisible(false);
+
+		compln.setVisible(false);
+		customid.setVisible(false);
 
 		switch (catalog_flag.getFlagg()){
 			case 0:{

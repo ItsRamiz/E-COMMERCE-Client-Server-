@@ -173,20 +173,24 @@ public class RegisterController {
                 shopID = 0;
             else
             {
-                switch (selectChain.getSelectionModel().toString()) {
-                    case "Tiberias, Big Danilof":
-                        shopID = 1;
+                switch (selectChain.getValue().toString())
+                {
+                    case "ID 0: - Chain":
+                        shopID = 0;
                         break;
-                    case "Haifa, Merkaz Zeiv":
-                        shopID = 2;
+                    case "ID 1: Tiberias, Big Danilof":
+                        shopID  = 1;
                         break;
-                    case "Tel Aviv, Ramat Aviv":
-                        shopID = 3;
+                    case "ID 2: Haifa, Merkaz Zeiv":
+                        shopID  = 2;
                         break;
-                    case "Eilat, Ice mall":
-                        shopID = 4;
+                    case "ID 3: Tel Aviv, Ramat Aviv":
+                        shopID  = 3;
                         break;
-                    case "Be'er Sheva, Big Beer Sheva":
+                    case "ID 4: Eilat, Ice mall":
+                        shopID  = 4;
+                        break;
+                    case "ID 5: Be'er Sheva, Big Beer Sheva":
                         shopID = 5;
                         break;
                 }
@@ -197,6 +201,7 @@ public class RegisterController {
             //Account new_acc = new Account(Name.getText(),Address,Email.getText(),Password.getText(),Long.parseLong(PhoneNumber.getText()),Long.parseLong(CardNumber.getText()),Integer.parseInt(chooseYear.getSelectionModel().getSelectedItem()),Integer.parseInt(chooseMonth.getSelectionModel().getSelectedItem()) ,Integer.parseInt(CVV.getText()), shopID);
             Account new_acc = new Account(0,Name.getText(),id,Address,Email.getText(),Password.getText(),Long.parseLong(PhoneNumber.getText()),Long.parseLong(CardNumber.getText()),Integer.parseInt(chooseMonth.getSelectionModel().getSelectedItem()),Integer.parseInt(chooseYear.getSelectionModel().getSelectedItem()),Integer.parseInt(CVV.getText()),false,shopID,subscription.isSelected());
             new_acc.setPrivialge(1);
+            System.out.println("Registering To Shop " + shopID);
             RegisteredAccounts.add(Email.getText());
 
 
@@ -278,11 +283,12 @@ public class RegisterController {
         assert RegisterButton != null : "fx:id=\"RegisterButton\" was not injected: check your FXML file 'register.fxml'.";
         assert Street_Address != null : "fx:id=\"Street_Address\" was not injected: check your FXML file 'register.fxml'.";
         assert userID != null : "fx:id=\"ZipCode\" was not injected: check your FXML file 'register.fxml'.";
-        selectChain.getItems().add("Tiberias, Big Danilof");
-        selectChain.getItems().add("Haifa, Merkaz Zeiv");
-        selectChain.getItems().add("Tel Aviv, Ramat Aviv");
-        selectChain.getItems().add("Eilat, Ice mall");
-        selectChain.getItems().add("Be'er Sheva, Big Beer Sheva");
+        selectChain.getItems().add("ID 1: Tiberias, Big Danilof");
+        selectChain.getItems().add("ID 2: Haifa, Merkaz Zeiv");
+        selectChain.getItems().add("ID 3: Tel Aviv, Ramat Aviv");
+        selectChain.getItems().add("ID 4: Eilat, Ice mall");
+        selectChain.getItems().add("ID 5: Be'er Sheva, Big Beer Sheva");
+
         selectChain.setVisible(true);
         registerShop.setSelected(true);
 
@@ -320,7 +326,5 @@ public class RegisterController {
     public LinkedList<String> getRegisteredAccounts(){
         return RegisteredAccounts;
     }
-
-
 
 }
