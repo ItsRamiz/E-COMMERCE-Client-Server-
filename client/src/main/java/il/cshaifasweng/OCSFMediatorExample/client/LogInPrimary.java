@@ -310,6 +310,7 @@ public class LogInPrimary {
                             }
                             else if(itWorked == true)
                             {
+
                                 LogIn.setVisible(false);
                                 backLog.setVisible(false);
                                 logSucc.setVisible(true);
