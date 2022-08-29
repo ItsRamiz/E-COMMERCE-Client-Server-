@@ -97,6 +97,7 @@ public class LogInPrimary {
         LogInTab.setVisible(true);
         RegisterTab.setVisible(true);
         Guest.setVisible(true);
+        requestFix = 0;
 
 
     }
@@ -126,6 +127,7 @@ public class LogInPrimary {
         Email.setVisible(true);
         Password.setVisible(true);
         backLog.setVisible(true);
+        requestFix = 0;
     }
 
     @FXML
@@ -292,6 +294,7 @@ public class LogInPrimary {
     int requestFix = 0;
     boolean alreadyLogged = false;
     public void LogIn(javafx.event.ActionEvent actionEvent) throws IOException {
+        backLog.setVisible(false);
         CheckMail checkML  = new CheckMail(Email.getText(),login_flag,Password.getText()); // check if employee's/customer's email exists
         try
         {
@@ -302,6 +305,7 @@ public class LogInPrimary {
                         public void run() {
                             if(alreadyLogged == true && requestFix == 0)
                             {
+                                backLog.setVisible(true);
                                 alLog.setVisible(true);
                             }
                             else if(itWorked == true)
@@ -310,6 +314,10 @@ public class LogInPrimary {
                                 backLog.setVisible(false);
                                 logSucc.setVisible(true);
                                 OpenCatalogplz.setVisible(true);
+                            }
+                            else
+                            {
+                                backLog.setVisible(true);
                             }
                         }
                     },2000
